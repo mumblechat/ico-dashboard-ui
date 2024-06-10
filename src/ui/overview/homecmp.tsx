@@ -52,19 +52,23 @@ const Homecmp = () => {
                 <Box
                     sx={{
                         padding: '3rem 0rem',
-                        marginTop:'4rem'
+                        marginTop: '4rem'
                     }}
                 >
-                    <AutoSlider />
+                    <Box component={'section'} id="partner"><AutoSlider /></Box>
                 </Box>
-                <Platform />
+               
+                <Box component={'section'} id="chart"> <Platform /></Box>
                 <Conduct />
                 <Distribute />
-                <Roadmap />
+                <Box component={'section'} id="roadmap"><Roadmap /></Box>
+
                 <Brick />
-                <Faqs />
+                <Box component={'section'} id="faq"><Faqs /></Box>
+                
                 <Application />
-                <GetInTouch />
+                <Box component={'section'} id="contact"><GetInTouch /></Box>
+                
                 <Footer />
             </Box>
         </>

@@ -23,13 +23,10 @@ import {
   ledgerWallet,
 } from '@rainbow-me/rainbowkit/wallets';
  
-import {
-  polygon,
-  polygonMumbai
-} from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Box, useTheme } from '@mui/material';
 import { ColorModeContext } from '@/context';
+import { ramestta } from '.';
  
 
 
@@ -46,9 +43,7 @@ export const config = getDefaultConfig({
     },
   ],
   chains: [
-    polygon,
-    polygonMumbai,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [polygonMumbai] : []),
+    ramestta,
   ],
   ssr: true,
 });

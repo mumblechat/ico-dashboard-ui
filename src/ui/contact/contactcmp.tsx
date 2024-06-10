@@ -3,9 +3,8 @@ import { Box, Typography, styled } from "@mui/material";
 import Header from "../shared/Header";
 import GetInTouch from "../overview/getInTouch";
 import Footer from "../shared/footer";
-import BnrLogin from "../login/bnrLogin";
-import Location from "./location";
-import MapLocate from "./mapLocate";
+// import Location from "./location";
+// import MapLocate from "./mapLocate";
  
 
 
@@ -38,12 +37,12 @@ const Contactcmp = () => {
                 }}>
                     <Box className={'bnrbg4'}>
                         <Header />
-                        <BnrLogin heading={"Contact"} text={"CONTACT"} home={"HOME"} />
+                        
                     </Box>
                 </Box>
 
-                <Location />
-                <MapLocate/>
+                {/* <Location />
+                <MapLocate/> */}
                 <GetInTouch />
                 <Footer />
             </Box>

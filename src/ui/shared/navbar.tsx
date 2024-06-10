@@ -91,10 +91,6 @@ const navLinks = [
         href: '/account'
     },
     {
-        name: ' Earning Calculator',
-        href: '/calculator'
-    },
-    {
         name: 'History',
         href: '/history'
     },
@@ -115,36 +111,36 @@ const Navbar = () => {
                 </ListItem>
                 <ListItem>
                     <LinkStyled
-                        href="#"
+                        href="/#partner"
                     >
-                        Feature
+                        Our Partner
                     </LinkStyled>
                 </ListItem>
                 <ListItem>
                     <LinkStyled
-                        href="#"
+                        href="/#chart"
                     >
                         ICO Chart
                     </LinkStyled>
                 </ListItem>
                 <ListItem>
                     <LinkStyled
-                        href="#"
+                        href="/#roadmap"
                     >
                         Roadmap
                     </LinkStyled>
                 </ListItem>
                 <ListItem>
                     <LinkStyled
-                        href="#"
+                        href="/#faq"
                     >
-                        Calculator
+                        FAQs
                     </LinkStyled>
                 </ListItem>
 
                 <ListItem>
                     <LinkStyled
-                        href="#"
+                        href="/#contact"
                     >
                         Contact
                     </LinkStyled>

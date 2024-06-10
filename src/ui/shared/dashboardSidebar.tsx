@@ -13,6 +13,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { makeStyles } from '@mui/styles';
 import Navbar from './navbar';
+import Sidebardb from '../dashboard/sidebardb';
 
 const useStyles = makeStyles({
 
@@ -26,9 +27,20 @@ const useStyles = makeStyles({
     
     mob:{
         display:'none',
+        position:'relative',
         '@media(max-width : 1200px)':{
             display:'block'
         }
+    },
+    logoutbtn:{
+        backgroundColor:'#00FFFF',
+        color:'#000',
+        padding:'1rem 2rem',
+        borderRadius:'30px',
+        margin:'0rem 1rem',
+        textDecoration:'none',
+        position:'absolute',
+        top:'30rem'
     }
 
 
@@ -55,7 +67,7 @@ type Anchor = 'top' | 'left' | 'bottom' | 'right';
 export default function DashboardSidebar() {
     const classes = useStyles();
     const [state, setState] = React.useState({
-        right: false,
+        left: false,
     });
 
     const toggleDrawer =
@@ -76,7 +88,7 @@ export default function DashboardSidebar() {
         <>
             <Box>
                 <Box
-                    sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 200, textAlign: 'end', margin: '15px', }}
+                    sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 300, textAlign: 'end', margin: '15px', }}
                     role="presentation"
                     onClick={toggleDrawer(anchor, false)}
                     onKeyDown={toggleDrawer(anchor, false)}
@@ -89,15 +101,17 @@ export default function DashboardSidebar() {
                 </Box>
                  
                 <Box className={classes.mob}>
-                    <Navbar/>
+                    <Sidebardb/>
+                    <Link className={classes.logoutbtn} href={''}>Logout</Link>
                 </Box>
+                
             </Box>
         </>
     );
 
     return (
         <div>
-            {(['right'] as const).map((anchor) => (
+            {(['left'] as const).map((anchor) => (
                 <React.Fragment key={anchor}>
 
                     <StyledMenu

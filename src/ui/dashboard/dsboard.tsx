@@ -23,8 +23,9 @@ import linkbtnimg from '../../icons/linkbtnimg.svg'
 const useStyles = makeStyles({
     mainDiv: {
         margin: '40px 40px 20px 40px',
+         
         '@media(max-width : 1200px)':{
-            // margin: '40px 20px 20px 60px',
+            margin: '20px 20px 20px 20px',
         }
     },
 
@@ -37,7 +38,11 @@ const useStyles = makeStyles({
         borderRadius: '12px',
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        '@media(max-width : 600px)':{
+            flexWrap:'wrap',
+            justifyContent:'center'
+        }
     },
     Top_hding: {
         textAlign: 'center'
@@ -53,7 +58,12 @@ const useStyles = makeStyles({
         justifyContent: 'space-between',
         padding: '1rem',
         '@media(max-width : 1200px)':{
-            gap:'1.5rem'
+            gap:'1.5rem',
+            '@media(max-width : 600px)':{
+            flexWrap:'wrap',
+            justifyContent:'center',
+            gap:'0.5rem',
+        }
         }
     },
 
@@ -85,7 +95,11 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: '2rem'
+        marginTop: '2rem',
+        '@media(max-width : 600px)':{
+            flexWrap:'wrap',
+            justifyContent:'center'
+        }
     },
     slider__img: {
         width: '100%'
@@ -143,7 +157,10 @@ const useStyles = makeStyles({
         fontSize: '20px'
     },
     middleBox: {
-        padding: '0rem 2rem 1rem 2rem'
+        padding: '0rem 2rem 1rem 2rem',
+       '@media(max-width : 600px)':{
+            padding:'0rem 1rem 1rem 1rem'
+        }
     },
     step__four: {
         border: '1px solid #1D1D20',
@@ -174,6 +191,11 @@ const useStyles = makeStyles({
     },
     sldr:{
         width:'100%'
+    },
+    coinlinewrp:{
+        '@media(max-width : 600px)':{
+            display:'none'
+        }
     }
 
 });
@@ -201,7 +223,9 @@ const Dsboard = () => {
     const classes = useStyles();
     return (
         <>
-            <DashboardHeader />
+           <Box>
+           
+           </Box>
             <Box className={classes.mainDiv}>
                 <Box className={classes.step__one}>
                     <Box className={classes.step__one_box}>
@@ -262,7 +286,7 @@ const Dsboard = () => {
                                 <Typography variant="h6" color={'#fff'} fontWeight={500}>$46,665,598.67</Typography>
                             </Box>
                             <Box>
-                                <Image src={coinline} alt={""} />
+                                <Image className={classes.coinlinewrp} src={coinline} alt={""} />
                             </Box>
                             <Box textAlign={'end'}>
                                 <Typography color={'#999'}>Total Coins Sold</Typography>

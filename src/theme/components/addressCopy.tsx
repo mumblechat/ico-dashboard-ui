@@ -1,3 +1,4 @@
+"use client"
 import { Box, IconButton, Snackbar, Typography, styled } from "@mui/material";
 import copy from 'clipboard-copy';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -23,6 +24,9 @@ const StyledLink = styled(Link)(({ theme }) => ({
     fontSize:'17px !important',
     '@media(max-width : 1200px)':{
         fontSize:'14px !important',
+        '@media(max-width : 600px)':{
+            fontSize:'12px !important',
+        }
     }
 }));
 

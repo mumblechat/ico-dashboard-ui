@@ -114,6 +114,10 @@ const RootLayout = ({
 
   return (
     <html lang="en">
+      <head>
+      <title>Mumblechat</title>
+      <meta name="description" content={"mumblechat is a web3 messaging dapp with end to end encryption"} />
+      </head>
       <body className={inter.className}>
         <Providers initialState={initialState}>
           <ColorModeContext.Provider value={colorMode}>

@@ -1,12 +1,28 @@
 "use client"
 import { Box, Grid } from "@mui/material";
-import DashboardSidebar from "../shared/dashboardSidebar";
-import Sidebardb from "./sidebardb";
-import Dsboard from "./dsboard";
+import Sidebardb from "../dashboard/sidebardb";
+import Dsboard from "../dashboard/dsboard";
 import DashboardHeader from "../shared/dashboardHeader";
+import ComingSoon from "./comingSoon";
 
-const Dashboardcmp = () => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+const Calculatorcmp = () => {
+
+
     return (
+
         <>
             <Box
                 sx={{ backgroundColor: '#080808' }}>
@@ -19,12 +35,14 @@ const Dashboardcmp = () => {
                     </Grid>
                     <Grid item lg={9.5} md={9.5} sm={12} xs={12}>
                         <DashboardHeader />
-                        <Dsboard />
+                        <ComingSoon/>
                     </Grid>
                 </Grid>
             </Box>
         </>
-    )
+
+    );
 }
 
-export default Dashboardcmp;
+
+export default Calculatorcmp

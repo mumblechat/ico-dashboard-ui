@@ -1,8 +1,8 @@
 import Heading from "@/theme/components/heading";
 import Text from "@/theme/components/text";
 import Image from "next/image";
-import banner_shape01 from '../../icons/banner_shape01.png'
-import banner_shape02 from '../../icons/banner_shape02.png'
+import banner_shape01 from '../../icons/banner_shape01.svg'
+import banner_shape02 from '../../icons/banner_shape02.svg'
 import CountdownTimer from "./countdownTimer";
 import { makeStyles } from '@mui/styles';
 import { Box, Grid } from "@mui/material";

@@ -13,8 +13,8 @@ const Heading=({heading}:props)=>{
             color:'#00FFFF',
             '@media(max-width : 1200px)':{
                 fontSize:'22px',
-                '@media(max-width : 600px)':{
-                fontSize:'19px'
+                '@media(max-width : 900px)':{
+                fontSize:'20px'
             }
             }
 

@@ -39,23 +39,25 @@ const useStyles = makeStyles({
     },
 
     mainDiv: {
-        borderRight: '1px solid #1D1D20',
+       
         minHeight: '100vh',
-        position: 'sticky',
+        position: 'fixed',
         top: '0px',
-        // width:'280px',
+        width:'260px',
+        
         '@media(max-width : 1200px)': {
-            // width:'250px',
+            width:'inherit',
         }
     },
     logo: {
-        borderBottom: '1px solid #1D1D20',
+        borderBottom: '1px solid #1d1d2000',
         display: 'block',
         padding: 15,
         height: '74px',
 
     },
     im_lg: {
+        width: '180px',
         '@media(max-width : 1200px)': {
             width: '180px'
         }
@@ -80,46 +82,41 @@ const navLinks = [
     },
     {
         name: 'ROI Calculator',
-        href: '#',
+        href: '/calculator',
         iconl: sideiconl_02,
         icond: sideicond_02,
     },
     {
         name: 'Leaderboard',
-        href: '#',
+        href: '/leaderboard',
         iconl: sideiconl_03,
         icond: sideicond_03,
     },
     {
         name: 'Referral',
-        href: '#',
+        href: '/referral',
         iconl: sideiconl_04,
         icond: sideicond_04,
     },
     {
         name: 'Transaction',
-        href: '#',
+        href: '/transaction',
         iconl: sideiconl_05,
         icond: sideicond_05,
     },
     {
         name: 'Earning',
-        href: '#',
+        href: '/earning',
         iconl: sideiconl_06,
         icond: sideicond_06,
     },
     {
         name: 'Profile',
-        href: '#',
+        href: '/profile',
         iconl: sideiconl_07,
         icond: sideicond_07,
     },
-    {
-        name: 'Logout',
-        href: '#',
-        iconl: sideiconl_08,
-        icond: sideicond_08,
-    },
+     
 ]
 
 const Sidebardb = () => {
@@ -129,8 +126,9 @@ const Sidebardb = () => {
     return (
         <Box className={classes.mainDiv}>
             <Box>
-                <Link className={classes.logo} href={'/'}><Image className={classes.im_lg} src={logo} alt={''} width={220} /></Link>
+                <Link className={classes.logo} href={'/'}><Image className={classes.im_lg} src={logo} alt={''} width={280} /></Link>
             </Box>
+             
             <Box component={'ul'} className={classes.main__list}>
                 {navLinks.map((item, index) => (
                     <Box key={index} component={'li'} className={classes.list__item}>

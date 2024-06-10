@@ -88,11 +88,11 @@ const Distribute = () => {
                             </Box>
                             <Box className={classes.listItem} component={'li'}>
                                 <Typography className={classes.round}>1</Typography>
-                                <Typography>Initial Value : 1 ETH = 3177.38 CIC</Typography>
+                                <Typography>Initial Value : 1 RAMA = 3.04 MMCT</Typography>
                             </Box>
                             <Box className={classes.listItem} component={'li'}>
                                 <Typography className={classes.round}>1</Typography>
-                                <Typography>Type : ERC20</Typography>
+                                <Typography>Type : RAMA20</Typography>
                             </Box>
                         </Box>
                     </Box>

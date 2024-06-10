@@ -103,7 +103,7 @@ const Countribution = () => {
             <Box>
                 <Box className={classes.heading}>
                     <Box>
-                        <Heading heading={'$45,256,432'} />
+                        <Heading heading={'$9,880'} />
                     </Box>
 
                     <Typography sx={{
@@ -118,17 +118,17 @@ const Countribution = () => {
 
                 <Box className={classes.presale}>
                     <Box textAlign={'center'}>
+                        <Typography color={'#aaabb2'}>PRIVATE SALE</Typography>
+                        <Typography>|</Typography>
+                    </Box>
+
+                    <Box textAlign={'center'}>
                         <Typography color={'#aaabb2'}>PRE-SALE</Typography>
                         <Typography>|</Typography>
                     </Box>
 
                     <Box textAlign={'center'}>
-                        <Typography color={'#aaabb2'}>SOFT CAP</Typography>
-                        <Typography>|</Typography>
-                    </Box>
-
-                    <Box textAlign={'center'}>
-                        <Typography color={'#aaabb2'}>BONUS</Typography>
+                        <Typography color={'#aaabb2'}>PUBLIC SALE</Typography>
                         <Typography>|</Typography>
                     </Box>
                 </Box>
@@ -147,8 +147,8 @@ const Countribution = () => {
                     </Box>
 
                     <Box className={classes.datacount}>
-                        <Typography sx={{ '@media(max-width : 600px)': { fontSize: '15px' } }} fontWeight={600} variant="h5">65 target raised</Typography>
-                        <Typography sx={{ '@media(max-width : 600px)': { fontSize: '15px' } }} fontWeight={600} variant="h5">1 ETH = $1000 = 3177.38 CIC</Typography>
+                        <Typography sx={{ '@media(max-width : 600px)': { fontSize: '15px' } }} fontWeight={600} variant="h5">65000 RAMA raised</Typography>
+                        <Typography sx={{ '@media(max-width : 600px)': { fontSize: '15px' } }} fontWeight={600} variant="h5">1 RAMA = $0.152 = 3.04 MMCT</Typography>
                     </Box>
                 </Container>
 
