@@ -121,10 +121,10 @@ const RootLayout = ({
       <body className={inter.className}>
         <Providers initialState={initialState}>
           <ColorModeContext.Provider value={colorMode}>
-            <ThemeProvider theme={theme}>
+            {/* <ThemeProvider theme={theme}> */}
               <CssBaseline />
               {children}
-            </ThemeProvider>
+            {/* </ThemeProvider> */}
           </ColorModeContext.Provider>
         </Providers>
       </body>

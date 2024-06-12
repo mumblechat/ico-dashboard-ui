@@ -1,4 +1,4 @@
-import Calculatorcmp from "@/ui/calculator/calculatorcmp"
+import Transactioncmp from "@/ui/transaction/transactioncmp"
 
 
  
@@ -6,7 +6,7 @@ import Calculatorcmp from "@/ui/calculator/calculatorcmp"
 const Transaction = () => {
     return (
         <>
-            <Calculatorcmp/>
+            <Transactioncmp/>
         </>
     )
 }

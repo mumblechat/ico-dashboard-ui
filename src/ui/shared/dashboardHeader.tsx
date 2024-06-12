@@ -22,6 +22,7 @@ const useStyles = makeStyles({
         height: '74px',
         position:'sticky',
         backgroundColor: '#080808',
+        zIndex:'100',
         top:'0px',
         '@media(max-width : 900px)':{
             padding:'10px 20px',

@@ -24,23 +24,23 @@ const useStyles = makeStyles({
             color: '#fff'
         }
     },
-    
-    mob:{
-        display:'none',
-        position:'relative',
-        '@media(max-width : 1200px)':{
-            display:'block'
+
+    mob: {
+        display: 'none',
+        position: 'relative',
+        '@media(max-width : 1200px)': {
+            display: 'block'
         }
     },
-    logoutbtn:{
-        backgroundColor:'#00FFFF',
-        color:'#000',
-        padding:'1rem 2rem',
-        borderRadius:'30px',
-        margin:'0rem 1rem',
-        textDecoration:'none',
-        position:'absolute',
-        top:'30rem'
+    logoutbtn: {
+        backgroundColor: '#00FFFF',
+        color: '#000',
+        padding: '1rem 2rem',
+        borderRadius: '30px',
+        margin: '0rem 1rem',
+        textDecoration: 'none',
+        position: 'absolute',
+        top: '30rem'
     }
 
 
@@ -88,7 +88,12 @@ export default function DashboardSidebar() {
         <>
             <Box>
                 <Box
-                    sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 300, textAlign: 'end', margin: '15px', }}
+                    sx={{
+                        width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 300, textAlign: 'end', margin: '15px',
+                        '& .MuiDrawer-paper': {
+                            backgroundColor: 'red', // Your desired background color
+                        },
+                    }}
                     role="presentation"
                     onClick={toggleDrawer(anchor, false)}
                     onKeyDown={toggleDrawer(anchor, false)}
@@ -99,18 +104,18 @@ export default function DashboardSidebar() {
 
 
                 </Box>
-                 
+
                 <Box className={classes.mob}>
-                    <Sidebardb/>
+                    <Sidebardb />
                     <Link className={classes.logoutbtn} href={''}>Logout</Link>
                 </Box>
-                
+
             </Box>
         </>
     );
 
     return (
-        <div>
+        <Box>
             {(['left'] as const).map((anchor) => (
                 <React.Fragment key={anchor}>
 
@@ -120,6 +125,11 @@ export default function DashboardSidebar() {
                         <MenuIcon />
                     </StyledMenu>
                     <Drawer
+                    sx={{
+                        '& .MuiDrawer-paper': {
+                            backgroundColor: '#101012', // Your desired background color
+                        },
+                    }}
                         anchor={anchor}
                         open={state[anchor]}
                         onClose={toggleDrawer(anchor, false)}
@@ -128,6 +138,6 @@ export default function DashboardSidebar() {
                     </Drawer>
                 </React.Fragment>
             ))}
-        </div>
+        </Box>
     );
 }

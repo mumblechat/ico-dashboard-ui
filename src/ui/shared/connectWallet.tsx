@@ -11,8 +11,9 @@ import { ColorModeContext } from '@/context';
 
 
 const StyledLink = styled(Link)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.light,
-  color: theme.palette.primary.contrastText,
+  backgroundColor: '#101012',
+  border:'1px solid #1D1D20',
+  color: '#fff',
   padding: "13px 16px",
   borderRadius: '36px',
   display: 'block',
@@ -105,7 +106,7 @@ const ConnectWallet = () => {
                       cursor:'pointer'
                     }}
                     onClick={openAccountModal}>
-                    <MoreVertIcon />
+                    <MoreVertIcon sx={{color:'#fff'}}/>
                   </Box>
                 </Box>
               );

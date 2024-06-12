@@ -22,12 +22,9 @@ const StyledLink = styled(Link)(({ theme }) => ({
     color: '#000',
     fontWeight: 500,
     fontSize:'17px !important',
-    '@media(max-width : 1200px)':{
-        fontSize:'14px !important',
-        '@media(max-width : 600px)':{
-            fontSize:'12px !important',
+    '@media(max-width : 600px)':{
+            fontSize:'13px !important',
         }
-    }
 }));
 
 const AddressCopy = ({ text, address,  }: props) => {

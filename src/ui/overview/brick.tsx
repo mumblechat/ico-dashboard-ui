@@ -109,7 +109,7 @@ function Brick() {
                                      }}>
                                         <Typography 
                                             fontFamily={'Bruce Forever!important'}
-                                            variant="h6">
+                                            variant="h6" color={'#fff'}>
                                             {item.title}
                                         </Typography>
                                         <Typography color={'#92939e'}>{item.text}</Typography>

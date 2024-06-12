@@ -1,4 +1,4 @@
-import Calculatorcmp from "@/ui/calculator/calculatorcmp"
+import Leaderboardcmp from "@/ui/leaderboard/leaderboardcmp"
 
 
  
@@ -6,7 +6,7 @@ import Calculatorcmp from "@/ui/calculator/calculatorcmp"
 const Earning = () => {
     return (
         <>
-            <Calculatorcmp/>
+            <Leaderboardcmp/>
         </>
     )
 }

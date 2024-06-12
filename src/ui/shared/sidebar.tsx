@@ -96,7 +96,7 @@ export default function Sidebar() {
     );
 
     return (
-        <div>
+        <Box>
             {(['right'] as const).map((anchor) => (
                 <React.Fragment key={anchor}>
 
@@ -106,6 +106,11 @@ export default function Sidebar() {
                         <MenuIcon />
                     </StyledMenu>
                     <Drawer
+                    sx={{
+                        '& .MuiDrawer-paper': {
+                            backgroundColor: '#101012', // Your desired background color
+                        },
+                    }}
                         anchor={anchor}
                         open={state[anchor]}
                         onClose={toggleDrawer(anchor, false)}
@@ -114,6 +119,6 @@ export default function Sidebar() {
                     </Drawer>
                 </React.Fragment>
             ))}
-        </div>
+        </Box>
     );
 }

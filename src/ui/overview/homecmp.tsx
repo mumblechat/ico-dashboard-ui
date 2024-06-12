@@ -57,7 +57,7 @@ const Homecmp = () => {
                 >
                     <Box component={'section'} id="partner"><AutoSlider /></Box>
                 </Box>
-               
+
                 <Box component={'section'} id="chart"> <Platform /></Box>
                 <Conduct />
                 <Distribute />
@@ -65,10 +65,10 @@ const Homecmp = () => {
 
                 <Brick />
                 <Box component={'section'} id="faq"><Faqs /></Box>
-                
+
                 <Application />
                 <Box component={'section'} id="contact"><GetInTouch /></Box>
-                
+
                 <Footer />
             </Box>
         </>

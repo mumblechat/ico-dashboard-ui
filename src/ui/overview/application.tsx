@@ -95,12 +95,12 @@ const Application = () => {
                             </Box>
                             <Box className={classes.wrap}>
                                 <Box className={classes.box}>
-                                    <Typography className={classes.round}>1</Typography>
-                                    <Typography variant='h6'>White Paper</Typography>
+                                    <Typography className={classes.round} color={'#fff'}>1</Typography>
+                                    <Typography variant='h6' color={'#fff'}>White Paper</Typography>
                                 </Box>
                                 <Box className={classes.box}>
-                                    <Typography className={classes.round}>2</Typography>
-                                    <Typography variant='h6'>Privacy & Policy</Typography>
+                                    <Typography className={classes.round} color={'#fff'}>2</Typography>
+                                    <Typography variant='h6' color={'#fff'}>Privacy & Policy</Typography>
                                 </Box>
                             </Box>
 

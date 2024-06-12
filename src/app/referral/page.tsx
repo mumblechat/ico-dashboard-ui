@@ -1,4 +1,8 @@
-import Calculatorcmp from "@/ui/calculator/calculatorcmp"
+import Referralcmp from "@/ui/referral/referralcmp"
+
+ 
+
+ 
 
 
  
@@ -6,7 +10,7 @@ import Calculatorcmp from "@/ui/calculator/calculatorcmp"
 const Referral = () => {
     return (
         <>
-            <Calculatorcmp/>
+            <Referralcmp/>
         </>
     )
 }

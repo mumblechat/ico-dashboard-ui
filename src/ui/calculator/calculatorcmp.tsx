@@ -3,7 +3,8 @@ import { Box, Grid } from "@mui/material";
 import Sidebardb from "../dashboard/sidebardb";
 import Dsboard from "../dashboard/dsboard";
 import DashboardHeader from "../shared/dashboardHeader";
-import ComingSoon from "./comingSoon";
+import ComingSoon from "../leaderboard/comingSoon";
+import CalculatorTab from "./calculatorTab";
 
 
 
@@ -35,7 +36,7 @@ const Calculatorcmp = () => {
                     </Grid>
                     <Grid item lg={9.5} md={9.5} sm={12} xs={12}>
                         <DashboardHeader />
-                        <ComingSoon/>
+                         <CalculatorTab/>
                     </Grid>
                 </Grid>
             </Box>

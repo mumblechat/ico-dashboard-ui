@@ -32,20 +32,20 @@ const Accordion_list = [
         title: 'What makes Less Accounting better than the rest?',
         text: "mumblechat points indicate your level of engagement as a mumblechat user. We use the points to determine a user's eligibility for future rewards such as token airdrops."
     },
-     
+
 ]
 
 
 const StyledBox = styled(Box)(({ theme }) => ({
     margin: '0rem 4rem',
-    '@media(max-width : 600px)':{
+    '@media(max-width : 600px)': {
         margin: '0rem 1.5rem',
     }
 
 }));
 
 const Faqs = () => {
-     const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState(false);
 
     const handleChange = (panel: any | any | ((prevState: any) => any)) => (event: any, isExpanded: any) => {
         setExpanded(isExpanded ? panel : false);
@@ -55,58 +55,59 @@ const Faqs = () => {
             <StyledBox>
 
 
-            <Box sx={{ textAlign: 'center', margin: '4rem 0rem 2rem 0rem' }}>
-                <Heading heading={"Ask Quick Question"} />
-                <Box sx={{
-                    width: '30%',
-                    height: '1px',
-                    background: 'linear-gradient(90deg, #071616, #00FFFF, #071616)',
-                    margin: '3rem auto 3rem auto',
-                    '@media(max-width : 600px)':{
-                        margin: '1.5rem auto 1.5rem auto', 
-                    }
-                }} />
-            </Box>
+                <Box sx={{ textAlign: 'center', margin: '4rem 0rem 2rem 0rem' }}>
+                    <Heading heading={"Ask Quick Question"} />
+                    <Box sx={{
+                        width: '30%',
+                        height: '1px',
+                        background: 'linear-gradient(90deg, #071616, #00FFFF, #071616)',
+                        margin: '3rem auto 3rem auto',
+                        '@media(max-width : 600px)': {
+                            margin: '1.5rem auto 1.5rem auto',
+                        }
+                    }} />
+                </Box>
                 <Grid container spacing={2}>
 
                     <Grid item lg={12} md={12} sm={12} xs={12}>
-                         
-                    {Accordion_list.map((item, index) => (
-                        <Accordion
-                            key={index}
-                            expanded={expanded === `panel${index}` as any}
-                            onChange={handleChange(`panel${index}`)}
-                            sx={{
-                                backgroundColor: '#1C1C20',
-                                borderRadius: '6px',
-                                boxShadow: 'inherit',
-                                marginTop: '1rem',
-                                padding: '5px',
-                                '&.Mui-expanded': {
-                                    background: 'linear-gradient(359deg, #00FFFF, #00FFFF)',
-                                    marginTop: '1rem',
-                                    color: '#000'
-                                },
-                            }}>
-                            <AccordionSummary
 
+                        {Accordion_list.map((item, index) => (
+                            <Accordion
+                                key={index}
+                                expanded={expanded === `panel${index}` as any}
+                                onChange={handleChange(`panel${index}`)}
                                 sx={{
-                                    fontWeight: 700,
+                                    backgroundColor: '#1C1C20',
+                                    borderRadius: '6px',
+                                    boxShadow: 'inherit',
+                                    marginTop: '1rem',
+                                    padding: '5px',
+                                    '&.Mui-expanded': {
+                                        background: 'linear-gradient(359deg, #00FFFF, #00FFFF)',
+                                        marginTop: '1rem',
+                                        color: '#000'
+                                    },
+                                }}>
+                                <AccordionSummary
 
-                                }}
-                                expandIcon={<SouthIcon sx={{ color: expanded === `panel${index}` as any ? '#000' : '#fff' }} />}
-                                aria-controls={`panel${index}-content`}
-                                id={`panel${index}-header`}
-                            >
-                                {item.title}
-                            </AccordionSummary>
-                            <AccordionDetails>
+                                    sx={{
+                                        fontWeight: 700,
+                                        color: expanded === `panel${index}` as any ? '#000' : '#fff',
+                                    }}
+                                    expandIcon={<SouthIcon sx={{ color: expanded === `panel${index}` as any ? '#000' : '#fff' }} />}
+                                    aria-controls={`panel${index}-content`}
+                                    id={`panel${index}-header`}
 
-                                {item.text}
+                                >
+                                    {item.title}
+                                </AccordionSummary>
+                                <AccordionDetails>
 
-                            </AccordionDetails>
-                        </Accordion>
-                    ))}
+                                    {item.text}
+
+                                </AccordionDetails>
+                            </Accordion>
+                        ))}
 
                     </Grid>
 
@@ -114,12 +115,13 @@ const Faqs = () => {
 
             </StyledBox>
 
-            <Box sx={{ padding: '5rem 0rem',
-                '@media(max-width : 900px)':{
+            <Box sx={{
+                padding: '5rem 0rem',
+                '@media(max-width : 900px)': {
                     padding: '2rem 0rem',
                 }
-             }}>
-                 
+            }}>
+
             </Box>
         </>
     )
@@ -127,4 +129,4 @@ const Faqs = () => {
 
 export default Faqs
 
- 
+

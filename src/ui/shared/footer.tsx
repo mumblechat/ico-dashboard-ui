@@ -74,7 +74,7 @@ const Footer = () => {
                 <Grid container spacing={2}>
                     <Grid item lg={3} md={3} sm={6} xs={12}>
                         <Box className={classes.box__listAlign}>
-                            <Typography className={classes.heading__align} variant='h5'>USEFULL LINKS</Typography>
+                            <Typography className={classes.heading__align} variant='h5' color={'#fff'}>USEFULL LINKS</Typography>
                             <Box className={classes.list} component={'ul'}>
                                 <Box className={classes.listBox} component={'li'}>
                                     <Link className={classes.list__item} href="">Contact us</Link>
@@ -96,7 +96,7 @@ const Footer = () => {
                     </Grid>
                     <Grid item lg={3} md={3} sm={6} xs={12}>
                         <Box className={classes.box__listAlign}>
-                            <Typography className={classes.heading__align} variant='h5'>SOLUTIONS</Typography>
+                            <Typography className={classes.heading__align} variant='h5' color={'#fff'}>SOLUTIONS</Typography>
                             <Box className={classes.list} component={'ul'}>
                                 <Box className={classes.listBox} component={'li'}>
                                     <Link className={classes.list__item} href="">Token Suite</Link>
@@ -118,7 +118,7 @@ const Footer = () => {
                     </Grid>
                     <Grid item lg={3} md={3} sm={6} xs={12}>
                         <Box className={classes.box__listAlign}>
-                            <Typography className={classes.heading__align} variant='h5'>USEFULL LINKS</Typography>
+                            <Typography className={classes.heading__align} variant='h5' color={'#fff'}>USEFULL LINKS</Typography>
                             <Box className={classes.list} component={'ul'}>
                                 <Box className={classes.listBox} component={'li'}>
                                     <Link className={classes.list__item} href="">Help Center</Link>
@@ -140,8 +140,8 @@ const Footer = () => {
                     </Grid>
                     <Grid item lg={3} md={3} sm={6} xs={12}>
                         <Box className={classes.box__listAlign}>
-                            <Typography className={classes.heading__align} variant='h5'>SUBSCRIBE NEWSLETTER</Typography>
-                            <Typography mt={2}>Exerci tation ullamcorper suscipit lobortis nisl aliquip ex ea commodo</Typography>
+                            <Typography className={classes.heading__align} variant='h5' color={'#fff'}>SUBSCRIBE NEWSLETTER</Typography>
+                            <Typography mt={2} color={'#fff'}>Exerci tation ullamcorper suscipit lobortis nisl aliquip ex ea commodo</Typography>
                             <Box className={classes.input__box}>
                                         <InputBase
                                             sx={{
@@ -175,7 +175,7 @@ const Footer = () => {
                         paddingBottom:'1rem'
                     }
                 }} pt={4} pb={4} textAlign={'center'}>
-                    <Typography>Copyright © 2024 mumblechat.com. All rights reserved.</Typography>
+                    <Typography color={'#fff'}>Copyright © 2024 mumblechat.com. All rights reserved.</Typography>
                 </Box>
             </Box>
           </Box>

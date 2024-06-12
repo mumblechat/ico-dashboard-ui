@@ -89,7 +89,7 @@ const Conduct = () => {
                                         textAlign: 'center'
                                     }
                                 }}>
-                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'}>Lifetime free and transaction</Typography>
+                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'} color={'#fff'}>Lifetime free and transaction</Typography>
                                 </Box>
                             </Box>
                         </Grid>
@@ -112,7 +112,7 @@ const Conduct = () => {
                                         }
                                     }}
                                 >
-                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'}>Security Control over money</Typography>
+                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'} color={'#fff'}>Security Control over money</Typography>
                                 </Box>
                             </Box>
                         </Grid>
@@ -135,7 +135,7 @@ const Conduct = () => {
                                         }
                                     }}
                                 >
-                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'}>Mobile Payment Make Easy</Typography>
+                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'}color={'#fff'}>Mobile Payment Make Easy</Typography>
                                 </Box>
                             </Box>
                         </Grid>

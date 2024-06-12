@@ -143,7 +143,7 @@ const GetInTouch = () => {
                                                 fontSize:'18px'
                                             }
                                         }
-                                    }} textAlign={'center'} mb={3} variant='h6' fontFamily={'Bruce Forever!important'}>Get In Touch Now</Typography>
+                                    }} textAlign={'center'} mb={3} variant='h6' fontFamily={'Bruce Forever!important'} color={'#fff'}>Get In Touch Now</Typography>
                                     <Box className={classes.flex__input}>
                                         <Box className={classes.input__box}>
                                             <InputBase
@@ -215,7 +215,7 @@ const GetInTouch = () => {
                                             fontSize:'18px'
                                         }
                                         }
-                                    }}textAlign={'center'} mb={3} variant='h6' fontFamily={'Bruce Forever!important'}>Read Documents</Typography>
+                                    }}textAlign={'center'} mb={3} variant='h6' fontFamily={'Bruce Forever!important'} color={'#fff'}>Read Documents</Typography>
 
                                     <Grid container spacing={2}>
                                         {PDF__title.map((item, index) => (

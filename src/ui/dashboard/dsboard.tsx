@@ -1,4 +1,5 @@
-import { Box, Grid, InputBase, Typography } from "@mui/material"
+"use client"
+import { Box, Grid, InputBase, Slider, styled, Typography } from "@mui/material"
 import DashboardHeader from "../shared/dashboardHeader"
 import { makeStyles } from '@mui/styles';
 import Image from "next/image";
@@ -19,6 +20,8 @@ import r1 from '../../icons/r1.svg'
 import r2 from '../../icons/r2.svg'
 import AddressCopy from "@/theme/components/addressCopy";
 import linkbtnimg from '../../icons/linkbtnimg.svg'
+import Refer from "./refer";
+import { useState } from "react";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -54,7 +57,7 @@ const useStyles = makeStyles({
     },
     step__two_box: {
         display: 'flex',
-        alignItems: 'end',
+        alignItems: 'center',
         justifyContent: 'space-between',
         padding: '1rem',
         '@media(max-width : 1200px)':{
@@ -196,6 +199,53 @@ const useStyles = makeStyles({
         '@media(max-width : 600px)':{
             display:'none'
         }
+    },
+    sliderBox:{
+        width: '550px',
+        '& .MuiSlider-root': {
+          backgroundColor: '#fff !important',
+          padding: '16px',
+        },
+        '& .MuiSlider-rail': {
+          background: 'linear-gradient(90deg, #080808, #00FFFF)',
+          padding: '12px',
+        },
+        '& .MuiSlider-track': {
+          background: 'linear-gradient(0deg, #fff, #fff)',
+        },
+        '& .MuiSlider-thumb': {
+          background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
+          padding: '20px',
+        },
+        '@media(max-width : 1200px)':{
+            width: '400px',
+            '@media(max-width : 900px)':{
+            width: '350px',
+            '@media(max-width : 900px)':{
+                width: '300px',
+            }
+        }
+        }
+    },
+    sliderBox2:{
+        
+        '& .MuiSlider-root': {
+          backgroundColor: '#fff !important',
+          padding: '24px',
+        },
+        '& .MuiSlider-rail': {
+          background: 'linear-gradient(90deg, #080808, #00FFFF)',
+          padding: '20px',
+        },
+        '& .MuiSlider-track': {
+          background: 'linear-gradient(0deg, #fff, #fff)',
+        },
+        '& .MuiSlider-thumb': {
+          background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
+          padding: '24px',
+        },
+         
+         
     }
 
 });
@@ -219,8 +269,21 @@ const Box__list = [
     },
 ]
 
+ 
+
 const Dsboard = () => {
     const classes = useStyles();
+    const [value, setValue] = useState<number[]>([10,]);
+
+    const [value2, setValue2] = useState<number[]>([98,]);
+
+    const handleChange = (event: Event, newValue: number | number[]) => {
+        setValue(newValue as number[]);
+    };
+
+    const handleChange2 = (event: Event, newValue: number | number[]) => {
+        setValue2(newValue as number[]);
+    };
     return (
         <>
            <Box>
@@ -241,15 +304,38 @@ const Dsboard = () => {
 
                         <Box className={classes.box__logo}>
                             <Image src={rmesta} alt={""} />
-                            <Typography>Ramestta</Typography>
+                            <Typography color={'#fff'}>Ramestta</Typography>
                         </Box>
 
-                        <Box >
-                            <Image className={classes.sldr} src={slider1} alt={""} />
-                        </Box>
+                        <Box sx={{
+                     
+                    
+                    marginBottom: '1rem'
+                }}>
+                     <Box sx={{textAlign:'center', marginBottom:1}}><Typography fontFamily={'Bruce Forever!important'} color={'#00ffff'}>{value}%</Typography></Box>
+                    <Slider
+                        value={value}
+                        onChange={handleChange}
+                        aria-labelledby="range-slider"
+                        min={0}
+                        max={100}
+                        className={classes.sliderBox}
+                        sx={{
+                            backgroundColor: '#101012',
+                            border: '1px solid #1D1D20',
+                            borderRadius: '30px',
+                            padding:'10px 10px 10px 0px',
+                            '&.Mui-active': {
+                                boxShadow: '0 0 0 14px rgba(0, 0, 255, 0.16)', // Change this to your desired active color
+                            },
+                        }}
+                    />
+                   
+
+                </Box>
 
                         <Box className={classes.box__logo}>
-                            <Typography>Mumblechat</Typography>
+                            <Typography color={'#fff'}>Mumblechat</Typography>
                             <Image src={shield} alt={""} width={60} />
                         </Box>
                     </Box>
@@ -262,7 +348,7 @@ const Dsboard = () => {
                                 <Box className={classes.list___bx}>
                                     <Image src={item.image} alt={""} />
                                     <Text text={item.title} />
-                                    <Typography fontWeight={500} variant="h4">{item.data}</Typography>
+                                    <Typography color={'#fff'} fontWeight={500} variant="h4">{item.data}</Typography>
                                 </Box>
                             </Grid>
                         ))}
@@ -272,12 +358,12 @@ const Dsboard = () => {
 
                 <Box className={classes.step__three}>
                     <Box className={classes.coin_hding}>
-                        <Typography variant="h5">Buy Coins</Typography>
+                        <Typography variant="h5" color={'#fff'}>Buy Coins</Typography>
                     </Box>
                     <Box className={classes.middleBox}>
 
                         <Box textAlign={'center'} mt={3}>
-                            <Typography>  <Typography component={'span'}>Private Sale</Typography></Typography>
+                            <Typography>  <Typography component={'span'} color={'#fff'}>Private Sale</Typography></Typography>
                         </Box>
 
                         <Box className={classes.currentsale}>
@@ -294,17 +380,34 @@ const Dsboard = () => {
                             </Box>
                         </Box>
 
-                        <Box mt={3} mb={0.5}>
-                            <Image className={classes.slider__img} src={slider2} alt={""} />
+                        <Box mt={3} mb={0.5} sx={{position:'relative'}}>
+                        <Box sx={{textAlign:'center', marginBottom:1,position:'absolute',left:10,top:1,zIndex:'1'}}><Typography   color={'#fff'}> Remaining:{value2}M</Typography></Box>
+                        <Slider
+                        value={value2}
+                        onChange={handleChange2}
+                        aria-labelledby="range-slider"
+                        min={0}
+                        max={100}
+                        className={classes.sliderBox2}
+                        sx={{
+                            backgroundColor: '#101012',
+                            border: '1px solid #1D1D20',
+                            borderRadius: '30px',
+                            padding:'10px 10px 10px 0px',
+                            '&.Mui-active': {
+                                boxShadow: '0 0 0 14px rgba(0, 0, 255, 0.16)', // Change this to your desired active color
+                            },
+                        }}
+                    />
                         </Box>
                         <Box className={classes.currentsale2}>
-                            <Typography variant="h6" fontWeight={500}>0.05 USDT = 1 MMCT</Typography>
-                            <Typography variant="h6" fontWeight={500}>Pre-Sale: 0.1 USDT</Typography>
+                            <Typography variant="h6" fontWeight={500} color={'#fff'}>0.05 USDT = 1 MMCT</Typography>
+                            <Typography variant="h6" fontWeight={500} color={'#fff'}>Pre-Sale: 0.1 USDT</Typography>
                         </Box>
 
                         <Box className={classes.rama__log}>
                             <Image src={rmesta} alt={""} />
-                            <Typography variant="h5" fontWeight={500}>RAMA</Typography>
+                            <Typography variant="h5" fontWeight={500} color={'#fff'}>RAMA</Typography>
                         </Box>
                         <Box className={classes.max_btn__wrap}>
                             <InputBase
@@ -318,7 +421,7 @@ const Dsboard = () => {
                                     }
                                 }}
                                 fullWidth
-                                placeholder={'Enter Amount'}
+                                placeholder={'Enter Amount in RAMA'}
                                 type={''}
                             />
                             <Link className={classes.max_btn} href={""}>Max</Link>
@@ -333,46 +436,7 @@ const Dsboard = () => {
                 </Box>
 
 
-                <Box>
-                    <Grid container spacing={2} mt={1}>
-                        <Grid item lg={5} md={5} sm={12} xs={12}>
-                            <Box className={classes.step__four}>
-                                <Typography color={'#999'}>YOUR LAST TRANSACTIONS</Typography>
-                                <Typography color={'#fff'}>There are no finalized transactions yet.</Typography>
-                            </Box>
-
-                        </Grid>
-                        <Grid item lg={7} md={7} sm={12} xs={12}>
-                            <Box className={classes.step__four2}>
-                                <Box className={classes.referral}>
-                                    <Box>
-                                        <Typography color={'#999'}>YOUR REFERRALS</Typography>
-                                        <Typography color={'#fff'} variant="h4">0</Typography>
-                                    </Box>
-                                    <Box>
-                                        <Image src={r1} alt={""} />
-                                    </Box>
-                                </Box>
-
-                                <Box className={classes.referral}>
-                                    <Box>
-                                        <Typography color={'#999'}>YOUR REFERRAL EARNINGS</Typography>
-                                        <Typography color={'#fff'} variant="h4">0</Typography>
-                                    </Box>
-                                    <Box>
-                                        <Image src={r2} alt={""} />
-                                    </Box>
-                                </Box>
-
-                                <Box className={classes.ref__link}>
-                                    <AddressCopy text={"0x7413b59f86635414b5ff609662eb92f7bf202ae6"} address={"https://ico.dashboard.mumblechat.com/?ref=0x7..ae6"} />
-                                    <Link href={"#"}><Image src={linkbtnimg} alt={""} /></Link>
-                                </Box>
-
-                            </Box>
-                        </Grid>
-                    </Grid>
-                </Box>
+                <Refer/>
 
             </Box>
 

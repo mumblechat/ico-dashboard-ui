@@ -223,7 +223,7 @@ function Roadmap() {
                                     </Box>
                                     <Box>
 
-                                        <Typography variant="h5">{item.title}</Typography>
+                                        <Typography variant="h5" color={'#fff'}>{item.title}</Typography>
                                     </Box>
                                 </Box>
                                 <Box className={classes.box_text_wrap}>

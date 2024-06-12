@@ -47,7 +47,7 @@ const Platform = () => {
                         margin: '1.5rem auto 1.5rem auto', 
                     }
       }} />
-                <Grid container spacing={2}>
+                <Grid container spacing={2} color={'#fff'}>
                     <Rewards reward_hding={'Mobile Payment Make Easy'} reward_text={'Add new, trending and rare artwork to your collection.'} Image_r={features_img01} />
                     <Rewards reward_hding={'Lifetime Free Transaction'} reward_text={'Add new, trending and rare artwork to your collection.'} Image_r={features_img02} />
                     <Rewards reward_hding={'Protect the Identity'} reward_text={'Add new, trending and rare artwork to your collection.'} Image_r={features_img03} />

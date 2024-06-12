@@ -1,4 +1,5 @@
-import Calculatorcmp from "@/ui/calculator/calculatorcmp"
+
+import Profilecmp from "@/ui/profile/profilecmp"
 
 
  
@@ -6,7 +7,7 @@ import Calculatorcmp from "@/ui/calculator/calculatorcmp"
 const Profile = () => {
     return (
         <>
-            <Calculatorcmp/>
+            <Profilecmp/>
         </>
     )
 }

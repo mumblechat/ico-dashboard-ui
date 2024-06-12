@@ -83,16 +83,16 @@ const Distribute = () => {
 
                         <Box component={'ul'}>
                             <Box className={classes.listItem} component={'li'}>
-                                <Typography className={classes.round}>1</Typography>
-                                <Typography>Symbol: RAMA</Typography>
+                                <Typography className={classes.round} color={'#fff'}>1</Typography>
+                                <Typography color={'#fff'}>Symbol: RAMA</Typography>
                             </Box>
                             <Box className={classes.listItem} component={'li'}>
-                                <Typography className={classes.round}>1</Typography>
-                                <Typography>Initial Value : 1 RAMA = 3.04 MMCT</Typography>
+                                <Typography className={classes.round} color={'#fff'}>1</Typography>
+                                <Typography color={'#fff'}>Initial Value : 1 RAMA = 3.04 MMCT</Typography>
                             </Box>
                             <Box className={classes.listItem} component={'li'}>
-                                <Typography className={classes.round}>1</Typography>
-                                <Typography>Type : RAMA20</Typography>
+                                <Typography className={classes.round} color={'#fff'}>1</Typography>
+                                <Typography color={'#fff'}>Type : RAMA20</Typography>
                             </Box>
                         </Box>
                     </Box>

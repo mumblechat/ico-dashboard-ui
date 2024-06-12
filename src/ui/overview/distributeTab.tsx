@@ -130,8 +130,8 @@ export default function DistributeTab() {
                                         zIndex: '1',
                                     }
                                 }} value={value} onChange={handleChange} aria-label="basic tabs example">
-                                <Tab sx={{ textTransform: 'capitalize', color: theme.palette.text.primary }} label="Funding Allocation" {...a11yProps(0)} />
-                                <Tab sx={{ textTransform: 'capitalize', color: theme.palette.text.primary }} label="Token Distribution" {...a11yProps(1)} />
+                                <Tab sx={{ textTransform: 'capitalize', color: '#fff' }} label="Funding Allocation" {...a11yProps(0)} />
+                                <Tab sx={{ textTransform: 'capitalize', color: '#fff' }} label="Token Distribution" {...a11yProps(1)} />
 
 
                             </Tabs>
@@ -145,30 +145,30 @@ export default function DistributeTab() {
                             <Box component={'ul'}>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#02CACA'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>ICO (40%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>ICO (40%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#116262'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>Community Rewards (35%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Community Rewards (35%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#136F84'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>Future Development & Operations (15%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Future Development & Operations (15%)</Typography>
                                 </Box>
                             </Box>
 
                             <Box component={'ul'}>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#00A3FF'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>Team & Advisors (5%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Team & Advisors (5%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#033356'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>Ecosystem Growth (2.5%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Ecosystem Growth (2.5%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#55558A'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>Liquidity Provision (2.5%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Liquidity Provision (2.5%)</Typography>
                                 </Box>
                             </Box>
                         </Box>
@@ -180,30 +180,30 @@ export default function DistributeTab() {
                             <Box component={'ul'}>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#02CACA'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>ICO (40%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>ICO (40%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#116262'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>Community Rewards (35%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Community Rewards (35%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#136F84'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>Future Development & Operations (15%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Future Development & Operations (15%)</Typography>
                                 </Box>
                             </Box>
 
                             <Box component={'ul'}>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#00A3FF'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>Team & Advisors (5%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Team & Advisors (5%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#033356'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>Ecosystem Growth (2.5%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Ecosystem Growth (2.5%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#55558A'} className={classes.round}></Typography>
-                                    <Typography fontSize={14}>Liquidity Provision (2.5%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Liquidity Provision (2.5%)</Typography>
                                 </Box>
                             </Box>
                         </Box>
