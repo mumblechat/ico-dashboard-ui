@@ -163,10 +163,10 @@ const Countribution = () => {
                         <Grid item lg={6} md={6} sm={12} xs={12}>
                             <Box>
                                 <Box className={classes.btnWrap}>
-                                    <Link className={classes.btn} href={""}>
+                                    <Link className={classes.btn} href={"/dashboard"}>
                                         <Typography>Purchase a Token</Typography>
                                     </Link>
-                                    <Link className={classes.btn2} href={""}>
+                                    <Link className={classes.btn2} href={"ICO MMCT Whitepaper.pdf"} target="_blank">
                                         <Typography>Read White Paper</Typography>
                                     </Link>
                                 </Box>

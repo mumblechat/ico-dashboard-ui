@@ -26,8 +26,8 @@ import { useState } from "react";
 const useStyles = makeStyles({
     mainDiv: {
         margin: '40px 40px 20px 40px',
-         
-        '@media(max-width : 1200px)':{
+
+        '@media(max-width : 1200px)': {
             margin: '20px 20px 20px 20px',
         }
     },
@@ -42,9 +42,9 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        '@media(max-width : 600px)':{
-            flexWrap:'wrap',
-            justifyContent:'center'
+        '@media(max-width : 600px)': {
+            flexWrap: 'wrap',
+            justifyContent: 'center'
         }
     },
     Top_hding: {
@@ -53,20 +53,27 @@ const useStyles = makeStyles({
     box__logo: {
         display: 'flex',
         alignItems: 'center',
-        gap: '10px'
+        gap: '10px',
+        justifyContent:'left'
+    },
+    box__logo2: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        justifyContent:'end'
     },
     step__two_box: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '1rem',
-        '@media(max-width : 1200px)':{
-            gap:'1.5rem',
-            '@media(max-width : 600px)':{
-            flexWrap:'wrap',
-            justifyContent:'center',
-            gap:'0.5rem',
-        }
+        '@media(max-width : 1200px)': {
+            gap: '1.5rem',
+            '@media(max-width : 600px)': {
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                gap: '0.5rem',
+            }
         }
     },
 
@@ -79,7 +86,7 @@ const useStyles = makeStyles({
         padding: '1rem',
         borderRadius: '12px',
         textAlign: 'center',
-        height:'100%'
+        height: '100%'
     },
     step__three: {
         border: '1px solid #1D1D20',
@@ -99,9 +106,9 @@ const useStyles = makeStyles({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: '2rem',
-        '@media(max-width : 600px)':{
-            flexWrap:'wrap',
-            justifyContent:'center'
+        '@media(max-width : 600px)': {
+            flexWrap: 'wrap',
+            justifyContent: 'center'
         }
     },
     slider__img: {
@@ -161,8 +168,8 @@ const useStyles = makeStyles({
     },
     middleBox: {
         padding: '0rem 2rem 1rem 2rem',
-       '@media(max-width : 600px)':{
-            padding:'0rem 1rem 1rem 1rem'
+        '@media(max-width : 600px)': {
+            padding: '0rem 1rem 1rem 1rem'
         }
     },
     step__four: {
@@ -192,60 +199,52 @@ const useStyles = makeStyles({
         alignItems: 'center',
         gap: 1
     },
-    sldr:{
-        width:'100%'
+    sldr: {
+        width: '100%'
     },
-    coinlinewrp:{
-        '@media(max-width : 600px)':{
-            display:'none'
+    coinlinewrp: {
+        '@media(max-width : 600px)': {
+            display: 'none'
         }
     },
-    sliderBox:{
-        width: '550px',
-        '& .MuiSlider-root': {
-          backgroundColor: '#fff !important',
-          padding: '16px',
-        },
-        '& .MuiSlider-rail': {
-          background: 'linear-gradient(90deg, #080808, #00FFFF)',
-          padding: '12px',
-        },
-        '& .MuiSlider-track': {
-          background: 'linear-gradient(0deg, #fff, #fff)',
-        },
-        '& .MuiSlider-thumb': {
-          background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
-          padding: '20px',
-        },
-        '@media(max-width : 1200px)':{
-            width: '400px',
-            '@media(max-width : 900px)':{
-            width: '350px',
-            '@media(max-width : 900px)':{
-                width: '300px',
-            }
-        }
-        }
-    },
-    sliderBox2:{
+    sliderBox: {
         
         '& .MuiSlider-root': {
-          backgroundColor: '#fff !important',
-          padding: '24px',
+            backgroundColor: '#fff !important',
+            padding: '16px',
         },
         '& .MuiSlider-rail': {
-          background: 'linear-gradient(90deg, #080808, #00FFFF)',
-          padding: '20px',
+            background: 'none',
+            padding: '12px',
         },
         '& .MuiSlider-track': {
-          background: 'linear-gradient(0deg, #fff, #fff)',
+            background: 'linear-gradient(0deg, #fff, #fff)',
         },
         '& .MuiSlider-thumb': {
-          background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
-          padding: '24px',
+            background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
+            padding: '20px',
         },
          
-         
+    },
+    sliderBox2: {
+
+        '& .MuiSlider-root': {
+            backgroundColor: '#fff !important',
+            padding: '24px',
+        },
+        '& .MuiSlider-rail': {
+            background: 'none',
+            padding: '20px',
+        },
+        '& .MuiSlider-track': {
+            background: 'linear-gradient(0deg, #fff, #fff)',
+        },
+        '& .MuiSlider-thumb': {
+            background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
+            padding: '24px',
+        },
+
+
     }
 
 });
@@ -269,13 +268,13 @@ const Box__list = [
     },
 ]
 
- 
+
 
 const Dsboard = () => {
     const classes = useStyles();
     const [value, setValue] = useState<number[]>([10,]);
 
-    const [value2, setValue2] = useState<number[]>([98,]);
+    const [value2, setValue2] = useState<number[]>([90,]);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number[]);
@@ -286,9 +285,9 @@ const Dsboard = () => {
     };
     return (
         <>
-           <Box>
-           
-           </Box>
+            <Box>
+
+            </Box>
             <Box className={classes.mainDiv}>
                 <Box className={classes.step__one}>
                     <Box className={classes.step__one_box}>
@@ -300,45 +299,57 @@ const Dsboard = () => {
                         <Box><Image src={dright} alt={""} /></Box>
                     </Box>
 
-                    <Box className={classes.step__two_box}>
+                    <Box sx={{padding:'0rem 0.5rem', marginTop:'1rem'}}>
+                    <Grid container spacing={2}>
+                        <Grid item lg={2} md={2.2} sm={12} xs={12} alignSelf={'center'}>
+                            <Box className={classes.box__logo}>
+                                <Image src={rmesta} alt={""} />
+                                <Typography color={'#fff'}>Ramestta</Typography>
+                            </Box>
+                        </Grid>
+                        <Grid item lg={7} md={7} sm={12} xs={12}>
+                            <Box sx={{
 
-                        <Box className={classes.box__logo}>
-                            <Image src={rmesta} alt={""} />
-                            <Typography color={'#fff'}>Ramestta</Typography>
-                        </Box>
 
-                        <Box sx={{
-                     
-                    
-                    marginBottom: '1rem'
-                }}>
-                     <Box sx={{textAlign:'center', marginBottom:1}}><Typography fontFamily={'Bruce Forever!important'} color={'#00ffff'}>{value}%</Typography></Box>
-                    <Slider
-                        value={value}
-                        onChange={handleChange}
-                        aria-labelledby="range-slider"
-                        min={0}
-                        max={100}
-                        className={classes.sliderBox}
-                        sx={{
-                            backgroundColor: '#101012',
-                            border: '1px solid #1D1D20',
-                            borderRadius: '30px',
-                            padding:'10px 10px 10px 0px',
-                            '&.Mui-active': {
-                                boxShadow: '0 0 0 14px rgba(0, 0, 255, 0.16)', // Change this to your desired active color
-                            },
-                        }}
-                    />
-                   
+                                marginBottom: '1rem'
+                            }}>
+                                <Box sx={{ textAlign: 'center', marginBottom: 1 }}><Typography fontFamily={'Bruce Forever!important'} color={'#00ffff'}>{value}%</Typography></Box>
+                                <Slider
+                                    value={value}
+                                    onChange={handleChange}
+                                    aria-labelledby="range-slider"
+                                    min={0}
+                                    max={100}
+                                    className={classes.sliderBox}
+                                    sx={{
+                                        background: 'linear-gradient(90deg, #080808, #00FFFF)',
+                                        border: '1px solid #1D1D20',
+                                        borderRadius: '30px',
+                                        padding: '10px 10px 10px 0px',
+                                        '&.Mui-active': {
+                                            boxShadow: '0 0 0 14px rgba(0, 0, 255, 0.16)', // Change this to your desired active color
+                                        },
+                                    }}
+                                />
 
-                </Box>
 
-                        <Box className={classes.box__logo}>
-                            <Typography color={'#fff'}>Mumblechat</Typography>
-                            <Image src={shield} alt={""} width={60} />
-                        </Box>
+                            </Box>
+                        </Grid>
+                        <Grid item lg={3} md={2.8} sm={12} xs={12} alignSelf={'center'}>
+                            <Box className={classes.box__logo2}>
+                                <Typography color={'#fff'}>Mumblechat</Typography>
+                                <Image src={shield} alt={""} width={60} />
+                            </Box>
+                        </Grid>
+                    </Grid>
                     </Box>
+
+
+
+
+
+
+
                 </Box>
 
                 <Box className={classes.step__two}>
@@ -380,25 +391,25 @@ const Dsboard = () => {
                             </Box>
                         </Box>
 
-                        <Box mt={3} mb={0.5} sx={{position:'relative'}}>
-                        <Box sx={{textAlign:'center', marginBottom:1,position:'absolute',left:10,top:1,zIndex:'1'}}><Typography   color={'#fff'}> Remaining:{value2}M</Typography></Box>
-                        <Slider
-                        value={value2}
-                        onChange={handleChange2}
-                        aria-labelledby="range-slider"
-                        min={0}
-                        max={100}
-                        className={classes.sliderBox2}
-                        sx={{
-                            backgroundColor: '#101012',
-                            border: '1px solid #1D1D20',
-                            borderRadius: '30px',
-                            padding:'10px 10px 10px 0px',
-                            '&.Mui-active': {
-                                boxShadow: '0 0 0 14px rgba(0, 0, 255, 0.16)', // Change this to your desired active color
-                            },
-                        }}
-                    />
+                        <Box mt={3} mb={0.5} sx={{ position: 'relative' }}>
+                            <Box sx={{ textAlign: 'center', marginBottom: 1, position: 'absolute', left: 10, top: '2px', zIndex: '1','@media(max-width : 1200px)':{top:'9px'} }}><Typography color={'#fff'}> Remaining:{value2}M</Typography></Box>
+                            <Slider
+                                value={value2}
+                                onChange={handleChange2}
+                                aria-labelledby="range-slider"
+                                min={0}
+                                max={100}
+                                className={classes.sliderBox2}
+                                sx={{
+                                    background: 'linear-gradient(90deg, #080808, #00FFFF)',
+                                    border: '1px solid #1D1D20',
+                                    borderRadius: '30px',
+                                    padding: '10px 10px 10px 0px',
+                                    '&.Mui-active': {
+                                        boxShadow: '0 0 0 14px rgba(0, 0, 255, 0.16)', // Change this to your desired active color
+                                    },
+                                }}
+                            />
                         </Box>
                         <Box className={classes.currentsale2}>
                             <Typography variant="h6" fontWeight={500} color={'#fff'}>0.05 USDT = 1 MMCT</Typography>
@@ -436,7 +447,7 @@ const Dsboard = () => {
                 </Box>
 
 
-                <Refer/>
+                <Refer />
 
             </Box>
 
