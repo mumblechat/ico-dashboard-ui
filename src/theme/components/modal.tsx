@@ -13,6 +13,9 @@ import Heading from './heading';
 import close from '../../icons/close.svg'
 import AddressReward from './addressReward';
 import { useAccount } from 'wagmi';
+import instagram from '../../icons/instagram.png'
+import discord from '../../icons/discord.png'
+import github from '../../icons/github.png'
 
 import {
     EmailShareButton,
@@ -45,11 +48,12 @@ import {
 
 
 const BoxSocial = styled(Box)(({ theme }) => ({
-   display:'flex',
-   gap:'10px',
-   justifyContent:'center',
-   flexWrap:'wrap',
-   marginTop:'2rem'
+    display: 'flex',
+    gap: '10px',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    marginTop: '2rem',
+    padding:'0rem 2rem'
 }));
 
 export default function Modal() {
@@ -111,12 +115,9 @@ export default function Modal() {
                 </DialogContent>
                 <AddressReward text={address} address={"https://ico.dashboard.mumblechat.com/?ref=0x7..ae6"} />
                 <BoxSocial>
-                 
-                    <FacebookShareButton
-                        url="https://www.npmjs.com/package/react-copy-to-clipboard"
-                    >
-                        <FacebookIcon size={32} round={true} />
-                    </FacebookShareButton>
+
+
+                    <Link href={'https://x.com/mumblchat'} target='_blank'><XIcon size={32} round={true}/></Link>
 
                     <WhatsappShareButton
                         url="https://www.npmjs.com/package/react-copy-to-clipboard"
@@ -124,18 +125,30 @@ export default function Modal() {
                         <WhatsappIcon size={32} round={true} />
                     </WhatsappShareButton>
 
+                    <Link href={'https://www.instagram.com/mumblechat/'} target='_blank'><Image src={instagram} alt={''} width={32}/></Link>
+
+                    <FacebookShareButton
+                        url="https://www.facebook.com/MumbleChat/"
+                    >
+                        <FacebookIcon size={32} round={true} />
+                    </FacebookShareButton>
+
                     <LinkedinShareButton
-                        url="https://www.npmjs.com/package/react-copy-to-clipboard"
+                        url="https://www.linkedin.com/company/mumblechat/about/"
                     >
                         <LinkedinIcon size={32} round={true} />
                     </LinkedinShareButton>
 
-                     
+
                     <TelegramShareButton
-                        url="https://www.npmjs.com/package/react-copy-to-clipboard"
+                        url="https://t.me/mumblechat"
                     >
                         <TelegramIcon size={32} round={true} />
                     </TelegramShareButton>
+
+
+                    <Link href={'/'} target='_blank'><Image src={discord} alt={''} width={32}/></Link>
+                    <Link href={'/'} target='_blank'><Image src={github} alt={''} width={32}/></Link>
                     
                 </BoxSocial>
             </Dialog>

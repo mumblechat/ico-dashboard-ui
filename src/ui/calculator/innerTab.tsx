@@ -1,4 +1,4 @@
-import { Box, InputBase, Typography } from "@mui/material"
+import { Box, InputBase, MenuItem, styled, TextField, Typography } from "@mui/material"
 import { makeStyles } from '@mui/styles';
 import Link from "next/link";
 import Slidercoin from "./slidercoin";
@@ -69,11 +69,79 @@ const useStyles = makeStyles({
     }
 });
 
+const StyledBox = styled('form')(({ theme }) => ({
+
+}));
+
+const currencies = [
+    {
+        value: 'USD',
+        label: 'Private Sale',
+    },
+    {
+        value: 'EUR',
+        label: 'Pre-Sale',
+    },
+    {
+        value: 'BTC',
+        label: 'Public Sale',
+    },
+     
+     
+];
+
 const InnerTab = () => {
     const classes = useStyles();
+
+    
     return (
         <>
             <Box>
+            <StyledBox
+                    sx={{
+                        margin:'1rem 0rem',
+                        '@media(max-width : 600px)': {
+                            minWidth: '100%'
+                        },
+                    }}
+                    noValidate
+                    autoComplete="off"
+                >
+                    <TextField
+                        id="outlined-select-currency"
+                        select
+                        defaultValue="EUR"
+                        sx={{
+                            '@media(max-width : 600px)': {
+                                width: '100%'
+                            },
+                            color: '#000',
+                            '& .MuiOutlinedInput-root': {
+                                borderColor: '#000',
+                                border: '#000',
+                                 
+                                backgroundColor: "#00ffff",
+                                    color: '#000',
+                                    borderRadius: '6px',
+                            },
+
+                            '&:hover .MuiOutlinedInput-root': {
+                                borderColor: '#000',
+                            },
+                            '&.Mui-focused .MuiOutlinedInput-root': {
+                                borderColor: '#000',
+                            },
+                            '& .MuiSvgIcon-root': { color: '#000' },
+
+                        }}
+                    >
+                        {currencies.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </StyledBox>
                 <Box className={classes.max_btn__wrap}>
                     <InputBase
                         sx={{
@@ -98,13 +166,13 @@ const InnerTab = () => {
                 <Box className={classes.current__main__wrap}>
                     <Box className={classes.presale}>
                         <Box>
-                            <Typography>Private Sale 17</Typography>
-                            <Typography fontSize={20} fontWeight={500}>$0.011</Typography>
+                            <Typography>Private Sale</Typography>
+                            <Typography fontSize={20} fontWeight={500}>$3.04</Typography>
                         </Box>
                         <Box className={classes.line} />
                         <Box>
                             <Typography>Current Price</Typography>
-                            <Typography fontSize={20} fontWeight={500}>$0.011</Typography>
+                            <Typography fontSize={20} fontWeight={500}>$3.04</Typography>
                         </Box>
                     </Box>
 

@@ -8,6 +8,7 @@ import m2 from '../../icons/m2.svg'
 import m3 from '../../icons/m3.svg'
 import m4 from '../../icons/m4.svg'
 import Image from "next/image";
+import InnerTab from "./innerTab";
 
 const useStyles = makeStyles({
     coin__lunch: {
@@ -112,7 +113,7 @@ const Miningcalculate = () => {
               </Box>
 
 
-                <CalculateTab />
+                <InnerTab />
             </Box>
         </>
     )

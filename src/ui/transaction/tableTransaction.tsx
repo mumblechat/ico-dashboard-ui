@@ -78,7 +78,7 @@ const TableTransaction = () => {
         <>
             <Box>
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650, backgroundColor: '#080808', borderRadius: '12px' }} aria-label="simple table">
+                    <Table sx={{ minWidth: 650, backgroundColor: '#080808', borderRadius: '0px' }} aria-label="simple table">
 
                         <TableBody>
 

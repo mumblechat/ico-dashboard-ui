@@ -1,6 +1,7 @@
 import { Box, InputBase, Typography } from "@mui/material"
 import { makeStyles } from '@mui/styles';
 import CalculateTab from "./calculateTab";
+import InnerTab from "./innerTab";
 
 const useStyles = makeStyles({
     coin__lunch: {
@@ -73,7 +74,7 @@ const CoinCalculate = () => {
                     </Box>
                 </Box>
 
-                <CalculateTab/>
+                <InnerTab />
             </Box>
         </>
     )

@@ -3,11 +3,7 @@ import { Box, Grid } from "@mui/material";
 import Sidebardb from "../dashboard/sidebardb";
 import Dsboard from "../dashboard/dsboard";
 import DashboardHeader from "../shared/dashboardHeader";
-import ComingSoon from "./comingSoon";
-import Leadeboard from "./leadeboard";
- 
- 
- 
+import Earning from "./earning";
 
 
 
@@ -22,7 +18,7 @@ import Leadeboard from "./leadeboard";
 
 
 
-const Leaderboardcmp = () => {
+const Earningcmp = () => {
 
 
     return (
@@ -39,7 +35,7 @@ const Leaderboardcmp = () => {
                     </Grid>
                     <Grid item lg={9.5} md={9.5} sm={12} xs={12}>
                         <DashboardHeader />
-                      <Leadeboard/>
+                        <Earning/>
                     </Grid>
                 </Grid>
             </Box>
@@ -49,4 +45,4 @@ const Leaderboardcmp = () => {
 }
 
 
-export default Leaderboardcmp
+export default Earningcmp

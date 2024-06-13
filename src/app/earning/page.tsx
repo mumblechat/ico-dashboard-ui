@@ -1,4 +1,4 @@
-import Leaderboardcmp from "@/ui/leaderboard/leaderboardcmp"
+import Earningcmp from "@/ui/earning/earningcmp"
 
 
  
@@ -6,7 +6,7 @@ import Leaderboardcmp from "@/ui/leaderboard/leaderboardcmp"
 const Earning = () => {
     return (
         <>
-            <Leaderboardcmp/>
+            <Earningcmp/>
         </>
     )
 }
