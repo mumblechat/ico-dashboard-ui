@@ -53,7 +53,7 @@ const useStyles = makeStyles({
 const Bnr = () => {
     const classes = useStyles();
 
-    const targetDate = new Date(1718364600*1000);
+    const targetDate = new Date(1718637605*1000);
     return (
         <>
             <Box className={classes.dotBox} mt={3}>
