@@ -83,7 +83,7 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
 
   return (
     <Box className={classes.countdownContainer}>
-      {(timeLeft.seconds!==0 && timeLeft.minutes!==0 && timeLeft.hours!==0 && timeLeft.days!==0) ? (
+      {(targetDate!==undefined && timeLeft.seconds!==0 && timeLeft.minutes!==0 && timeLeft.hours!==0 && timeLeft.days!==0) ? (
         <Box className={classes.paper}>
           <Typography className={classes.timerText} variant="h4">
             {timeLeft.days}

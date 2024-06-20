@@ -44,14 +44,14 @@ export const config = getDefaultConfig({
     },
   ],
   chains: [
-    ramestta,
-    pingaksha
+    pingaksha,
+    ramestta
   ],
   ssr: false,
   multiInjectedProviderDiscovery: false, 
   transports: {
-    [ramestta.id]: http('https://blockchain.ramestta.com'),
-    [pingaksha.id]: http('https://testnet.ramestta.com')
+    [pingaksha.id]: http('https://testnet.ramestta.com'),
+    [ramestta.id]: http('https://blockchain.ramestta.com')
   },
 });
 
