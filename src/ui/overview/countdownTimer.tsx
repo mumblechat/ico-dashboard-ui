@@ -9,42 +9,42 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop:'2rem'
+    marginTop: '2rem'
 
   },
   paper: {
     padding: '20px',
     textAlign: 'center',
     color: '#fff',
-    display:'flex',
-    gap:'1rem',
-    alignItems:'center',
-    '@media(max-width : 1200px)':{
+    display: 'flex',
+    gap: '1rem',
+    alignItems: 'center',
+    '@media(max-width : 1200px)': {
       padding: '10px',
-      gap:'1rem',
-      flexWrap:'wrap',
-      justifyContent:'space-between'
-   }
-    
+      gap: '1rem',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between'
+    }
+
   },
   timerText: {
     fontSize: '2rem',
     backgroundColor: '#101012',
-    border:'1px solid #049192',
-    color:'#00FFFF',
-    padding:'16px 24px',
-    borderRadius:'12px',
-    width:'120px',
-    '@media(max-width : 1200px)':{
+    border: '1px solid #049192',
+    color: '#00FFFF',
+    padding: '16px 24px',
+    borderRadius: '12px',
+    width: '120px',
+    '@media(max-width : 1200px)': {
       width: '212px',
       padding: '16px 16px',
-      '@media(max-width : 900px)':{
+      '@media(max-width : 900px)': {
         width: '155px',
-        '@media(max-width : 900px)':{
-        width: '122px',
-       }
-       }
-   }
+        '@media(max-width : 900px)': {
+          width: '122px',
+        }
+      }
+    }
   },
 });
 
@@ -83,25 +83,51 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
 
   return (
     <Box className={classes.countdownContainer}>
-      <Box className={classes.paper}>
+      {(timeLeft.seconds!==0 && timeLeft.minutes!==0 && timeLeft.hours!==0 && timeLeft.days!==0) ? (
+        <Box className={classes.paper}>
+          <Typography className={classes.timerText} variant="h4">
+            {timeLeft.days}
+            <Typography>days</Typography>
+          </Typography>
+          <Typography sx={{ '@media(max-width : 1200px)': { display: 'none' } }}><Image src={dots} alt={''} /></Typography>
+          <Typography className={classes.timerText} variant="h4">{timeLeft.hours}
+            <Typography>hours</Typography>
+
+          </Typography>
+          <Typography sx={{ '@media(max-width : 1200px)': { display: 'none' } }}><Image src={dots} alt={''} /></Typography>
+          <Typography className={classes.timerText} variant="h4">{timeLeft.minutes}
+            <Typography>mins</Typography>
+          </Typography>
+          <Typography sx={{ '@media(max-width : 1200px)': { display: 'none' } }}><Image src={dots} alt={''} /></Typography>
+          <Typography className={classes.timerText} variant="h4">{timeLeft.seconds}
+            <Typography>secs</Typography>
+          </Typography>
+        </Box>
+      ) : (
+        <Box className={classes.paper}>
         <Typography className={classes.timerText} variant="h4">
-          {timeLeft.days}
-          <Typography>days</Typography>
+          {/* {timeLeft.days} */}
+          <Typography>L</Typography>
         </Typography>
-        <Typography sx={{'@media(max-width : 1200px)':{display:'none'}}}><Image src={dots} alt={''}/></Typography>
-        <Typography className={classes.timerText} variant="h4">{timeLeft.hours}
-        <Typography>hours</Typography>
-        
+        <Typography sx={{ '@media(max-width : 1200px)': { display: 'none' } }}><Image src={dots} alt={''} /></Typography>
+        <Typography className={classes.timerText} variant="h4">
+          {/* {timeLeft.hours} */}
+          <Typography>I</Typography>
+
         </Typography>
-        <Typography sx={{'@media(max-width : 1200px)':{display:'none'}}}><Image src={dots} alt={''}/></Typography>
-        <Typography className={classes.timerText} variant="h4">{timeLeft.minutes}
-        <Typography>mins</Typography>
+        <Typography sx={{ '@media(max-width : 1200px)': { display: 'none' } }}><Image src={dots} alt={''} /></Typography>
+        <Typography className={classes.timerText} variant="h4">
+          {/* {timeLeft.minutes} */}
+          <Typography>V</Typography>
         </Typography>
-        <Typography sx={{'@media(max-width : 1200px)':{display:'none'}}}><Image src={dots} alt={''}/></Typography>
-        <Typography className={classes.timerText} variant="h4">{timeLeft.seconds}
-        <Typography>secs</Typography>
+        <Typography sx={{ '@media(max-width : 1200px)': { display: 'none' } }}><Image src={dots} alt={''} /></Typography>
+        <Typography className={classes.timerText} variant="h4">
+          {/* {timeLeft.seconds} */}
+          <Typography>E</Typography>
         </Typography>
       </Box>
+      )
+      }
     </Box>
   );
 };

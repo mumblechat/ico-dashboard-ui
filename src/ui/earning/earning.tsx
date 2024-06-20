@@ -3,6 +3,13 @@ import { makeStyles } from '@mui/styles';
 import Image from "next/image";
 import Heading from "@/theme/components/heading";
 import TableEarn from "./tableEarn";
+import { useAccount, useBalance, useChainId, useReadContract } from "wagmi";
+import { Address, formatEther, zeroAddress } from "viem";
+import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
+import { mmctTokenAbi } from "@/configs/abi/mmctToken";
+import { mmctContractAddresses } from "@/configs";
+import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
+import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -44,37 +51,79 @@ const useStyles = makeStyles({
 });
 
 
-const Card = [
-    {
-        id: 1,
-        Title: 'Ramestta Wallet Balance',
-        Amount: '0',
-        data: '0.00'
-    },
-    {
-        id: 2,
-        Title: 'Your Stake',
-        Amount: '1000',
-        data: '0.00'
-    },
-    {
-        id: 3,
-        Title: 'Claimed Rewards',
-        Amount: '0.9',
-        data: '0.00'
-    },
-    {
-        id: 4,
-        Title: 'Unclaimed Rewards',
-        Amount: '00.1',
-        data: '0.00'
-    },
-]
 
 
 
 const Earning = () => {
     const classes = useStyles();
+    const { address } = useAccount()
+    const chainId = useChainId()
+    const balanceOfRama= useBalance({
+        address: address
+    })
+    const resultOfBalance = useReadContract({
+        abi: mmctTokenAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_token : mmctContractAddresses.pingaksha.mmct_token,
+        functionName: 'balanceOf',
+        args: [address as Address],
+        account: address
+    })
+
+    const resultOfUserStaked = useReadContract({
+        abi: mmctStakingAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+        functionName: 'user2Staked',
+        args: [address as Address],
+        account: zeroAddress
+    })
+
+    const resultOfUserStakedLength = useReadContract({
+        abi: mmctStakingAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+        functionName: 'totalStakedLengthForUser',
+        args: [address as Address],
+        account: zeroAddress
+    })
+
+
+    const resultOfUserStakedList = useReadContract({
+        abi: mmctStakingAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+        functionName: 'user2StakedList',
+        args: [address as Address,BigInt(0),Number(resultOfUserStakedLength?.data)>0 ?resultOfUserStakedLength.data as bigint:BigInt(1)],
+        account: zeroAddress
+    })
+    
+    // const totalUnclaimedRewards= resultOfUserStakedList?.data?.reduce((previousValue,currentValue)=> previousValue+  )
+
+    const Card = [
+        {
+            id: 1,
+            Title: 'Ramestta Wallet Balance',
+            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)))}`,
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0))) * 0.05)}`
+        },
+        {
+            id: 2,
+            Title: 'Your Stake',
+            Amount:  `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0)))}`,
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0))) * 0.05)}`
+        },
+        {
+            id: 3,
+            Title: 'Claimed Rewards',
+            Amount:  `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0)))}`,
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0))) * 0.05)}`
+        },
+        {
+            id: 4,
+            Title: 'Unclaimed Rewards',
+            Amount: `${
+               " 0.00"
+            }`,
+            data: '0.00'
+        },
+    ]
     return (
         <>
 
@@ -89,7 +138,7 @@ const Earning = () => {
                                 <Box className={classes.Card}>
                                     <Typography color={'#fff'}>{item.Title}</Typography>
                                     <Typography color={'#fff'} variant="h6">{item.Amount} MMCT</Typography>
-                                    <Typography color={'#999'}>$ {item.data}</Typography>
+                                    <Typography color={'#999'}>{item.data}</Typography>
                                 </Box>
                             </Grid>
                         ))}
@@ -97,7 +146,7 @@ const Earning = () => {
                     </Grid>
                 </Box>
                 <Box sx={{ marginTop: '1rem' }}>
-                    <TableEarn />
+                    <TableEarn resultOfUserStakedList={resultOfUserStakedList?.data} />
                 </Box>
                 </Box>
 

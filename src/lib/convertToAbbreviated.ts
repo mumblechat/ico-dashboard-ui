@@ -16,6 +16,6 @@ export const  convertToAbbreviated= (value: string | number): string => {
     } else if (numericValue >= 1_000) {
         return (numericValue / 1_000).toFixed(2).replace(/\.0$/, '') + 'K';
     } else {
-        return numericValue.toString();
+        return numericValue.toFixed(2);
     }
 }

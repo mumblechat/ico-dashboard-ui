@@ -1,10 +1,16 @@
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import mmct from '../../icons/Sheild.svg'
 import { makeStyles } from '@mui/styles';
 import Image from "next/image";
 import Link from "next/link";
 import { convertToNumber } from "@/lib/convertToNumber";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
+import shortenString from "@/lib/shortenString";
+import { useAccount, useChainId, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { Address, formatEther, zeroAddress } from "viem";
+import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
+import { formatTier, mmctContractAddresses } from "@/configs";
+import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
  
 
 const useStyles = makeStyles({
@@ -46,8 +52,11 @@ const useStyles = makeStyles({
     }
 });
 
-const TableEarn = () => {
+const TableEarn = ({resultOfUserStakedList}:{resultOfUserStakedList:any}) => {
     const classes = useStyles();
+
+    const {address} = useAccount()
+    const chainId = useChainId()
 
     const TableList = [
         {
@@ -125,6 +134,28 @@ const TableEarn = () => {
          
     ];
 
+    const Reward = ({index}:{index:number})=>{
+        const mintReward = useReadContract({
+            abi: mmctStakingAbi,
+            address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+            functionName: 'calculateMintRewards',
+            args: [address as Address,BigInt(index)],
+            account: zeroAddress
+        })
+        return(
+            <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
+            <Typography color={'#fff'}>{Number(mintReward?.data)>0?Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))).toFixed(4):'0.00'} MMCT</Typography>
+            <Typography color={'#999'}>${Number(mintReward?.data)>0?(Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))) * 0.05).toFixed(4):'0.00'}</Typography>
+           </TableCell>
+        )
+    }
+
+    const { writeContractAsync,data,isPending:isPendingClaimForWrite } = useWriteContract()
+    const {isLoading,isSuccess} = useWaitForTransactionReceipt({
+        hash: data,
+      })
+
+
     return (
         <Box>
             <TableContainer component={Paper} className={classes.tableContainer}>
@@ -141,36 +172,47 @@ const TableEarn = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {TableList.map((item, index) => (
+                        { resultOfUserStakedList?.length>0 && resultOfUserStakedList.map((item:any, index:number) => (
                             <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} component="th" scope="row">
                                     <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                                        <Image src={item.Userprofile} alt={""} width={50} />
-                                        <Typography>{item.ProfileAddress}</Typography>
+                                        <Image src={TableList[index].Userprofile} alt={""} width={50} />
+                                        <Typography>{shortenString(address as Address)}</Typography>
                                     </Box>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{convertToAbbreviated(item.stakeAmount)} MMCT</Typography>
-                                    <Typography color={'#999'}>$ {item.stakeDate}</Typography>
+                                    <Typography color={'#fff'}>{convertToAbbreviated(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0)))} MMCT</Typography>
+                                    <Typography color={'#999'}>{formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0))) * 0.05)}</Typography>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{item.tier}</Typography>
+                                    <Typography color={'#fff'}>{formatTier(Number(item.tier))}</Typography>
                                     
                                 </TableCell>
+                                <Reward index={index}/>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{item.reward} MMCT</Typography>
-                                    <Typography color={'#999'}>$ {item.rewardData}</Typography>
+                                    <Typography color={'#fff'}>{new Date(Number(item?.startTime)*1000).toLocaleString()}</Typography>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{item.startTime}</Typography>
-                                </TableCell>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{item.lastClaim}</Typography>
+                                    <Typography color={'#fff'}>{new Date(Number(item?.lastClaimTime)*1000).toLocaleString()}</Typography>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="right">
                                     <Box className={classes.stakebtn__wrp}>
-                                        <Link className={classes.stakebtn} href={""}>Claim</Link>
-                                        <Link className={classes.stakebtn} href={""}>Unstake</Link>
+                                        <Button 
+                                        disabled={
+                                            isPendingClaimForWrite || isLoading
+                                        }
+                                        className={classes.stakebtn}
+                                        onClick={async()=>{
+                                            await writeContractAsync({
+                                                abi: mmctStakingAbi,
+                                                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+                                                functionName: 'claimRewards',
+                                                args: [BigInt(index)],
+                                                account: address
+                                             })
+                                        }}
+                                        >Claim</Button>
+                                        <Button className={classes.stakebtn} >Unstake</Button>
                                     </Box>
                                 </TableCell>
                             </TableRow>

@@ -1,3 +1,4 @@
+'use client'
 import Heading from "@/theme/components/heading";
 import Text from "@/theme/components/text";
 import Image from "next/image";
@@ -8,6 +9,12 @@ import { makeStyles } from '@mui/styles';
 import { Box, Grid } from "@mui/material";
 import Link from "next/link";
 import backward from '../../icons/backward.svg'
+import { useChainId, useReadContract,useConfig, useAccount } from "wagmi";
+import { mmctContractAddresses } from "@/configs";
+import { Abi, zeroAddress } from "viem";
+import { mmctIcoAbi } from "@/configs/abi/mmctIco";
+
+
 
 const useStyles = makeStyles({
     countdownContainer: {
@@ -52,8 +59,17 @@ const useStyles = makeStyles({
 
 const Bnr = () => {
     const classes = useStyles();
+    const chainId = useChainId()
 
-    const targetDate = new Date(1718637605*1000);
+    const result = useReadContract({
+        abi: mmctIcoAbi ,
+        address: chainId===1370?mmctContractAddresses.ramestta.mmct_ico:mmctContractAddresses.pingaksha.mmct_ico,
+        functionName: 'saleType2IcoDetail',
+        args: [0],
+        account: zeroAddress
+      }) 
+      
+    const targetDate = new Date(Number(result?.data?.startAt)*1000);
     return (
         <>
             <Box className={classes.dotBox} mt={3}>

@@ -5,9 +5,12 @@ import r2 from '../../icons/r2.svg'
 import AddressCopy from "@/theme/components/addressCopy";
 import Link from "next/link";
 import Image from "next/image";
-import { useAccount } from "wagmi";
+import { UseReadContractsReturnType, useAccount } from "wagmi";
 import linkbtnimg from '../../icons/linkbtnimg.svg'
 import RefBottom from "./refBottom";
+import { Abi, formatEther } from "viem";
+import { mmctReferralAbi } from "@/configs/abi/mmctReferral";
+import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 
 
 const useStyles = makeStyles({
@@ -195,10 +198,11 @@ const useStyles = makeStyles({
 
 });
 
-const Refer =()=>{
+const Refer =({resultOfReferralDetail}:{resultOfReferralDetail: any})=>{
     const classes = useStyles();
 
     const {address}=useAccount();
+    
     return(
         <>
         <Box>
@@ -215,7 +219,7 @@ const Refer =()=>{
                                 <Box className={classes.referral}>
                                     <Box>
                                         <Typography color={'#999'}>YOUR REFERRALS</Typography>
-                                        <Typography color={'#fff'} variant="h4">0</Typography>
+                                        <Typography color={'#fff'} variant="h4">{resultOfReferralDetail?.data?.[1].result>0?resultOfReferralDetail?.data?.[1].result.toString():0}</Typography>
                                     </Box>
                                     <Box>
                                         <Image src={r1} alt={""} />
@@ -225,7 +229,7 @@ const Refer =()=>{
                                 <Box className={classes.referral}>
                                     <Box>
                                         <Typography color={'#999'}>YOUR REFERRAL EARNINGS</Typography>
-                                        <Typography color={'#fff'} variant="h4">0</Typography>
+                                        <Typography color={'#fff'} variant="h4">{convertToAbbreviated(formatEther?.(BigInt?.(resultOfReferralDetail?.data?.[0].result ? resultOfReferralDetail?.data?.[0].result.toString() : 0)))}</Typography>
                                     </Box>
                                     <Box>
                                         <Image src={r2} alt={""} />

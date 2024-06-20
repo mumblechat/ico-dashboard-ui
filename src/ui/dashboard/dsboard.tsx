@@ -1,5 +1,5 @@
 "use client"
-import { Box, Grid, InputBase, Slider, styled, Typography } from "@mui/material"
+import { Box, Button, Grid, InputBase, Slider, styled, Typography } from "@mui/material"
 import DashboardHeader from "../shared/dashboardHeader"
 import { makeStyles } from '@mui/styles';
 import Image from "next/image";
@@ -21,7 +21,15 @@ import r2 from '../../icons/r2.svg'
 import AddressCopy from "@/theme/components/addressCopy";
 import linkbtnimg from '../../icons/linkbtnimg.svg'
 import Refer from "./refer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAccount, useBalance, useChainId, useReadContract, useReadContracts, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { Address, formatEther, parseEther, zeroAddress } from "viem";
+import { mmctTokenAbi } from "@/configs/abi/mmctToken";
+import { mmctContractAddresses } from "@/configs";
+import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
+import { mmctIcoAbi } from "@/configs/abi/mmctIco";
+import { mmctReferralAbi } from "@/configs/abi/mmctReferral";
+import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -54,13 +62,13 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         gap: '10px',
-        justifyContent:'left'
+        justifyContent: 'left'
     },
     box__logo2: {
         display: 'flex',
         alignItems: 'center',
         gap: '10px',
-        justifyContent:'end'
+        justifyContent: 'end'
     },
     step__two_box: {
         display: 'flex',
@@ -138,6 +146,11 @@ const useStyles = makeStyles({
         color: '#000',
         textDecoration: 'none',
         fontWeight: 500,
+        '&:hover': {
+            backgroundColor: '#00ffff',
+            color: '#000'
+        }
+
     },
     max_btn__wrap: {
         backgroundColor: '#101012',
@@ -147,6 +160,14 @@ const useStyles = makeStyles({
         padding: '2px',
         marginTop: '0.5rem'
     },
+    apply_btn__wrap: {
+        backgroundColor: '#101012',
+        border: '1px solid #1D1D20',
+        borderRadius: '12px',
+        display: 'flex',
+        padding: '2px',
+        marginTop: '0.9rem'
+    },
 
     worth: {
         display: 'flex',
@@ -154,6 +175,22 @@ const useStyles = makeStyles({
         gap: '10px',
         alignItems: 'center',
         padding: '1rem 0rem'
+    },
+    apply: {
+        cursor: 'pointer',
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '10px',
+        alignItems: 'center',
+        padding: '1rem 0rem'
+    },
+    validation: {
+        display: 'flex',
+        justifyContent: 'start',
+        gap: '10px',
+        alignItems: 'start',
+        padding: '1rem 0rem',
+
     },
     buy__btn: {
         backgroundColor: '#00FFFF',
@@ -164,7 +201,11 @@ const useStyles = makeStyles({
         fontWeight: 700,
         display: 'block',
         textAlign: 'center',
-        fontSize: '20px'
+        fontSize: '20px',
+        '&:hover': {
+            backgroundColor: '#00ffff',
+            color: '#000'
+        }
     },
     middleBox: {
         padding: '0rem 2rem 1rem 2rem',
@@ -208,7 +249,7 @@ const useStyles = makeStyles({
         }
     },
     sliderBox: {
-        
+
         '& .MuiSlider-root': {
             backgroundColor: '#fff !important',
             padding: '16px',
@@ -224,7 +265,7 @@ const useStyles = makeStyles({
             background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
             padding: '20px',
         },
-         
+
     },
     sliderBox2: {
 
@@ -250,39 +291,115 @@ const useStyles = makeStyles({
 });
 
 
-const Box__list = [
-    {
-        image: l1,
-        title: 'Your Total $RAMA Balance',
-        data: '0.00'
-    },
-    {
-        image: l2,
-        title: 'Your Coin Worth at Launch',
-        data: '$0.00'
-    },
-    {
-        image: l3,
-        title: 'Your Referral Earnings',
-        data: '0 MMCT'
-    },
-]
 
 
 
 const Dsboard = () => {
     const classes = useStyles();
-    const [value, setValue] = useState<number[]>([10,]);
+    const [value, setValue] = useState<number[]>([0,]);
+    const [buyInput, setBuyInput] = useState("")
+    const [showInput, setShowInput] = useState<boolean>(false);
+    const [referrerAddress, setReferrerAddress] = useState<`0x${string}`>("0x65bED791FeA6345C0217Ad1E4BdE4DD29d88aAcA")
+    const { address } = useAccount()
+    const chainId = useChainId()
+    const { writeContractAsync, data, isPending: isPendingBuyForWrite } = useWriteContract()
+    const { isLoading, isSuccess } = useWaitForTransactionReceipt({
+        hash: data,
+    })
 
-    const [value2, setValue2] = useState<number[]>([90,]);
+    const balanceOfRama = useBalance({
+        address: address
+    })
 
+
+    const handleMax = () => {
+        setBuyInput((formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))))
+    }
     const handleChange = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number[]);
-    };
+    }
 
-    const handleChange2 = (event: Event, newValue: number | number[]) => {
-        setValue2(newValue as number[]);
-    };
+    const resultOfSaleDetails = useReadContract({
+        abi: mmctIcoAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_ico : mmctContractAddresses.pingaksha.mmct_ico,
+        functionName: 'saleType2IcoDetail',
+        args: [0],
+        account: zeroAddress
+    })
+
+    const [value2, setValue2] = useState<number>(Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.tokenAmount ? resultOfSaleDetails?.data?.tokenAmount.toString() : 0))));
+
+    const resultOfUserContribution = useReadContract({
+        abi: mmctIcoAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_ico : mmctContractAddresses.pingaksha.mmct_ico,
+        functionName: 'user2SaleType2Contributor',
+        args: [address as Address, 0],
+        account: zeroAddress
+    })
+
+    const resultOfRamaPriceInUSD = useReadContract({
+        abi: mmctIcoAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_ico : mmctContractAddresses.pingaksha.mmct_ico,
+        functionName: 'ramaPriceInUSD',
+        args: [],
+        account: zeroAddress
+    })
+
+    const resultOfBalance = useReadContract({
+        abi: mmctTokenAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_token : mmctContractAddresses.pingaksha.mmct_token,
+        functionName: 'balanceOf',
+        args: [address as Address],
+        account: address
+    })
+
+    const resultOfReferralDetail = useReadContracts({
+        contracts: [
+            {
+                abi: mmctReferralAbi,
+                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
+                functionName: 'getReferralRewards',
+                args: [address as Address]
+            },
+            {
+                abi: mmctReferralAbi,
+                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
+                functionName: 'getReferralsCount',
+                args: [address as Address]
+            },
+        ]
+    })
+
+    const Box__list = [
+        {
+            image: l1,
+            title: 'Your Total $MMCT Balance',
+            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)))}`,
+        },
+        {
+            image: l2,
+            title: 'Your Coin Worth at Launch',
+            data: `$${resultOfUserContribution?.data ? Number(Number(formatEther?.(BigInt?.(resultOfUserContribution?.data?.volume ? resultOfUserContribution?.data?.volume.toString() : 0))) * Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleRateInUsd ? resultOfSaleDetails?.data?.saleRateInUsd.toString() : 0)))).toFixed(2) : 0.00}`
+        },
+        {
+            image: l3,
+            title: 'Your Referral Earnings',
+            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfReferralDetail?.data?.[0].result ? resultOfReferralDetail?.data?.[0].result.toString() : 0)))} MMCT`
+        },
+    ]
+
+    // const handleChange2 = (event: Event, newValue: number) => {
+    //     setValue2(newValue);
+    // };
+
+    useEffect(() => {
+        if (resultOfSaleDetails?.data?.saleQuantity !== undefined) {
+            setValue2(Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleQuantity ? resultOfSaleDetails?.data?.saleQuantity.toString() : 0))));
+        }
+    }, [resultOfSaleDetails]);
+
+
+
     return (
         <>
             <Box>
@@ -299,49 +416,49 @@ const Dsboard = () => {
                         <Box><Image src={dright} alt={""} /></Box>
                     </Box>
 
-                    <Box sx={{padding:'0rem 0.5rem', marginTop:'1rem'}}>
-                    <Grid container spacing={2}>
-                        <Grid item lg={2} md={2.2} sm={12} xs={12} alignSelf={'center'}>
-                            <Box className={classes.box__logo}>
-                                <Image src={rmesta} alt={""} />
-                                <Typography color={'#fff'}>Ramestta</Typography>
-                            </Box>
+                    <Box sx={{ padding: '0rem 0.5rem', marginTop: '1rem' }}>
+                        <Grid container spacing={2}>
+                            <Grid item lg={2} md={2.2} sm={12} xs={12} alignSelf={'center'}>
+                                <Box className={classes.box__logo}>
+                                    <Image src={rmesta} alt={""} />
+                                    <Typography color={'#fff'}>Ramestta</Typography>
+                                </Box>
+                            </Grid>
+                            <Grid item lg={7} md={7} sm={12} xs={12}>
+                                <Box sx={{
+
+
+                                    marginBottom: '1rem'
+                                }}>
+                                    <Box sx={{ textAlign: 'center', marginBottom: 1 }}><Typography fontFamily={'Bruce Forever!important'} color={'#00ffff'}>{value}%</Typography></Box>
+                                    <Slider
+                                        value={value}
+                                        onChange={handleChange}
+                                        aria-labelledby="range-slider"
+                                        min={0}
+                                        max={100}
+                                        className={classes.sliderBox}
+                                        sx={{
+                                            background: 'linear-gradient(90deg, #080808, #00FFFF)',
+                                            border: '1px solid #1D1D20',
+                                            borderRadius: '30px',
+                                            padding: '10px 10px 10px 0px',
+                                            '&.Mui-active': {
+                                                boxShadow: '0 0 0 14px rgba(0, 0, 255, 0.16)', // Change this to your desired active color
+                                            },
+                                        }}
+                                    />
+
+
+                                </Box>
+                            </Grid>
+                            <Grid item lg={3} md={2.8} sm={12} xs={12} alignSelf={'center'}>
+                                <Box className={classes.box__logo2}>
+                                    <Typography color={'#fff'}>Mumblechat</Typography>
+                                    <Image src={shield} alt={""} width={60} />
+                                </Box>
+                            </Grid>
                         </Grid>
-                        <Grid item lg={7} md={7} sm={12} xs={12}>
-                            <Box sx={{
-
-
-                                marginBottom: '1rem'
-                            }}>
-                                <Box sx={{ textAlign: 'center', marginBottom: 1 }}><Typography fontFamily={'Bruce Forever!important'} color={'#00ffff'}>{value}%</Typography></Box>
-                                <Slider
-                                    value={value}
-                                    onChange={handleChange}
-                                    aria-labelledby="range-slider"
-                                    min={0}
-                                    max={100}
-                                    className={classes.sliderBox}
-                                    sx={{
-                                        background: 'linear-gradient(90deg, #080808, #00FFFF)',
-                                        border: '1px solid #1D1D20',
-                                        borderRadius: '30px',
-                                        padding: '10px 10px 10px 0px',
-                                        '&.Mui-active': {
-                                            boxShadow: '0 0 0 14px rgba(0, 0, 255, 0.16)', // Change this to your desired active color
-                                        },
-                                    }}
-                                />
-
-
-                            </Box>
-                        </Grid>
-                        <Grid item lg={3} md={2.8} sm={12} xs={12} alignSelf={'center'}>
-                            <Box className={classes.box__logo2}>
-                                <Typography color={'#fff'}>Mumblechat</Typography>
-                                <Image src={shield} alt={""} width={60} />
-                            </Box>
-                        </Grid>
-                    </Grid>
                     </Box>
 
 
@@ -380,22 +497,37 @@ const Dsboard = () => {
                         <Box className={classes.currentsale}>
                             <Box>
                                 <Typography color={'#999'}>Total Coin Sales USD</Typography>
-                                <Typography variant="h6" color={'#fff'} fontWeight={500}>$46,665,598.67</Typography>
+                                <Typography variant="h6" color={'#fff'} fontWeight={500}>{formatNumberToCurrencyString(
+                                    resultOfSaleDetails?.data ?
+                                        Number(
+                                            formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleRateInUsd ? resultOfSaleDetails?.data?.saleRateInUsd.toString() : 0))) *
+                                        Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.tokenAmount ? resultOfSaleDetails?.data?.tokenAmount.toString() : 0)))
+                                        : 0
+                                )}</Typography>
                             </Box>
                             <Box>
                                 <Image className={classes.coinlinewrp} src={coinline} alt={""} />
                             </Box>
                             <Box textAlign={'end'}>
                                 <Typography color={'#999'}>Total Coins Sold</Typography>
-                                <Typography variant="h6" color={'#fff'} fontWeight={500}>11,261,282,602.79</Typography>
+                                <Typography variant="h6" color={'#fff'} fontWeight={500}>{formatNumberToCurrencyString(
+                                    resultOfSaleDetails?.data ?
+                                        Number(
+                                            formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleRateInUsd ? resultOfSaleDetails?.data?.saleRateInUsd.toString() : 0))) *
+                                        (
+                                            Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.tokenAmount ? resultOfSaleDetails?.data?.tokenAmount.toString() : 0))) -
+                                            Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleQuantity ? resultOfSaleDetails?.data?.saleQuantity.toString() : 0)))
+                                        )
+                                        : 0
+                                )}</Typography>
                             </Box>
                         </Box>
 
                         <Box mt={3} mb={0.5} sx={{ position: 'relative' }}>
-                            <Box sx={{ textAlign: 'center', marginBottom: 1, position: 'absolute', left: 10, top: '2px', zIndex: '1','@media(max-width : 1200px)':{top:'9px'} }}><Typography color={'#fff'}> Remaining:{value2}M</Typography></Box>
+                            <Box sx={{ textAlign: 'cener', marginBottom: 1, position: 'absolute', left: 10, top: '2px', zIndex: '1', '@media(max-width : 1200px)': { top: '9px' } }}><Typography color={'#fff'}> Remaining:{convertToAbbreviated(value2)}</Typography></Box>
                             <Slider
-                                value={value2}
-                                onChange={handleChange2}
+                                value={value}
+                                // onChange={handleChange2}
                                 aria-labelledby="range-slider"
                                 min={0}
                                 max={100}
@@ -422,6 +554,8 @@ const Dsboard = () => {
                         </Box>
                         <Box className={classes.max_btn__wrap}>
                             <InputBase
+                                value={buyInput}
+                                onChange={(e) => setBuyInput(e.target.value)}
                                 sx={{
                                     flex: 1,
                                     color: '#fff',
@@ -435,19 +569,110 @@ const Dsboard = () => {
                                 placeholder={'Enter Amount in RAMA'}
                                 type={''}
                             />
-                            <Link className={classes.max_btn} href={""}>Max</Link>
+                            <Button className={classes.max_btn} onClick={handleMax} >Max</Button>
                         </Box>
                         <Box className={classes.worth}>
+                            {(resultOfRamaPriceInUSD?.data && buyInput) &&
+                                <>
+                                    <Image src={rmesta} alt={""} width={40} />
+                                    <Typography color={'#999'}>RAMA PRICE:
+                                        <Typography component={'span'} color={'#fff'}> ${
+                                            Number(
+                                                formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
+                                        }
+                                        </Typography>
+                                    </Typography>
+                                </>
+                            }
                             <Image src={shield} alt={""} width={50} />
-                            <Typography color={'#999'}>MMCT WORTH : <Typography component={'span'} color={'#fff'}>0.00</Typography></Typography>
+                            <Typography color={'#999'}>MMCT WORTH : <Typography component={'span'} color={'#fff'}>{
+                                ((Number(Number(buyInput) > 0 ? buyInput : 0) *
+                                    Number(
+                                        formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
+                                ) /
+                                    Number(
+                                        formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleRateInUsd ? resultOfSaleDetails?.data?.saleRateInUsd.toString() : 0)))
+                                ).toFixed(2)
+                            }</Typography></Typography>
                         </Box>
 
-                        <Link className={classes.buy__btn} href={"#"}>Buy Coins</Link>
+                        <Button
+                            disabled={
+                                !buyInput || isPendingBuyForWrite || isLoading ||(
+                                    buyInput && (Number(buyInput) *
+                                    Number(
+                                        formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
+                                  )<10
+                                )||(
+                                    Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0)))<Number(Number(buyInput) > 0 ? buyInput : 0)
+                                )
+                            }
+                            fullWidth={true}
+                            className={classes.buy__btn}
+                            onClick={async () => {
+                                await writeContractAsync({
+                                    abi: mmctIcoAbi,
+                                    address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_ico : mmctContractAddresses.pingaksha.mmct_ico,
+                                    functionName: 'buy',
+                                    args: [0, referrerAddress],
+                                    account: address,
+                                    value: parseEther(buyInput),
+                                })
+
+
+                            }} >Buy Coins</Button>
+
+                        {
+                            buyInput && (Number(buyInput) *
+                             Number(
+                                 formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
+                           )<10 &&
+                            <Box className={classes.validation} >
+                                <Typography component={'span'} fontWeight={200} color={'#ff4546'}>Minimum Contribution $10</Typography>
+                            </Box>
+                        }
+                        {
+                            Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0)))<Number(Number(buyInput) > 0 ? buyInput : 0) &&
+                            <Box className={classes.validation} >
+                                <Typography component={'span'} fontWeight={200} color={'#ff4546'}>Insufficient RAMA Balance</Typography>
+                            </Box>
+                        }
+
+                        {
+                            !showInput && (
+                                <Box className={classes.apply} onClick={() => setShowInput(true)} >
+                                    <Typography component={'span'} fontWeight={200} color={'#fff'}>Do you have any Referrer?</Typography>
+                                </Box>
+                            )
+                        }
+                        {
+                            showInput && (
+                                <Box className={classes.apply_btn__wrap}>
+                                    <InputBase
+                                        value={referrerAddress}
+                                        onChange={(e) => setReferrerAddress(e.target.value as Address)}
+                                        sx={{
+                                            flex: 1,
+                                            color: '#fff',
+                                            width: '100%',
+                                            padding: '0.3rem 0.5rem',
+                                            ':-moz-placeholder': {
+                                                color: 'fff',
+                                            }
+                                        }}
+                                        fullWidth
+                                        placeholder={'Enter Referrer Address'}
+                                        type={'text'}
+                                    />
+                                    <Button className={classes.max_btn} >Apply</Button>
+                                </Box>
+                            )
+                        }
                     </Box>
                 </Box>
 
 
-                <Refer />
+                <Refer resultOfReferralDetail={resultOfReferralDetail} />
 
             </Box>
 

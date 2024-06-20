@@ -1,6 +1,6 @@
 // 'use client'
 import { useContext, type ReactNode } from 'react'
-import { type State, WagmiProvider } from 'wagmi'
+import { type State, WagmiProvider, http } from 'wagmi'
 import '@rainbow-me/rainbowkit/styles.css';
 import { useRouter } from 'next/router';
 import Sheild from '../icons/Sheild.svg'
@@ -21,31 +21,38 @@ import {
   argentWallet,
   trustWallet,
   ledgerWallet,
+  injectedWallet
 } from '@rainbow-me/rainbowkit/wallets';
  
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Box, useTheme } from '@mui/material';
 import { ColorModeContext } from '@/context';
-import { ramestta } from '.';
+import { pingaksha, ramestta } from '.';
  
 
 
 const { wallets } = getDefaultWallets();
 
 export const config = getDefaultConfig({
-  appName: 'RainbowKit demo',
+  appName: 'Mumblechat ICO',
   projectId: 'YOUR_PROJECT_ID',
   wallets: [
     ...wallets,
     {
       groupName: 'Other',
-      wallets: [argentWallet, trustWallet, ledgerWallet],
+      wallets: [injectedWallet,argentWallet, trustWallet, ledgerWallet],
     },
   ],
   chains: [
     ramestta,
+    pingaksha
   ],
-  ssr: true,
+  ssr: false,
+  multiInjectedProviderDiscovery: false, 
+  transports: {
+    [ramestta.id]: http('https://blockchain.ramestta.com'),
+    [pingaksha.id]: http('https://testnet.ramestta.com')
+  },
 });
 
 const queryClient = new QueryClient();

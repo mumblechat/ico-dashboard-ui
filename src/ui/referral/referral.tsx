@@ -21,6 +21,10 @@ import AddressCopy from "@/theme/components/addressCopy";
 import linkbtnimg from '../../icons/linkbtnimg.svg'
 import Refer from "../dashboard/refer";
 import Tablereferral from "./tablereferral";
+import { useAccount, useChainId, useReadContracts } from "wagmi";
+import { mmctReferralAbi } from "@/configs/abi/mmctReferral";
+import { mmctContractAddresses } from "@/configs";
+import { Address } from "viem";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -51,12 +55,31 @@ const useStyles = makeStyles({
 
 const Referral = () => {
     const classes = useStyles();
+    const { address } = useAccount()
+    const chainId = useChainId()
+
+    const resultOfReferralDetail = useReadContracts({
+        contracts: [
+            {
+                abi: mmctReferralAbi,
+                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
+                functionName: 'getReferralRewards',
+                args: [address as Address]
+            },
+            {
+                abi: mmctReferralAbi,
+                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
+                functionName: 'getReferralsCount',
+                args: [address as Address]
+            },
+        ]
+    })
     return (
         <>
 
             <Box className={classes.mainDiv}>
                 <Heading heading={"Referral"} />
-                <Refer />
+                <Refer resultOfReferralDetail={resultOfReferralDetail} />
                 <Box sx={{ marginTop: '1rem' }}>
                     <Tablereferral />
                 </Box>
