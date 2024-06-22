@@ -140,15 +140,15 @@ const useStyles = makeStyles({
         marginTop: '1.5rem'
     },
     max_btn: {
-        backgroundColor: '#00FFFF',
+        backgroundColor: '#00FFFF !important',
         padding: '10px 20px',
-        borderRadius: '8px',
-        color: '#000',
+        borderRadius: '8px !important',
+        color: '#000 !important',
         textDecoration: 'none',
         fontWeight: 500,
         '&:hover': {
-            backgroundColor: '#00ffff',
-            color: '#000'
+            backgroundColor: '#00ffff !important',
+            color: '#000 !important'
         }
 
     },
@@ -187,16 +187,16 @@ const useStyles = makeStyles({
     validation: {
         display: 'flex',
         justifyContent: 'start',
-        gap: '10px',
+        gap: '8px',
         alignItems: 'start',
         padding: '1rem 0rem',
 
     },
     buy__btn: {
-        backgroundColor: '#00FFFF',
-        padding: '10px 20px',
-        borderRadius: '30px',
-        color: '#000',
+        backgroundColor: '#00FFFF !important',
+        padding: '10px 20px !important',
+        borderRadius: '30px !important',
+        color: '#000 !important',
         textDecoration: 'none',
         fontWeight: 700,
         display: 'block',
@@ -250,39 +250,37 @@ const useStyles = makeStyles({
     },
     sliderBox: {
 
-        '& .MuiSlider-root': {
-            backgroundColor: '#fff !important',
-            padding: '16px',
-        },
+         
+            padding: '10px !important',
+         
         '& .MuiSlider-rail': {
             background: 'none',
-            padding: '12px',
+            height: '30px'
         },
         '& .MuiSlider-track': {
             background: 'linear-gradient(0deg, #fff, #fff)',
         },
         '& .MuiSlider-thumb': {
             background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
-            padding: '20px',
+            padding: '16px',
         },
 
     },
     sliderBox2: {
-
+        padding: '10px !important',
         '& .MuiSlider-root': {
-            backgroundColor: '#fff !important',
-            padding: '24px',
+            padding: '10px !important'
         },
         '& .MuiSlider-rail': {
             background: 'none',
-            padding: '20px',
+            height: '30px'
         },
         '& .MuiSlider-track': {
             background: 'linear-gradient(0deg, #fff, #fff)',
         },
         '& .MuiSlider-thumb': {
-            background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
-            padding: '24px',
+            background: 'linear-gradient(270deg, #000000, #00FFFF)',
+            padding: '16px',
         },
 
 
@@ -417,14 +415,14 @@ const Dsboard = () => {
                     </Box>
 
                     <Box sx={{ padding: '0rem 0.5rem', marginTop: '1rem' }}>
-                        <Grid container spacing={2}>
-                            <Grid item lg={2} md={2.2} sm={12} xs={12} alignSelf={'center'}>
+                        <Grid container spacing={2} sx={{ flexWrap: 'inherit', '@media(max-width : 1200px)': { flexWrap: 'wrap' } }}>
+                            <Grid item lg={2.5} md={12} sm={12} xs={12} alignSelf={'center'}>
                                 <Box className={classes.box__logo}>
                                     <Image src={rmesta} alt={""} />
                                     <Typography color={'#fff'}>Ramestta</Typography>
                                 </Box>
                             </Grid>
-                            <Grid item lg={7} md={7} sm={12} xs={12}>
+                            <Grid item lg={7} md={12} sm={12} xs={12} margin={'0rem 1.5rem'}>
                                 <Box sx={{
 
 
@@ -452,7 +450,7 @@ const Dsboard = () => {
 
                                 </Box>
                             </Grid>
-                            <Grid item lg={3} md={2.8} sm={12} xs={12} alignSelf={'center'}>
+                            <Grid item lg={3} md={12} sm={12} xs={12} alignSelf={'center'}>
                                 <Box className={classes.box__logo2}>
                                     <Typography color={'#fff'}>Mumblechat</Typography>
                                     <Image src={shield} alt={""} width={60} />
@@ -524,8 +522,19 @@ const Dsboard = () => {
                         </Box>
 
                         <Box mt={3} mb={0.5} sx={{ position: 'relative' }}>
-                            <Box sx={{ textAlign: 'cener', marginBottom: 1, position: 'absolute', left: 10, top: '2px', zIndex: '1', '@media(max-width : 1200px)': { top: '9px' } }}><Typography color={'#fff'}> Remaining:{convertToAbbreviated(value2)}</Typography></Box>
-                            <Slider
+                            <Box sx={{
+                                textAlign: 'center',
+                                position: 'absolute',
+                                left: '2.8rem',
+                                top: '0.1rem',
+                                zIndex: '1',
+
+                            }}
+                            ><Typography color={'#fff'}> Remaining:{convertToAbbreviated(value2)}</Typography></Box>
+                           <Box sx={{
+                            margin:'1.5rem'
+                           }}>
+                           <Slider
                                 value={value}
                                 // onChange={handleChange2}
                                 aria-labelledby="range-slider"
@@ -542,6 +551,8 @@ const Dsboard = () => {
                                     },
                                 }}
                             />
+                           </Box>
+
                         </Box>
                         <Box className={classes.currentsale2}>
                             <Typography variant="h6" fontWeight={500} color={'#fff'}>0.05 USDT = 1 MMCT</Typography>
@@ -569,7 +580,7 @@ const Dsboard = () => {
                                 placeholder={'Enter Amount in RAMA'}
                                 type={''}
                             />
-                            <Button className={classes.max_btn} onClick={handleMax} >Max</Button>
+                            <Button className={classes.max_btn} onClick={handleMax} href={""} >Max</Button>
                         </Box>
                         <Box className={classes.worth}>
                             {(resultOfRamaPriceInUSD?.data && buyInput) &&
@@ -598,13 +609,13 @@ const Dsboard = () => {
 
                         <Button
                             disabled={
-                                !buyInput || isPendingBuyForWrite || isLoading ||(
+                                !buyInput || isPendingBuyForWrite || isLoading || (
                                     buyInput && (Number(buyInput) *
-                                    Number(
-                                        formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
-                                  )<10
-                                )||(
-                                    Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0)))<Number(Number(buyInput) > 0 ? buyInput : 0)
+                                        Number(
+                                            formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
+                                    ) < 10
+                                ) || (
+                                    Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))) < Number(Number(buyInput) > 0 ? buyInput : 0)
                                 )
                             }
                             fullWidth={true}
@@ -624,15 +635,15 @@ const Dsboard = () => {
 
                         {
                             buyInput && (Number(buyInput) *
-                             Number(
-                                 formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
-                           )<10 &&
+                                Number(
+                                    formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
+                            ) < 10 &&
                             <Box className={classes.validation} >
                                 <Typography component={'span'} fontWeight={200} color={'#ff4546'}>Minimum Contribution $10</Typography>
                             </Box>
                         }
                         {
-                            Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0)))<Number(Number(buyInput) > 0 ? buyInput : 0) &&
+                            Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))) < Number(Number(buyInput) > 0 ? buyInput : 0) &&
                             <Box className={classes.validation} >
                                 <Typography component={'span'} fontWeight={200} color={'#ff4546'}>Insufficient RAMA Balance</Typography>
                             </Box>

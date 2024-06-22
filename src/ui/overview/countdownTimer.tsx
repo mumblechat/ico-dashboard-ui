@@ -23,7 +23,7 @@ const useStyles = makeStyles({
       padding: '10px',
       gap: '1rem',
       flexWrap: 'wrap',
-      justifyContent: 'space-between'
+      justifyContent: 'center'
     }
 
   },

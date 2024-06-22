@@ -78,6 +78,13 @@ function Brick() {
                     slidesToShow: 2,
                     centerPadding: "10px",
                 }
+            },
+            {
+                breakpoint: 580,
+                settings: {
+                    slidesToShow: 1,
+                    centerPadding: "10px",
+                }
             }
         ]
     };

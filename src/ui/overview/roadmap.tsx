@@ -146,6 +146,14 @@ function Roadmap() {
                 }
             },
             {
+                breakpoint: 900,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    centerPadding: "30px",
+                }
+            },
+            {
                 breakpoint: 768,
                 settings: {
                     slidesToShow: 2,
@@ -154,7 +162,7 @@ function Roadmap() {
                 }
             },
             {
-                breakpoint: 480,
+                breakpoint: 580,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
@@ -191,10 +199,8 @@ function Roadmap() {
                                     borderRadius: '20px',
                                     backgroundColor: '#101012',
                                     marginTop: '3rem',
-                                    height: '480px',
-                                    '@media(max-width : 900px)':{
-                                        height:'560px'
-                                    }
+                                    height: 'auto',
+                                     
                                 }}
                             >
                                 <Box

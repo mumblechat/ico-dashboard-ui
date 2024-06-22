@@ -23,6 +23,7 @@ const ListBox = styled(Box)(({ theme }) => ({
 
 const StyledSlider = styled(Slider)(
     ({ theme }) => `
+     padding: 10px !important;
     .MuiSlider-root {
         background-color: #fff !important;
         padding:16px
