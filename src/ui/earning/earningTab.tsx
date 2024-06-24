@@ -8,8 +8,8 @@ import { styled, useTheme } from '@mui/material';
 import { ColorModeContext } from '@/context';
 import { makeStyles } from '@mui/styles';
 import Heading from '@/theme/components/heading';
-import CoinCalculate from './coinCalculate';
-import Miningcalculate from './miningcalculate';
+import Earning from './earning';
+import Community from './community';
 
 
 
@@ -52,12 +52,7 @@ function a11yProps(index: number) {
 
 const useStyles = makeStyles({
     mainDiv: {
-        margin: '40px 40px 20px 40px',
-        minHeight: '100vh',
-
-        '@media(max-width : 600px)': {
-            margin: '20px 10px 20px 10px',
-        }
+        margin: '10px',
     },
     box_hding: {
 
@@ -68,10 +63,22 @@ const useStyles = makeStyles({
         height: '480px',
         alignItems: 'center',
         borderRadius: '12px'
+    },
+    comingsoon: {
+        height: '400px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        border:'1px solid #00FFFF',
+        borderRadius:'12px',
+        marginTop:'1rem'
+    },
+    MainHis:{
+        margin:'1.5rem 1.5rem 1.5rem 1.5rem'
     }
 });
 
-export default function CalculatorTab() {
+export default function EarningTab() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -84,7 +91,7 @@ export default function CalculatorTab() {
     return (
         <Box className={classes.mainDiv}>
 
-            <Heading heading={"Calculator"} />
+
 
             <Box sx={{ width: '100%', border: '1px solid #1D1D20', borderRadius: '8px', marginTop: '1.5rem' }}>
 
@@ -108,18 +115,40 @@ export default function CalculatorTab() {
                                 zIndex: '1',
                             }
                         }} value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1,'@media(max-width : 600px)':{} }} label="Coin Amount Calculator" {...a11yProps(0)} />
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1,'@media(max-width : 600px)':{} }} label="Mining Profit Calculator" {...a11yProps(1)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1 }} label="Mining" {...a11yProps(0)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1 }} label="Community" {...a11yProps(1)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1 }} label="History" {...a11yProps(2)} />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
                     <Box mt={3}>
-                        <CoinCalculate />
+                        <Earning Earning={'Mining'} />
                     </Box>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     <Box mt={3}>
-                        <Miningcalculate />
+
+                        <Community />
+                    </Box>
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={2}>
+                    <Box className={classes.MainHis}>
+                    <Typography
+                    sx={{
+                        fontFamily: 'Bruce Forever !important',
+                        color: '#00FFFF',
+                        '@media(max-width : 1200px)': {
+                            fontSize: '22px',
+                            '@media(max-width : 900px)': {
+                                fontSize: '20px'
+                            }
+                        }
+
+                    }}
+                    variant="h4">History Reward</Typography>
+                        <Box className={classes.comingsoon}>
+                            <Typography variant='h6' color={'#00FFFF'}>Coming Soon</Typography>
+                        </Box>
                     </Box>
                 </CustomTabPanel>
             </Box>

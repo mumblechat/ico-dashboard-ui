@@ -8,8 +8,15 @@ import { styled, useTheme } from '@mui/material';
 import { ColorModeContext } from '@/context';
 import { makeStyles } from '@mui/styles';
 import Heading from '@/theme/components/heading';
-import CoinCalculate from './coinCalculate';
-import Miningcalculate from './miningcalculate';
+import Referral from './referral';
+import Tablereferral from './tablereferral';
+import Refer from '../dashboard/refer';
+import { useAccount, useChainId, useReadContracts } from 'wagmi';
+import { mmctReferralAbi } from '@/configs/abi/mmctReferral';
+import { mmctContractAddresses } from '@/configs';
+import { Address } from 'viem';
+import Tablereferral2 from './tablereferral2';
+
 
 
 
@@ -52,12 +59,7 @@ function a11yProps(index: number) {
 
 const useStyles = makeStyles({
     mainDiv: {
-        margin: '40px 40px 20px 40px',
-        minHeight: '100vh',
-
-        '@media(max-width : 600px)': {
-            margin: '20px 10px 20px 10px',
-        }
+        margin: '10px',
     },
     box_hding: {
 
@@ -68,10 +70,14 @@ const useStyles = makeStyles({
         height: '480px',
         alignItems: 'center',
         borderRadius: '12px'
+    },
+    boxref: {
+        padding: '1rem',
+         
     }
 });
 
-export default function CalculatorTab() {
+export default function ReferralTab() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -81,10 +87,30 @@ export default function CalculatorTab() {
     const colorMode = React.useContext(ColorModeContext);
     const theme = useTheme();
 
+
+    const { address } = useAccount()
+    const chainId = useChainId()
+    const resultOfReferralDetail = useReadContracts({
+        contracts: [
+            {
+                abi: mmctReferralAbi,
+                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
+                functionName: 'getReferralRewards',
+                args: [address as Address]
+            },
+            {
+                abi: mmctReferralAbi,
+                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
+                functionName: 'getReferralsCount',
+                args: [address as Address]
+            },
+        ]
+    })
+
     return (
         <Box className={classes.mainDiv}>
 
-            <Heading heading={"Calculator"} />
+<Refer resultOfReferralDetail={resultOfReferralDetail} />
 
             <Box sx={{ width: '100%', border: '1px solid #1D1D20', borderRadius: '8px', marginTop: '1.5rem' }}>
 
@@ -108,20 +134,29 @@ export default function CalculatorTab() {
                                 zIndex: '1',
                             }
                         }} value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1,'@media(max-width : 600px)':{} }} label="Coin Amount Calculator" {...a11yProps(0)} />
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1,'@media(max-width : 600px)':{} }} label="Mining Profit Calculator" {...a11yProps(1)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1 }} label="Direct Referral" {...a11yProps(0)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1 }} label="Upline Referral" {...a11yProps(1)} />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <Box mt={3}>
-                        <CoinCalculate />
+                    <Box className={classes.boxref} mt={2}>
+                        <Referral refTitle={'Direct Referral'} />
+                        <Box sx={{ marginTop: '1rem' }}>
+                            <Tablereferral />
+                        </Box>
+                        
+                        
                     </Box>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <Box mt={3}>
-                        <Miningcalculate />
+                    <Box className={classes.boxref} mt={2}>
+                        <Referral refTitle={'Upline Referral'} />
+                        <Box sx={{ marginTop: '1rem' }}>
+                            <Tablereferral2 />
+                        </Box>
                     </Box>
                 </CustomTabPanel>
+
             </Box>
         </Box>
     );

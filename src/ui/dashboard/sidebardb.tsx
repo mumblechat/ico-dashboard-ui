@@ -81,7 +81,13 @@ const navLinks = [
         icond: sideicond_01,
     },
     {
-        name: 'ROI Calculator',
+        name: 'Earning',
+        href: '/earning',
+        iconl: sideiconl_06,
+        icond: sideicond_06,
+    },
+    {
+        name: 'Calculator',
         href: '/calculator',
         iconl: sideiconl_02,
         icond: sideicond_02,
@@ -104,12 +110,7 @@ const navLinks = [
         iconl: sideiconl_05,
         icond: sideicond_05,
     },
-    {
-        name: 'Earning',
-        href: '/earning',
-        iconl: sideiconl_06,
-        icond: sideicond_06,
-    },
+    
     {
         name: 'Profile',
         href: '/profile',

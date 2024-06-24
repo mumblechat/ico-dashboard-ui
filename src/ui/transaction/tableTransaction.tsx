@@ -1,15 +1,33 @@
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import t1 from '../../icons/t1.svg'
-
 import Image from "next/image";
+import { makeStyles } from '@mui/styles';
 
 
-
-
+const useStyles = makeStyles({
+    tableContainer: {
+        // maxHeight: 100, 
+        '&::-webkit-scrollbar': {
+            width: '12px',
+        },
+        '&::-webkit-scrollbar-track': {
+            background: '#101012',
+            borderRadius: '0px',
+        },
+        '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#1D1D20',
+            borderRadius: '10px',
+            border: '3px solid #101012',
+        },
+        '&::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: '#555',
+        },
+    },
+})
 
 
 const TableTransaction = () => {
-
+    const classes = useStyles();
 
 
 
@@ -77,8 +95,8 @@ const TableTransaction = () => {
 
         <>
             <Box>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650, backgroundColor: '#080808', borderRadius: '0px' }} aria-label="simple table">
+                <TableContainer component={Paper} className={classes.tableContainer}>
+                    <Table sx={{ minWidth: 350, backgroundColor: '#080808', borderRadius: '0px' }} aria-label="simple table">
 
                         <TableBody>
 
@@ -103,7 +121,7 @@ const TableTransaction = () => {
                                         </Box>
                                     </TableCell>
                                     <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1 }} align="right">
-                                        <Typography>$ {item.Profit}</Typography>
+                                        <Typography color={'#fff'}>$ {item.Profit}</Typography>
                                         <Typography color={'#999'}>  {item.Bonus}</Typography>
                                     </TableCell>
 

@@ -10,6 +10,7 @@ import { mmctTokenAbi } from "@/configs/abi/mmctToken";
 import { mmctContractAddresses } from "@/configs";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
+import TableCummunityEarn from "./tableCummunityEarn";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -47,12 +48,10 @@ const useStyles = makeStyles({
 });
 
 
-interface props {
-    Earning: string;
-}
+ 
 
 
-const Earning = ({ Earning }: props) => {
+const Community = () => {
     const classes = useStyles();
     const { address } = useAccount()
     const chainId = useChainId()
@@ -95,26 +94,15 @@ const Earning = ({ Earning }: props) => {
     // const totalUnclaimedRewards= resultOfUserStakedList?.data?.reduce((previousValue,currentValue)=> previousValue+  )
 
     const Card = [
+         
         {
             id: 1,
-            Title: 'Ramestta Wallet Balance',
-            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)))}`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0))) * 0.05)}`
-        },
-        {
-            id: 2,
-            Title: 'Your Stake',
-            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0)))}`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0))) * 0.05)}`
-        },
-        {
-            id: 3,
             Title: 'Claimed Rewards',
             Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0)))}`,
             data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0))) * 0.05)}`
         },
         {
-            id: 4,
+            id: 2,
             Title: 'Unclaimed Rewards',
             Amount: `${" 0.00"
                 }`,
@@ -138,13 +126,13 @@ const Earning = ({ Earning }: props) => {
                         }
 
                     }}
-                    variant="h4">{Earning} Reward</Typography>
+                    variant="h4">Community Reward</Typography>
 
                 <Box className={classes.boxCr}>
                     <Box className={classes.cardlist}>
                         <Grid container spacing={2}>
                             {Card.map((item, index) => (
-                                <Grid key={index} item lg={3} md={3} sm={6} xs={12}>
+                                <Grid key={index} item lg={6} md={6} sm={6} xs={12}>
                                     <Box className={classes.Card}>
                                         <Typography color={'#fff'}>{item.Title}</Typography>
                                         <Typography color={'#fff'} variant="h6">{item.Amount} MMCT</Typography>
@@ -158,7 +146,7 @@ const Earning = ({ Earning }: props) => {
 
                 </Box>
                 <Box className={classes.boxCr} sx={{ marginTop: '1rem' }}>
-                    <TableEarn />
+                    <TableCummunityEarn />
                 </Box>
             </Box>
 
@@ -166,4 +154,4 @@ const Earning = ({ Earning }: props) => {
     )
 }
 
-export default Earning
+export default Community

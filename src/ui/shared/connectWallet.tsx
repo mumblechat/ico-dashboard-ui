@@ -7,6 +7,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useContext } from 'react';
 import { Box, styled, useTheme } from '@mui/material';
 import { ColorModeContext } from '@/context';
+import disconnect from '../../icons/disconnect.svg'
+import Image from 'next/image';
 
 
 
@@ -30,6 +32,8 @@ const LoginStyled = styled(Link)(({ theme }) => ({
   fontWeight: '700 !important',
   borderRadius: '5rem !important',
   transition: '0.5s',
+  width:'100%',
+  justifyContent:'center',
   ':hover': {
     transform: 'translateY(-5px)'
   },
@@ -99,14 +103,11 @@ const ConnectWallet = () => {
                 <Box style={{ display: 'flex', gap: 12 }}>
                   <Box
                     sx={{
-                      backgroundColor: '#101012',
-                      border: '1px solid #1D1D20',
                       borderRadius:'8px',
-                      padding:'0.7rem 0.8rem 0.4rem 0.8rem',
                       cursor:'pointer'
                     }}
                     onClick={openAccountModal}>
-                    <MoreVertIcon sx={{color:'#fff'}}/>
+                     <Image src={disconnect} alt={''}/>
                   </Box>
                 </Box>
               );

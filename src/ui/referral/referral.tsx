@@ -28,12 +28,7 @@ import { Address } from "viem";
 
 const useStyles = makeStyles({
     mainDiv: {
-        margin: '40px 40px 20px 40px',
-        minHeight: '100vh',
-
-        '@media(max-width : 1200px)': {
-            margin: '20px 20px 20px 20px',
-        }
+       
     },
     box_hding: {
 
@@ -51,9 +46,11 @@ const useStyles = makeStyles({
 });
 
 
+interface props{
+    refTitle:string;
+}
 
-
-const Referral = () => {
+const Referral = ({refTitle}:props) => {
     const classes = useStyles();
     const { address } = useAccount()
     const chainId = useChainId()
@@ -78,11 +75,11 @@ const Referral = () => {
         <>
 
             <Box className={classes.mainDiv}>
-                <Heading heading={"Referral"} />
-                <Refer resultOfReferralDetail={resultOfReferralDetail} />
-                <Box sx={{ marginTop: '1rem' }}>
+                <Heading heading={refTitle} />
+                
+                {/* <Box sx={{ marginTop: '1rem' }}>
                     <Tablereferral />
-                </Box>
+                </Box> */}
 
             </Box>
 

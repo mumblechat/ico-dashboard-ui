@@ -1,25 +1,9 @@
 "use client"
-import { Box, Grid, InputBase, Slider, TextField, Typography, styled, useTheme } from "@mui/material";
+import { Box, Grid, InputBase, LinearProgress, Slider, TextField, Typography, linearProgressClasses, styled, useTheme } from "@mui/material";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import { ColorModeContext } from "@/context";
 
-
-const StyledBox = styled(Box)(({ theme }) => ({
-    backgroundColor: 'red',
-    padding: "1.5rem",
-    borderRadius: '12px',
-    '@media(max-width : 600px)': {
-        padding: "1rem",
-        marginTop: '0.8rem'
-    }
-}));
-
-const ListBox = styled(Box)(({ theme }) => ({
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: '1rem'
-}));
 
 const StyledSlider = styled(Slider)(
     ({ theme }) => `
@@ -44,12 +28,32 @@ const StyledSlider = styled(Slider)(
   `
 );
 
+const ListBox = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '1rem'
+}));
+
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 30,
+    borderRadius: 30,
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+        backgroundColor: '#101012',
+        border: '1px solid #1D1D20',
+        width: '100% !important'
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+        borderRadius: 30,
+        background: 'linear-gradient(90deg, #080808, #00ffff78)',
+    },
+}));
+
 const Slidercoin = () => {
 
-    const [value, setValue] = useState<number[]>([10,]);
+    const [valueTop, setValueTop] = useState<number[]>([10,]);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
-        setValue(newValue as number[]);
+        setValueTop(newValue as number[]);
     };
 
     return (
@@ -66,8 +70,9 @@ const Slidercoin = () => {
                     alignItems: 'center',
                     marginBottom: '1rem'
                 }}>
+
                     <StyledSlider
-                        value={value}
+                        value={valueTop}
                         onChange={handleChange}
                         aria-labelledby="range-slider"
                         min={0}
@@ -81,6 +86,7 @@ const Slidercoin = () => {
                             },
                         }}
                     />
+                    {/* <BorderLinearProgress variant="determinate" value={valueTop as any} /> */}
                     {/* <Typography color={'#fff'}>{value}%</Typography> */}
 
                 </Box>

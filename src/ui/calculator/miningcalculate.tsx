@@ -1,4 +1,4 @@
-import { Box, Grid, IconButton, InputBase, Tooltip, Typography } from "@mui/material"
+import { Box, Grid, IconButton, InputBase, Slider, styled, Tooltip, Typography } from "@mui/material"
 import { makeStyles } from '@mui/styles';
 import CalculateTab from "./calculateTab";
 import Link from "next/link";
@@ -9,6 +9,10 @@ import m3 from '../../icons/m3.svg'
 import m4 from '../../icons/m4.svg'
 import Image from "next/image";
 import InnerTab from "./innerTab";
+import { useState } from "react";
+import HoverTool from "@/theme/components/hoverTool";
+import MiningCalculatorTable from "./miningCalculatorTable";
+
 
 const useStyles = makeStyles({
     coin__lunch: {
@@ -28,15 +32,31 @@ const useStyles = makeStyles({
         border: '1px solid #1D1D20',
         padding: '10px',
         borderRadius: '4px',
-        display:'flex',
-        alignItems:'center',
-        justifyContent:'center'
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     mmcttool: {
         display: 'flex',
         alignItems: 'center',
         gap: '10px'
-    }
+    },
+    max_btn__wrap: {
+        backgroundColor: '#101012',
+        border: '1px solid #1D1D20',
+        borderRadius: '8px',
+        display: 'flex',
+        padding: '2px',
+        marginTop: '0.5rem'
+    },
+    max_btn: {
+        backgroundColor: '#00FFFF',
+        padding: '10px 20px',
+        borderRadius: '8px',
+        color: '#000',
+        textDecoration: 'none',
+        fontWeight: 500,
+    },
 
 });
 
@@ -46,33 +66,81 @@ const MMCTBOX = [
         Title: '1',
         date: '200.00',
         mmct: '20',
-        icon:m1,
+        icon: m1,
     },
     {
         id: 2,
         Title: '10',
         date: '2k',
         mmct: '200',
-        icon:m2,
+        icon: m2,
     },
     {
         id: 3,
         Title: '30',
         date: '6k',
         mmct: '600',
-        icon:m3,
+        icon: m3,
     },
     {
         id: 4,
         Title: '100',
         date: '20k',
         mmct: '2000',
-        icon:m4,
+        icon: m4,
     },
 ]
 
+
+
+const StyledSlider = styled(Slider)(
+    ({ theme }) => `
+     padding: 10px !important;
+    .MuiSlider-root {
+        background-color: #fff !important;
+        padding:16px
+      }
+    .MuiSlider-rail {
+      background: linear-gradient(90deg, #080808, #00FFFF);
+      padding:12px
+    }
+      
+    .MuiSlider-track {
+      background: linear-gradient(0deg, #fff, #fff);
+       
+    }
+    .MuiSlider-thumb {
+        background: linear-gradient(0deg, #00FFFF, #00FFFF);
+        padding:20px
+      }
+  `
+);
+
+const ValueLabelComponent = (props: { children: any; open: any; value: any; }) => {
+    const { children, open, value } = props;
+
+    return (
+        <Tooltip
+            open={open}
+            enterTouchDelay={0}
+            placement="top"
+            title={`Value ${value}`}
+            arrow
+        >
+            {children}
+        </Tooltip>
+    );
+};
+
 const Miningcalculate = () => {
     const classes = useStyles();
+    const [valueTop, setValueTop] = useState<number[]>([1,]);
+    const [input, setInput] = useState<string>('');
+
+    const handleChange = (event: Event, newValue: number | number[]) => {
+        setValueTop(newValue as number[]);
+    };
+
     return (
         <>
             <Box className={classes.mainDiv}>
@@ -84,36 +152,56 @@ const Miningcalculate = () => {
                     <Typography color={'#fff'}>How many coins will I mine <Box component={'span'}><Link href={""} style={{ textDecoration: 'none', color: '#00FFFF' }}>per day?</Link></Box></Typography>
                 </Box>
 
+                <Typography mt={3} color={'#fff'} variant="h6">Enter how much $ you want to invest.</Typography>
+                <Box className={classes.max_btn__wrap}>
+                    <InputBase
+                        onChange={(e) => setInput(e.target.value)}
+                        value={input}
+                        type={'number'}
+                        sx={{
+                            flex: 1,
+                            color: '#fff',
+                            width: '100%',
+                            padding: '0.3rem 0.5rem',
+                            ':-moz-placeholder': {
+                                color: 'fff',
+                            }
+                        }}
+                        fullWidth
+                        placeholder={'Enter Amount in $'}
 
-              <Box mt={5}>
-              <Grid container spacing={2}>
-                    {MMCTBOX.map((item, index) => (
-                        <Grid key={index} item lg={3} md={6} sm={6} xs={12}>
-                            <Box className={classes.mainBox}>
-                                <Box className={classes.sBox}>
-                                    <Image src={item.icon} alt={""}/>
-                                </Box>
-                                <Box className={classes.mmcttool}>
-                                    <Box><Typography color={'#fff'}>MMCTX{item.Title}</Typography></Box>
-                                    <Tooltip title="MMCT">
-                                        <IconButton>
-                                            <InfoIcon sx={{ color: '#fff' }} />
-                                        </IconButton>
-                                    </Tooltip>
-                                </Box>
-                                <Box>
-                                    <Typography variant="h4" color={'#fff'} fontWeight={500}>$ {item.date}</Typography>
-                                    <Typography variant="h6" color={'#fff'} fontWeight={300}>{item.mmct} MMCT</Typography>
-                                </Box>
-                            </Box>
-                        </Grid>
-                    ))}
+                    />
+                    {/* <Link className={classes.max_btn} href={""}>Max</Link> */}
+                </Box>
 
-                </Grid>
-              </Box>
+                <Typography variant="h6" mt={2} mb={2} color={'#fff'}>Position <Typography component={'span'}><HoverTool Title={"1"} /></Typography></Typography>
 
+               
+                <Box sx={{ margin: '0rem 2rem 0rem 0rem' }}>
+                    
+                        <StyledSlider
+                            value={valueTop}
+                            onChange={handleChange}
+                            aria-labelledby="range-slider"
+                            min={1}
+                            max={8}
+                            valueLabelDisplay="auto"
+                            components={{
+                                ValueLabel: ValueLabelComponent,
+                            }}
+                            sx={{
+                                backgroundColor: '#101012',
+                                border: '1px solid #1D1D20',
+                                borderRadius: '30px',
+                                '&.Mui-active': {
+                                    boxShadow: '0 0 0 14px rgba(0, 0, 255, 0.16)', // Change this to your desired active color
+                                },
+                            }}
+                        />
+                     
+                </Box>
 
-                <InnerTab />
+                {input && <MiningCalculatorTable />}
             </Box>
         </>
     )

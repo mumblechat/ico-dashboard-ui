@@ -61,7 +61,7 @@ const useStyles = makeStyles({
     }
 });
 
-const TableEarn = () => {
+const TableCummunityEarn = () => {
     const classes = useStyles();
 
     const { address } = useAccount()
@@ -187,19 +187,14 @@ const TableEarn = () => {
     return (
         <Box>
             <TableContainer className={classes.tableContainer}>
-                <Table sx={{ minWidth: 1500, backgroundColor: '#080808', border: '1px solid #1D1D20', borderRadius: '8px' }} aria-label="simple table">
+                <Table sx={{ minWidth: 650, backgroundColor: '#080808', border: '1px solid #1D1D20', borderRadius: '8px' }} aria-label="simple table">
                     <TableHead sx={{ backgroundColor: '#101012' }}>
                         <TableRow>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }}>Users</TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">SA <HoverTool Title={"Staked Amount"}/></TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">Tier</TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">Reward</TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">TRI365D <HoverTool Title={"Total Reward in 365 Days"}/></TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">TCR <HoverTool Title={"Till Claimed Rewards"}/></TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">RR <HoverTool Title={"Remaining Rewards"}/></TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">ST <HoverTool Title={"Start Time"}/></TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">LC <HoverTool Title={"Last Claimed"}/></TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="right">Action</TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }}>From</TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">Level</TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">FCR <HoverTool Title={"From Claimed Reward"}/></TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">FCT <HoverTool Title={"From Claimed Time"}/></TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="right">Reward</TableCell>
  
                         </TableRow>
                     </TableHead>
@@ -214,53 +209,25 @@ const TableEarn = () => {
                                     </Box>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
+                                    <Typography color={'#fff'}>{item.id}</Typography>
+
+                                </TableCell>
+                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
                                     <Typography color={'#fff'}>{item.stakeAmount} MMCT</Typography>
                                     <Typography color={'#999'}>$ {item.stakeDate}</Typography>
                                 </TableCell>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{item.tier}</Typography>
-
-                                </TableCell>
+                             
                                  
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>$ {item.reward}</Typography>
+                                    <Typography color={'#fff'}>$ {item.startTime}</Typography>
                                 </TableCell>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>$ {item.tri365d}</Typography>
-                                </TableCell>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>$ {item.tcr}</Typography>
-                                </TableCell>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>$ {item.rr}</Typography>
-                                </TableCell>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{item.startTime}</Typography>
-                                </TableCell>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{item.lastClaim}</Typography>
-                                </TableCell>
-                               
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="right">
-                                    <Box className={classes.stakebtn__wrp}>
-                                        <Button 
-                                        disabled={
-                                            isPendingClaimForWrite || isLoading
-                                        }
-                                        className={classes.stakebtn}
-                                        onClick={async()=>{
-                                            await writeContractAsync({
-                                                abi: mmctStakingAbi,
-                                                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
-                                                functionName: 'claimRewards',
-                                                args: [BigInt(index)],
-                                                account: address
-                                             })
-                                        }}
-                                        >Claim</Button>
-                                        <Button className={classes.stakebtn} >Unstake</Button>
-                                    </Box>
+                                    <Typography color={'#fff'}> {item.tri365d} MMCT</Typography>
+                                    <Typography color={'#999'}>$ {item.stakeDate}</Typography>
                                 </TableCell>
+                                
+                               
+                               
                             </TableRow>
                         ))}
                             
@@ -280,4 +247,4 @@ const TableEarn = () => {
     );
 }
 
-export default TableEarn;
+export default TableCummunityEarn;

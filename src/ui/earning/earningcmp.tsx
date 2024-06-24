@@ -4,6 +4,7 @@ import Sidebardb from "../dashboard/sidebardb";
 import Dsboard from "../dashboard/dsboard";
 import DashboardHeader from "../shared/dashboardHeader";
 import Earning from "./earning";
+import EarningTab from "./earningTab";
 
 
 
@@ -35,7 +36,7 @@ const Earningcmp = () => {
                     </Grid>
                     <Grid item lg={9.5} md={9.5} sm={12} xs={12}>
                         <DashboardHeader />
-                        <Earning/>
+                        <EarningTab/>
                     </Grid>
                 </Grid>
             </Box>

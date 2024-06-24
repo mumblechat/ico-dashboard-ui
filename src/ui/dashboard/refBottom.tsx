@@ -1,9 +1,11 @@
+import shortenString from "@/lib/shortenString";
 import AddressCopy from "@/theme/components/addressCopy";
 import Modal from "@/theme/components/modal";
 import { Box } from "@mui/material"
 import { makeStyles } from '@mui/styles';
 import Image from "next/image";
 import Link from "next/link";
+import { Address } from "viem";
 
 import { useAccount } from "wagmi";
 
@@ -34,8 +36,8 @@ const RefBottom = () => {
     return (
         <>
             <Box className={classes.ref__link}>
-                <AddressCopy text={address} address={"https://ico.dashboard.mumblechat.com/?ref=0x7..ae6"} />
-              <Modal/>
+                 <AddressCopy text={`https://ico.mumblechat.com/dashboard/?ref=${address}`} addresstext={`https://ico.mumblechat.com/dashboard/?ref=${shortenString(address as Address)}`} /> 
+                <Modal />
             </Box>
         </>
     )

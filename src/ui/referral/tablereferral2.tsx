@@ -6,8 +6,8 @@ import p4 from '../../icons/p4.svg'
 import p5 from '../../icons/p5.svg'
 import p6 from '../../icons/p6.svg'
 import Image from "next/image";
-import r2 from '../../icons/r2.svg'
 import HoverTool from "@/theme/components/hoverTool";
+import r2 from '../../icons/r2.svg'
 import { makeStyles } from '@mui/styles';
 
 
@@ -34,7 +34,10 @@ const useStyles = makeStyles({
 
 
 
-const Tablereferral = () => {
+
+
+
+const Tablereferral2 = () => {
     const classes = useStyles();
 
 
@@ -46,7 +49,8 @@ const Tablereferral = () => {
             ProfileAddress: "0xcc5...be31",
             Bonus: '57',
             Profit: '1,021',
-            sa: '10'
+            sa: '10',
+            level:'1'
 
         },
         {
@@ -55,7 +59,8 @@ const Tablereferral = () => {
             ProfileAddress: "0x2eb...7176",
             Bonus: '10',
             Profit: '1,210',
-            sa: '10'
+            sa: '10',
+            level:'2'
         },
         {
             id: 3,
@@ -63,7 +68,8 @@ const Tablereferral = () => {
             ProfileAddress: "0x614...7419",
             Bonus: '22',
             Profit: '1,252',
-            sa: '10'
+            sa: '10',
+             level:'3'
         },
         {
             id: 4,
@@ -71,7 +77,8 @@ const Tablereferral = () => {
             ProfileAddress: "0x247...12a3",
             Bonus: '37',
             Profit: '1,345',
-            sa: '10'
+            sa: '10',
+             level:'4'
         },
         {
             id: 5,
@@ -79,7 +86,8 @@ const Tablereferral = () => {
             ProfileAddress: "0xe7d...31e2",
             Bonus: '29',
             Profit: '1,879',
-            sa: '10'
+            sa: '10',
+            level:'5'
         },
         {
             id: 6,
@@ -87,7 +95,8 @@ const Tablereferral = () => {
             ProfileAddress: "0x6ac...0be7",
             Bonus: '12',
             Profit: '18,521',
-            sa: '10'
+            sa: '10',
+            level:'Elite'
         },
 
     ]
@@ -107,8 +116,9 @@ const Tablereferral = () => {
                             <TableRow>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} >Users</TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">SA <HoverTool Title={"Staking Amount"} /></TableCell>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">Bonus</TableCell>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="right">YE <HoverTool Title={"Your Earning"} /></TableCell>
+                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">RE <HoverTool Title={"Referral Earning"}/></TableCell>
+                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">level</TableCell>
+                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="right">EFY <HoverTool Title={"Earning From You"} /></TableCell>
 
                             </TableRow>
                         </TableHead>
@@ -129,8 +139,9 @@ const Tablereferral = () => {
                                             <Typography>{item.ProfileAddress}</Typography>
                                         </Box>
                                     </TableCell>
-                                    <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">${item.Bonus}</TableCell>
-                                    <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">{item.sa}%</TableCell>
+                                    <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">{item.Bonus} %</TableCell>
+                                    <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">$ {item.sa}</TableCell>
+                                    <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">{item.id}</TableCell>
                                     <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="right">$ {item.Profit}</TableCell>
 
                                 </TableRow>
@@ -145,4 +156,4 @@ const Tablereferral = () => {
     );
 }
 
-export default Tablereferral
+export default Tablereferral2

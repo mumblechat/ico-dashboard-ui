@@ -207,14 +207,14 @@ const Refer =({resultOfReferralDetail}:{resultOfReferralDetail: any})=>{
         <>
         <Box>
                     <Grid container spacing={2} mt={1}>
-                        <Grid item lg={5} md={5} sm={12} xs={12}>
+                        {/* <Grid item lg={5} md={5} sm={12} xs={12}>
                             <Box className={classes.step__four}>
                                 <Typography color={'#999'}>YOUR LAST TRANSACTIONS</Typography>
                                 <Typography color={'#fff'}>There are no finalized transactions yet.</Typography>
                             </Box>
 
-                        </Grid>
-                        <Grid item lg={7} md={7} sm={12} xs={12}>
+                        </Grid> */}
+                        <Grid item lg={12} md={12} sm={12} xs={12}>
                             <Box className={classes.step__four2}>
                                 <Box className={classes.referral}>
                                     <Box>

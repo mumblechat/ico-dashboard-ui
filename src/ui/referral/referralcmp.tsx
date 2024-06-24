@@ -4,6 +4,8 @@ import Sidebardb from "../dashboard/sidebardb";
 import Dsboard from "../dashboard/dsboard";
 import DashboardHeader from "../shared/dashboardHeader";
 import Referral from "./referral";
+import ReferralTab from "./referralTab";
+import Refer from "../dashboard/refer";
 
 
 
@@ -35,7 +37,8 @@ const Raferralcmp = () => {
                     </Grid>
                     <Grid item lg={9.5} md={9.5} sm={12} xs={12}>
                         <DashboardHeader />
-                        <Referral/>
+                         
+                        <ReferralTab/>
                     </Grid>
                 </Grid>
             </Box>

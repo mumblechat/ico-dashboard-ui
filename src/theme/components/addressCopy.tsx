@@ -4,10 +4,11 @@ import copy from 'clipboard-copy';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Link from "next/link";
 import React, { useState } from "react";
+import { useAccount } from "wagmi";
 
 interface props {
     text: any;
-    address: any;
+    addresstext: any;
 }
 const StyledBox = styled(Box)(({ theme }) => ({
     display: 'flex',
@@ -27,8 +28,9 @@ const StyledLink = styled(Link)(({ theme }) => ({
         }
 }));
 
-const AddressCopy = ({ text, address,  }: props) => {
+const AddressCopy = ({ text, addresstext,  }: props) => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const { address } = useAccount();
     const handleCopy = () => {
         copy(text);
         setOpenSnackbar(true);
@@ -42,8 +44,8 @@ const AddressCopy = ({ text, address,  }: props) => {
     return (
         <>
             <StyledBox>
-                <StyledLink href={'#'}>
-                    {address}
+                <StyledLink href={`https://ico.dashboard.mumblechat.com/dashboard/?ref=${address}`} target="_black">
+                    {addresstext}
                 </StyledLink>
 
                 <Box onClick={handleCopy}>
