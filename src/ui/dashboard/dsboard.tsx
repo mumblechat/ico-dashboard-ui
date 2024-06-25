@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { Box, Button, CircularProgress, circularProgressClasses, CircularProgressProps, Grid, InputBase, LinearProgress, linearProgressClasses, Slider, styled, Typography } from "@mui/material"
 import DashboardHeader from "../shared/dashboardHeader"
 import { makeStyles } from '@mui/styles';
@@ -30,9 +30,10 @@ import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 
 import { mmctReferralAbi } from "@/configs/abi/mmctReferral";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
-import CommunityTable from "./communityTable";
+import ContributorsTable from "./contributorsTable";
 import { mmctIcoAbi } from "@/configs/abi/mmctIco";
 import ConnectWallet from "../shared/connectWallet";
+import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -319,11 +320,11 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 const Dsboard = (props: CircularProgressProps) => {
     const classes = useStyles();
-    const [valueTop, setValueTop] = useState<number[]>([10,]);
+    const [valueTop, setValueTop] = useState<number>(1);
 
     const [buyInput, setBuyInput] = useState("")
     const [showInput, setShowInput] = useState<boolean>(false);
-    const [referrerAddress, setReferrerAddress] = useState<`0x${string}`>("0x65bED791FeA6345C0217Ad1E4BdE4DD29d88aAcA")
+    const [referrerAddress, setReferrerAddress] = useState<string>("")
     const { address } = useAccount()
     const chainId = useChainId()
     const { writeContractAsync, data, isPending: isPendingBuyForWrite } = useWriteContract()
@@ -339,8 +340,8 @@ const Dsboard = (props: CircularProgressProps) => {
     const handleMax = () => {
         setBuyInput((formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))))
     }
-    const handleChange = (event: Event, newValue: number | number[]) => {
-        setValueTop(newValue as number[]);
+    const handleChange = (event: Event, newValue: number) => {
+        setValueTop(newValue);
     }
 
     const resultOfSaleDetails = useReadContract({
@@ -351,7 +352,26 @@ const Dsboard = (props: CircularProgressProps) => {
         account: zeroAddress
     })
 
-    const [value2, setValue2] = useState<number>(Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.tokenAmount ? resultOfSaleDetails?.data?.tokenAmount.toString() : 0))));
+    const [value2, setValue2] = useState<number>(0);
+    const [initialProgressValue, setInitialProgressValue] = useState<number>(0);
+    useEffect(() => {
+        if (resultOfSaleDetails?.data) {
+          const tokenAmount = BigInt(resultOfSaleDetails.data.tokenAmount?.toString() || '0');
+          const saleQuantity = BigInt(resultOfSaleDetails.data.saleQuantity?.toString() || '0');
+          const tokenAmountInEther = Number(formatEther(tokenAmount));
+          const saleQuantityInEther = Number(formatEther(saleQuantity));
+    
+          if (!initialProgressValue) {
+            setInitialProgressValue(tokenAmountInEther);
+          }
+    
+          setValue2(((tokenAmountInEther - (tokenAmountInEther-saleQuantityInEther))>0?(tokenAmountInEther - (tokenAmountInEther-saleQuantityInEther)):0));
+        }
+      }, [resultOfSaleDetails?.data]);
+    
+
+      const progressValue = initialProgressValue > 0 ? ((initialProgressValue - value2) / initialProgressValue) * 100 : 0;
+    
 
     const resultOfUserContribution = useReadContract({
         abi: mmctIcoAbi,
@@ -377,6 +397,14 @@ const Dsboard = (props: CircularProgressProps) => {
         account: address
     })
 
+    const resultOfUserCommunityReward = useReadContract({
+        abi: mmctStakingAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+        functionName: 'user2CommunityRewardInfo',
+        args: [address as Address],
+        account: zeroAddress
+    })
+
     const resultOfReferralDetail = useReadContracts({
         contracts: [
             {
@@ -391,6 +419,12 @@ const Dsboard = (props: CircularProgressProps) => {
                 functionName: 'getReferralsCount',
                 args: [address as Address]
             },
+            {
+                abi: mmctReferralAbi,
+                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
+                functionName: 'isValidReferrerOrStaker',
+                args: [address as Address,referrerAddress as Address]
+            },
         ]
     })
 
@@ -398,22 +432,22 @@ const Dsboard = (props: CircularProgressProps) => {
         {
             image: l1,
             title: 'Your Total $MMCT Balance',
-            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)))}`,
+            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)),3)}`,
         },
         {
             image: l2,
             title: 'Your Coin Worth at Launch',
-            data: `$${resultOfUserContribution?.data ? Number(Number(formatEther?.(BigInt?.(resultOfUserContribution?.data?.volume ? resultOfUserContribution?.data?.volume.toString() : 0))) * Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleRateInUsd ? resultOfSaleDetails?.data?.saleRateInUsd.toString() : 0)))).toFixed(2) : 0.00}`
+            data: `$${resultOfUserContribution?.data ? Number(Number(formatEther?.(BigInt?.(resultOfUserContribution?.data?.volume ? resultOfUserContribution?.data?.volume.toString() : 0))) * Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleRateInUsd ? resultOfSaleDetails?.data?.saleRateInUsd.toString() : 0)))).toFixed(3) : 0.000}`
         },
         {
             image: l3,
             title: 'Your Spot Earnings',
-            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfReferralDetail?.data?.[0].result ? resultOfReferralDetail?.data?.[0].result.toString() : 0)))} MMCT`
+            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfReferralDetail?.data?.[0].result ? resultOfReferralDetail?.data?.[0].result.toString() : 0)),3)} MMCT`
         },
         {
             image: l1,
             title: 'Your Community Earnings',
-            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfReferralDetail?.data?.[0].result ? resultOfReferralDetail?.data?.[0].result.toString() : 0)))} MMCT`
+            data: `${convertToAbbreviated(formatEther?.(BigInt(Number(resultOfUserCommunityReward?.data)>0 ? resultOfUserCommunityReward?.data?.claimedReward as bigint : 0)),3)} MMCT`
         },
     ]
 
@@ -421,11 +455,6 @@ const Dsboard = (props: CircularProgressProps) => {
     //     setValue2(newValue);
     // };
 
-    useEffect(() => {
-        if (resultOfSaleDetails?.data?.saleQuantity !== undefined) {
-            setValue2(Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleQuantity ? resultOfSaleDetails?.data?.saleQuantity.toString() : 0))));
-        }
-    }, [resultOfSaleDetails]);
 
 
 
@@ -565,7 +594,7 @@ const Dsboard = (props: CircularProgressProps) => {
                                         zIndex: '1',
 
                                     }}
-                                    ><Typography color={'#fff'}> Remaining:{convertToAbbreviated(value2)}</Typography></Box>
+                                    ><Typography color={'#fff'}> Remaining:{convertToAbbreviated(value2,4)}</Typography></Box>
                                     <Box>
                                         {/* <Slider
                                     value={valueTop}
@@ -584,7 +613,7 @@ const Dsboard = (props: CircularProgressProps) => {
                                         },
                                     }}
                                 /> */}
-                                        <BorderLinearProgress variant="determinate" value={valueTop as any} />
+                                        <BorderLinearProgress variant="determinate" value={progressValue} />
                                     </Box>
 
                                 </Box>
@@ -658,14 +687,23 @@ const Dsboard = (props: CircularProgressProps) => {
                                 fullWidth={true}
                                 className={classes.buy__btn}
                                 sx={{
-                                    opacity: buyInput ? "1" : '0.3'
+                                    opacity: !(
+                                        !buyInput || isPendingBuyForWrite || isLoading || (
+                                            buyInput && (Number(buyInput) *
+                                                Number(
+                                                    formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
+                                            ) < 10
+                                        ) || (
+                                            Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))) < Number(Number(buyInput) > 0 ? buyInput : 0)
+                                        )
+                                    ) ? "1" : '0.3'
                                 }}
                                 onClick={async () => {
                                     await writeContractAsync({
                                         abi: mmctIcoAbi,
                                         address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_ico : mmctContractAddresses.pingaksha.mmct_ico,
                                         functionName: 'buy',
-                                        args: [0, referrerAddress],
+                                        args: [0, referrerAddress as Address],
                                         account: address,
                                         value: parseEther(buyInput),
                                     })
@@ -723,9 +761,18 @@ const Dsboard = (props: CircularProgressProps) => {
 
 
                                             </Box>
-                                            {/* <Box className={classes.validate__box} >
-                                                <Typography component={'span'} fontWeight={200} color={'red'}>This is Invalid Address</Typography>
-                                            </Box> */}
+                                            {
+                                                (referrerAddress && !resultOfReferralDetail?.data?.[2].result) && (
+                                                    <>
+                                            <Box className={classes.validate__box} >
+                                                <Typography component={'span'} fontWeight={200} color={'red'}>Your Referrer is Invalid</Typography>
+                                            </Box>
+                                            {/* <Box className={classes.validate__box} > */}
+                                                 <Typography component={'span'} fontWeight={200} color={'#00FFFF'}>Note: If You have no any  valid referrer address then you can use this community referrer.</Typography>
+                                                 <Typography component={'h6'} fontWeight={200} color={'#00FFFF'}>Referrer: 0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af</Typography>
+                                             {/* </Box> */}
+                                             </>
+                                            )}
                                         </Box>
                                     )
                                 }
@@ -739,7 +786,7 @@ const Dsboard = (props: CircularProgressProps) => {
                             <Box className={classes.coin_hding}>
                                 <Typography variant="h5" color={'#fff'}>Your Contributions</Typography>
                             </Box>
-                            <CommunityTable />
+                            <ContributorsTable resultOfRamaPriceInUSD={resultOfRamaPriceInUSD?.data} />
                         </Box>
                     </Grid>
                 </Grid>

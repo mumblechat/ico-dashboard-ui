@@ -15,7 +15,7 @@ import TableCummunityEarn from "./tableCummunityEarn";
 const useStyles = makeStyles({
     mainDiv: {
         margin: '10px',
-
+        minHeight: '100vh',
     },
     box_hding: {
 
@@ -55,58 +55,28 @@ const Community = () => {
     const classes = useStyles();
     const { address } = useAccount()
     const chainId = useChainId()
-    const balanceOfRama = useBalance({
-        address: address
-    })
-    const resultOfBalance = useReadContract({
-        abi: mmctTokenAbi,
-        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_token : mmctContractAddresses.pingaksha.mmct_token,
-        functionName: 'balanceOf',
-        args: [address as Address],
-        account: address
-    })
 
-    const resultOfUserStaked = useReadContract({
+    const resultOfUserCommunityReward = useReadContract({
         abi: mmctStakingAbi,
         address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
-        functionName: 'user2Staked',
+        functionName: 'user2CommunityRewardInfo',
         args: [address as Address],
         account: zeroAddress
     })
-
-    const resultOfUserStakedLength = useReadContract({
-        abi: mmctStakingAbi,
-        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
-        functionName: 'totalStakedLengthForUser',
-        args: [address as Address],
-        account: zeroAddress
-    })
-
-
-    const resultOfUserStakedList = useReadContract({
-        abi: mmctStakingAbi,
-        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
-        functionName: 'user2StakedList',
-        args: [address as Address, BigInt(0), Number(resultOfUserStakedLength?.data) > 0 ? resultOfUserStakedLength.data as bigint : BigInt(1)],
-        account: zeroAddress
-    })
-
-    // const totalUnclaimedRewards= resultOfUserStakedList?.data?.reduce((previousValue,currentValue)=> previousValue+  )
 
     const Card = [
          
         {
             id: 1,
             Title: 'Claimed Rewards',
-            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0)))}`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0))) * 0.05)}`
+            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.claimedReward.toString() : 0)),4)}`,
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.claimedReward.toString() : 0))) * 0.05)}`
         },
         {
             id: 2,
             Title: 'Unclaimed Rewards',
-            Amount: `${" 0.00"
-                }`,
-            data: '0.00'
+            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.amount.toString() : 0)),4)}`,
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.amount.toString() : 0))) * 0.05)}`
         },
     ]
     return (
@@ -146,7 +116,7 @@ const Community = () => {
 
                 </Box>
                 <Box className={classes.boxCr} sx={{ marginTop: '1rem' }}>
-                    <TableCummunityEarn />
+                    <TableCummunityEarn resultOfUserCommunityReward={resultOfUserCommunityReward?.data} />
                 </Box>
             </Box>
 

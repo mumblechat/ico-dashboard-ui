@@ -1,3 +1,4 @@
+'use client'
 import { Box, Grid, InputBase, Typography } from "@mui/material"
 import { makeStyles } from '@mui/styles';
 import Image from "next/image";
@@ -14,6 +15,7 @@ import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString
 const useStyles = makeStyles({
     mainDiv: {
         margin: '10px',
+        minHeight: '100vh',
 
     },
     box_hding: {
@@ -88,7 +90,7 @@ const Earning = ({ Earning }: props) => {
         abi: mmctStakingAbi,
         address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
         functionName: 'user2StakedList',
-        args: [address as Address, BigInt(0), Number(resultOfUserStakedLength?.data) > 0 ? resultOfUserStakedLength.data as bigint : BigInt(1)],
+        args: [address as Address, BigInt(0), Number(resultOfUserStakedLength?.data) > 0 ? resultOfUserStakedLength.data as bigint : BigInt(0)],
         account: zeroAddress
     })
 
@@ -98,27 +100,27 @@ const Earning = ({ Earning }: props) => {
         {
             id: 1,
             Title: 'Ramestta Wallet Balance',
-            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)))}`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0))) * 0.05)}`
+            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)),3)}`,
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0))) * 0.05,3)}`
         },
         {
             id: 2,
             Title: 'Your Stake',
-            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0)))}`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0))) * 0.05)}`
+            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0)),3)}`,
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0))) * 0.05,3)}`
         },
         {
             id: 3,
             Title: 'Claimed Rewards',
-            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0)))}`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0))) * 0.05)}`
+            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0)),3)}`,
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0))) * 0.05,3)}`
         },
         {
             id: 4,
             Title: 'Unclaimed Rewards',
-            Amount: `${" 0.00"
+            Amount: `${" 0.000"
                 }`,
-            data: '0.00'
+            data: '$0.000'
         },
     ]
     return (
@@ -158,7 +160,7 @@ const Earning = ({ Earning }: props) => {
 
                 </Box>
                 <Box className={classes.boxCr} sx={{ marginTop: '1rem' }}>
-                    <TableEarn />
+                    <TableEarn resultOfUserStakedList={resultOfUserStakedList?.data} />
                 </Box>
             </Box>
 

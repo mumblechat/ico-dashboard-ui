@@ -1,23 +1,16 @@
-"use client"
+'use client'
 import { Box, Grid } from "@mui/material";
 import Sidebardb from "../dashboard/sidebardb";
-import Dsboard from "../dashboard/dsboard";
 import DashboardHeader from "../shared/dashboardHeader";
-import Earning from "./earning";
-import EarningTab from "./earningTab";
+import dynamic from "next/dynamic"
 
-
-
-
-
-
-
-
-
-
-
-
-
+const EarningTab = dynamic(
+  () => import("@/ui/earning/earningTab"),
+  {
+    ssr: false,
+  }
+)
+ 
 
 const Earningcmp = () => {
 

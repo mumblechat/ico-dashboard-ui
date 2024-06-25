@@ -18,34 +18,37 @@ import {
   midnightTheme,
 } from '@rainbow-me/rainbowkit';
 import {
-  argentWallet,
   trustWallet,
-  ledgerWallet,
-  injectedWallet
+  injectedWallet,
+  metaMaskWallet,
+  argentWallet
 } from '@rainbow-me/rainbowkit/wallets';
  
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Box, useTheme } from '@mui/material';
 import { ColorModeContext } from '@/context';
 import { pingaksha, ramestta } from '.';
- 
+import { ramaPayWallet } from './ramaPayWallet';
 
-
-const { wallets } = getDefaultWallets();
+const {wallets}=getDefaultWallets()
 
 export const config = getDefaultConfig({
   appName: 'Mumblechat ICO',
   projectId: 'YOUR_PROJECT_ID',
   wallets: [
+    {
+      groupName: 'Recommended',
+      wallets: [metaMaskWallet,injectedWallet,ramaPayWallet],
+    },
     ...wallets,
     {
       groupName: 'Other',
-      wallets: [injectedWallet,argentWallet, trustWallet, ledgerWallet],
+      wallets: [trustWallet,argentWallet]
     },
-  ],
+    ],
   chains: [
     pingaksha,
-    ramestta
+    ramestta,
   ],
   ssr: false,
   multiInjectedProviderDiscovery: false, 
@@ -151,4 +154,8 @@ export function Providers({ children, initialState }: Props) {
       </QueryClientProvider>
     </WagmiProvider>
   )
+}
+
+function jsonRpcProvider(arg0: { rpc: (chain: any) => { http: string; }; }) {
+  throw new Error('Function not implemented.');
 }

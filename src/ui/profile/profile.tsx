@@ -4,6 +4,7 @@ import Heading from "@/theme/components/heading";
 import RefBottom from "../dashboard/refBottom";
 import Image from "next/image";
 import rmesta from '../../icons/rmesta.svg'
+import { useAccount } from "wagmi";
 
 
 
@@ -47,6 +48,7 @@ const useStyles = makeStyles({
 
 const Profile = () => {
     const classes = useStyles();
+    const {address} = useAccount()
     return (
         <>
 
@@ -56,13 +58,13 @@ const Profile = () => {
                     <Box className={classes.js_Reigns}>
                         <Box className={classes.profile}>
                             <Image src={rmesta} alt={""} />
-                            <Typography color={'#999'}>Rank: <Typography component={'span'} color={'#fff'}>Silver</Typography></Typography>
+                            <Typography color={'#999'}>Rank: <Typography component={'span'} color={'#fff'}>1</Typography></Typography>
                         </Box>
                         <Typography sx={{
                             '@media(max-width : 600px)': {
                                 fontSize: 11.7
                             }
-                        }} mt={1.5} color={'#fff'}>0xbE97d054CB8f0Af6524Beb00a3AB3a97e5676A5d</Typography>
+                        }} mt={1.5} color={'#fff'}>{address??''}</Typography>
                     </Box>
                     <RefBottom />
                 </Box>

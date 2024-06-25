@@ -9,6 +9,13 @@ import Image from "next/image";
 import HoverTool from "@/theme/components/hoverTool";
 import r2 from '../../icons/r2.svg'
 import { makeStyles } from '@mui/styles';
+import { useAccount, useChainId, useReadContract } from "wagmi";
+import { mmctReferralAbi } from "@/configs/abi/mmctReferral";
+import { Address, formatEther, zeroAddress } from "viem";
+import { mmctContractAddresses } from "@/configs";
+import shortenString from "@/lib/shortenString";
+import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
+import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
 
 
 const useStyles = makeStyles({
@@ -30,6 +37,14 @@ const useStyles = makeStyles({
             backgroundColor: '#555',
         },
     },
+    noData: {
+        height: '50px',
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'center',
+        justifyItems: "center",
+        backgroundColor: '#080808'
+    }
 })
 
 
@@ -40,7 +55,8 @@ const useStyles = makeStyles({
 const Tablereferral2 = () => {
     const classes = useStyles();
 
-
+    const { address } = useAccount()
+    const chainId = useChainId()
 
     const TableList = [
         {
@@ -103,8 +119,31 @@ const Tablereferral2 = () => {
 
 
 
+    const resultOfUplineReferrals = useReadContract({
+        abi: mmctReferralAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
+        functionName: 'getReferralUplineTree',
+        args: [address as Address],
+        account: zeroAddress
+    })
 
-
+    const rewardPercentages=[
+        0.05,  // L1: 5%
+        0.005,   // L2: 0.5%
+        0.005,   // L3: 0.5%
+        0.005,   // L4: 0.5%
+        0.003,   // L5: 0.3%
+        0.003,   // L6: 0.3%
+        0.003,   // L7: 0.3%
+        0.002,   // L8: 0.2%
+        0.002,   // L9: 0.2%
+        0.002,   // L10: 0.2%
+        0.002,   // L11: 0.2%
+        0.002,   // L12: 0.2%
+        0.005,   // L13: 0.5%
+        0.005,   // L14: 0.5%
+        0.006    // L15: 0.6%
+    ];
 
     return (
 
@@ -114,7 +153,7 @@ const Tablereferral2 = () => {
                     <Table sx={{ minWidth: 650, backgroundColor: '#080808', border: '1px solid #1D1D20', borderRadius: '4px' }} aria-label="simple table">
                         <TableHead sx={{ backgroundColor: '#101012' }}>
                             <TableRow>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} >Users</TableCell>
+                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} >User</TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">SA <HoverTool Title={"Staking Amount"} /></TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">RE <HoverTool Title={"Referral Earning"}/></TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">level</TableCell>
@@ -124,28 +163,95 @@ const Tablereferral2 = () => {
                         </TableHead>
                         <TableBody>
 
-                            {TableList.map((item, index) => (
-                                <TableRow
-                                    key={index}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} component="th" scope="row">
-                                        <Box sx={{
-                                            display: 'flex',
-                                            gap: '10px',
-                                            alignItems: 'center'
-                                        }}>
-                                            <Image src={r2} alt={""} />
-                                            <Typography>{item.ProfileAddress}</Typography>
-                                        </Box>
-                                    </TableCell>
-                                    <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">{item.Bonus} %</TableCell>
-                                    <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">$ {item.sa}</TableCell>
-                                    <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">{item.id}</TableCell>
-                                    <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="right">$ {item.Profit}</TableCell>
-
-                                </TableRow>
-                            ))}
+                            {
+                            (resultOfUplineReferrals?.data && resultOfUplineReferrals.data[0][0]!==zeroAddress)? (
+                                resultOfUplineReferrals.data[0].map((item, index) => (
+                                    <>
+                                    {resultOfUplineReferrals.data[0][index]!==zeroAddress &&
+                                    <TableRow
+                                        key={index}
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} component="th" scope="row">
+                                            <Box sx={{
+                                                display: 'flex',
+                                                gap: '10px',
+                                                alignItems: 'center'
+                                            }}>
+                                                <Image src={r2} alt={""} />
+                                                <Typography>{shortenString(resultOfUplineReferrals.data[0][index] as Address)}</Typography>
+                                            </Box>
+                                        </TableCell>
+                                        <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
+                                        <Typography color={'#fff'}>{resultOfUplineReferrals.data[1][index] ?
+                                                (
+                                                    <>
+                                                        {convertToAbbreviated(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[1][index].toString()))))} MMCT
+                                                    </>
+                                                )
+                                                : '-'}
+                                            </Typography>
+                                            <Typography color={'#999'}>
+                                            {resultOfUplineReferrals.data[1][index] ?
+                                                (
+                                                    <>
+                                                        {formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[1][index].toString())))*0.05)}
+                                                    </>
+                                                )
+                                                : '-'}
+                                                </Typography>
+                                        </TableCell>
+                                        <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
+                                        <Typography color={'#fff'}>{resultOfUplineReferrals.data[2][index] ?
+                                                (
+                                                    <>
+                                                        {convertToAbbreviated(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString()))),3)} MMCT
+                                                    </>
+                                                )
+                                                : '-'}
+                                            </Typography>
+                                            <Typography color={'#999'}>
+                                            {resultOfUplineReferrals.data[2][index] ?
+                                                (
+                                                    <>
+                                                        {formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString())))*0.05,3)}
+                                                    </>
+                                                )
+                                                : '-'}
+                                                </Typography>
+                                        </TableCell>
+                                        <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">{index+1}</TableCell>
+                                        <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="right">
+                                        <Typography color={'#fff'}>{resultOfUplineReferrals.data[2][index] ?
+                                                (
+                                                    <>
+                                                        {convertToAbbreviated(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString())))*rewardPercentages[index],3)} MMCT
+                                                    </>
+                                                )
+                                                : '-'}
+                                            </Typography>
+                                            <Typography color={'#999'}>
+                                            {resultOfUplineReferrals.data[2][index] ?
+                                                (
+                                                    <>
+                                                        {formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString())))*rewardPercentages[index]*0.05,3)}
+                                                    </>
+                                                )
+                                                : '-'}
+                                                </Typography>
+                                        </TableCell>
+    
+                                    </TableRow>
+                                     }
+                                    </>
+                                    
+                              ))) :
+                              (
+                                  <Box ml={30} className={classes.noData}>
+                                      <Typography color={'#fff'} margin={'auto'}>No Data Found!</Typography>
+                                  </Box>
+                              )
+                      }
 
                         </TableBody>
                     </Table>

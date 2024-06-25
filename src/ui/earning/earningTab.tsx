@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -53,6 +53,7 @@ function a11yProps(index: number) {
 const useStyles = makeStyles({
     mainDiv: {
         margin: '10px',
+        minHeight: '100vh',
     },
     box_hding: {
 

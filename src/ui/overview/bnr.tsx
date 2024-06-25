@@ -69,7 +69,7 @@ const Bnr = () => {
         account: zeroAddress
       }) 
       
-    const targetDate = new Date(Number(result?.data?.startAt)*1000);
+    const targetDate = new Date(result?.data ?Number(result?.data?.startAt)*1000: new Date().getTime());
     return (
         <>
             <Box className={classes.dotBox} mt={3}>

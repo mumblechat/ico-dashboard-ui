@@ -1,4 +1,4 @@
-export const mmctIcoAbi= [
+export const mmctIcoAbi = [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",

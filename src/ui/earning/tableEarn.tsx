@@ -1,9 +1,8 @@
+'use client'
 import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import mmct from '../../icons/Sheild.svg'
 import { makeStyles } from '@mui/styles';
 import Image from "next/image";
-import Link from "next/link";
-import { convertToNumber } from "@/lib/convertToNumber";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 import shortenString from "@/lib/shortenString";
 import { useAccount, useChainId, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
@@ -17,7 +16,7 @@ import HoverTool from "@/theme/components/hoverTool";
 
 const useStyles = makeStyles({
     tableContainer: {
-        // maxHeight: 100, 
+        // maxHeight: 100,
         '&::-webkit-scrollbar': {
             width: '12px',
         },
@@ -38,13 +37,13 @@ const useStyles = makeStyles({
         backgroundColor: 'transparent',
         padding: '10px',
         borderRadius: '6px',
-        border: '1px solid #00ffff',
-        color: '#00ffff',
+        border: '1px solid #00ffff !important',
+        color: '#00ffff !important',
         textDecoration: 'none',
         transition: '0.5s',
         '&:hover': {
-            backgroundColor: '#00ffff',
-            color: '#000'
+            backgroundColor: '#00ffff !important',
+            color: '#000 !important'
         }
     },
     stakebtn__wrp: {
@@ -53,15 +52,16 @@ const useStyles = makeStyles({
         justifyContent: 'end'
     },
     noData: {
-        height: '200px',
+        height: '50px',
         display: 'flex',
         width: '100%',
         justifyContent: 'center',
+        justifyItems:"center",
         backgroundColor: '#080808'
     }
 });
 
-const TableEarn = () => {
+const TableEarn = ({ resultOfUserStakedList }: { resultOfUserStakedList: any }) => {
     const classes = useStyles();
 
     const { address } = useAccount()
@@ -79,9 +79,9 @@ const TableEarn = () => {
             startTime: 'Jun 12 2024 23:11:38 PM',
             lastClaim: 'Jun 12 2024 23:11:38 PM',
             tier: 'Starter',
-            tri365d:'1000',
-            tcr:'100',
-            rr:'10'
+            tri365d: '1000',
+            tcr: '100',
+            rr: '10'
         },
         {
             id: 2,
@@ -94,9 +94,9 @@ const TableEarn = () => {
             startTime: 'Jun 12 2024 23:11:38 PM',
             lastClaim: 'Jun 12 2024 23:11:38 PM',
             tier: 'Silver',
-            tri365d:'1000',
-            tcr:'100',
-            rr:'10'
+            tri365d: '1000',
+            tcr: '100',
+            rr: '10'
         },
         {
             id: 3,
@@ -109,9 +109,9 @@ const TableEarn = () => {
             startTime: 'Jun 12 2024 23:11:38 PM',
             lastClaim: 'Jun 12 2024 23:11:38 PM',
             tier: 'Gold',
-            tri365d:'1000',
-            tcr:'100',
-            rr:'10'
+            tri365d: '1000',
+            tcr: '100',
+            rr: '10'
         },
         {
             id: 4,
@@ -124,9 +124,9 @@ const TableEarn = () => {
             startTime: 'Jun 12 2024 23:11:38 PM',
             lastClaim: 'Jun 12 2024 23:11:38 PM',
             tier: 'Platinum',
-            tri365d:'1000',
-            tcr:'100',
-            rr:'10'
+            tri365d: '1000',
+            tcr: '100',
+            rr: '10'
         },
         {
             id: 5,
@@ -139,9 +139,9 @@ const TableEarn = () => {
             startTime: 'Jun 12 2024 23:11:38 PM',
             lastClaim: 'Jun 12 2024 23:11:38 PM',
             tier: 'Daimond',
-            tri365d:'1000',
-            tcr:'100',
-            rr:'10'
+            tri365d: '1000',
+            tcr: '100',
+            rr: '10'
         },
         {
             id: 6,
@@ -154,34 +154,65 @@ const TableEarn = () => {
             startTime: 'Jun 12 2024 23:11:38 PM',
             lastClaim: 'Jun 12 2024 23:11:38 PM',
             tier: 'Elite',
-            tri365d:'1000',
-            tcr:'100',
-            rr:'10'
+            tri365d: '1000',
+            tcr: '100',
+            rr: '10'
         },
 
     ];
 
-    const Reward = ({index}:{index:number})=>{
+    const Reward = ({ index }: { index: number }) => {
         const mintReward = useReadContract({
             abi: mmctStakingAbi,
             address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
             functionName: 'calculateMintRewards',
-            args: [address as Address,BigInt(index)],
+            args: [address as Address, BigInt(index)],
             account: zeroAddress
         })
-        return(
+        return (
             <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-            <Typography color={'#fff'}>{Number(mintReward?.data)>0?Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))).toFixed(4):'0.00'} MMCT</Typography>
-            <Typography color={'#999'}>${Number(mintReward?.data)>0?(Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))) * 0.05).toFixed(4):'0.00'}</Typography>
-           </TableCell>
+                <Typography color={'#fff'}>{Number(mintReward?.data) > 0 ? Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))).toFixed(4) : '0.00'} MMCT</Typography>
+                <Typography color={'#999'}>${Number(mintReward?.data) > 0 ? (Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))) * 0.05).toFixed(4) : '0.00'}</Typography>
+            </TableCell>
         )
     }
 
-    const { writeContractAsync,data,isPending:isPendingClaimForWrite } = useWriteContract()
-    const {isLoading,isSuccess} = useWaitForTransactionReceipt({
-        hash: data,
-      }) 
-    
+
+    const Action = ({index}:{index:number})=>{
+        const { writeContractAsync, data, isPending: isPendingClaimForWrite } = useWriteContract()
+        const { isLoading, isSuccess } = useWaitForTransactionReceipt({
+            hash: data,
+        })
+        return (
+            <Box className={classes.stakebtn__wrp}>
+            <Button
+                disabled={
+                    (isPendingClaimForWrite || isLoading) ? true : false
+                }
+                className={classes.stakebtn}
+                sx={{
+                    opacity: !(
+                        isPendingClaimForWrite || isLoading
+                    ) ? "1" : '0.3'
+                }}
+                onClick={async () => {
+                    await writeContractAsync({
+                        abi: mmctStakingAbi,
+                        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+                        functionName: 'claimRewards',
+                        args: [BigInt(index)],
+                        account: address
+                    })
+                }}
+            >Claim</Button>
+            <Button className={classes.stakebtn} >Unstake</Button>
+        </Box>
+        )
+    }
+
+
+    //   console.log({resultOfUserStakedList});
+
 
 
     return (
@@ -190,94 +221,78 @@ const TableEarn = () => {
                 <Table sx={{ minWidth: 1500, backgroundColor: '#080808', border: '1px solid #1D1D20', borderRadius: '8px' }} aria-label="simple table">
                     <TableHead sx={{ backgroundColor: '#101012' }}>
                         <TableRow>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }}>Users</TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">SA <HoverTool Title={"Staked Amount"}/></TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }}>User</TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">SA <HoverTool Title={"Staked Amount"} /></TableCell>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">Tier</TableCell>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">Reward</TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">TRI365D <HoverTool Title={"Total Reward in 365 Days"}/></TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">TCR <HoverTool Title={"Till Claimed Rewards"}/></TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">RR <HoverTool Title={"Remaining Rewards"}/></TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">ST <HoverTool Title={"Start Time"}/></TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">LC <HoverTool Title={"Last Claimed"}/></TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">TRI365D <HoverTool Title={"Total Reward in 365 Days"} /></TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">TCR <HoverTool Title={"Till Claimed Rewards"} /></TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">RR <HoverTool Title={"Remaining Rewards"} /></TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">ST <HoverTool Title={"Start Time"} /></TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">LC <HoverTool Title={"Last Claimed"} /></TableCell>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="right">Action</TableCell>
- 
+
                         </TableRow>
                     </TableHead>
-                    <TableBody>
-                        
-                        {TableList.map((item,index)=>(
+                    <TableBody style={{alignItems:'center'}}>
+
+                        {
+                        resultOfUserStakedList?.length > 0 ? resultOfUserStakedList.map((item: any, index: number) => (
                             <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} component="th" scope="row">
                                     <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                                        <Image src={item.Userprofile} alt={""} width={50} />
-                                        <Typography>{item.ProfileAddress}</Typography>
+                                        <Image src={mmct} alt={"lol"} width={50} />
+                                        <Typography>{shortenString(address as Address)}</Typography>
                                     </Box>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{item.stakeAmount} MMCT</Typography>
-                                    <Typography color={'#999'}>$ {item.stakeDate}</Typography>
+                                    <Typography color={'#fff'}>{convertToAbbreviated(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0)))} MMCT</Typography>
+                                    <Typography color={'#999'}>{formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0))) * 0.05)}</Typography>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{item.tier}</Typography>
+                                    <Typography color={'#fff'}>{formatTier(Number(item.tier))}</Typography>
 
                                 </TableCell>
-                                 
+
+                                <Reward index={index} />
+
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>$ {item.reward}</Typography>
+                                    <Typography color={'#fff'}>$ {0}</Typography>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>$ {item.tri365d}</Typography>
+                                    <Typography color={'#fff'}>$ {0}</Typography>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>$ {item.tcr}</Typography>
+                                    <Typography color={'#fff'}>$ {0}</Typography>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>$ {item.rr}</Typography>
+                                    <Typography color={'#fff'}>{new Date(Number(item?.startTime) * 1000).toLocaleString()}</Typography>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{item.startTime}</Typography>
+                                    <Typography color={'#fff'}>{new Date(Number(item?.lastClaimTime) * 1000).toLocaleString()}</Typography>
                                 </TableCell>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{item.lastClaim}</Typography>
-                                </TableCell>
-                               
+
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="right">
-                                    <Box className={classes.stakebtn__wrp}>
-                                        <Button 
-                                        disabled={
-                                            isPendingClaimForWrite || isLoading
-                                        }
-                                        className={classes.stakebtn}
-                                        onClick={async()=>{
-                                            await writeContractAsync({
-                                                abi: mmctStakingAbi,
-                                                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
-                                                functionName: 'claimRewards',
-                                                args: [BigInt(index)],
-                                                account: address
-                                             })
-                                        }}
-                                        >Claim</Button>
-                                        <Button className={classes.stakebtn} >Unstake</Button>
-                                    </Box>
+                                    <Action index={index}/>
                                 </TableCell>
                             </TableRow>
-                        ))}
-                            
-                         
+                        ))
 
+                        :(
+                        <Box ml={30} className={classes.noData}>
+                            <Typography color={'#fff'} margin={'auto'}>No Data Found!</Typography>
+                        </Box>
+                        )
+                        }
+                        
 
+                    
                     </TableBody>
                 </Table>
-
-                {/* <Box className={classes.noData}>
-                    <Typography color={'#fff'} margin={'auto'}>No Data Found</Typography>
-                </Box> */}
-
-
             </TableContainer>
         </Box>
     );
 }
 
 export default TableEarn;
+

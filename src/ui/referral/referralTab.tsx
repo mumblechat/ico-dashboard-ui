@@ -60,6 +60,7 @@ function a11yProps(index: number) {
 const useStyles = makeStyles({
     mainDiv: {
         margin: '10px',
+        minHeight: '90vh',
     },
     box_hding: {
 
@@ -142,7 +143,7 @@ export default function ReferralTab() {
                     <Box className={classes.boxref} mt={2}>
                         <Referral refTitle={'Direct Referral'} />
                         <Box sx={{ marginTop: '1rem' }}>
-                            <Tablereferral />
+                            <Tablereferral referralsCount={resultOfReferralDetail?.data?.[1].result?.toString() as string} />
                         </Box>
                         
                         
