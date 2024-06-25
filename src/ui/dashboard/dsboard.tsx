@@ -323,7 +323,7 @@ const Dsboard = (props: CircularProgressProps) => {
     const [valueTop, setValueTop] = useState<number>(1);
 
     const [buyInput, setBuyInput] = useState("")
-    const [showInput, setShowInput] = useState<boolean>(false);
+    // const [showInput, setShowInput] = useState<boolean>(false);
     const [referrerAddress, setReferrerAddress] = useState<string>("")
     const { address } = useAccount()
     const chainId = useChainId()
@@ -340,9 +340,9 @@ const Dsboard = (props: CircularProgressProps) => {
     const handleMax = () => {
         setBuyInput((formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))))
     }
-    const handleChange = (event: Event, newValue: number) => {
-        setValueTop(newValue);
-    }
+    // const handleChange = (event: Event, newValue: number) => {
+    //     setValueTop(newValue);
+    // }
 
     const resultOfSaleDetails = useReadContract({
         abi: mmctIcoAbi,
@@ -356,22 +356,22 @@ const Dsboard = (props: CircularProgressProps) => {
     const [initialProgressValue, setInitialProgressValue] = useState<number>(0);
     useEffect(() => {
         if (resultOfSaleDetails?.data) {
-          const tokenAmount = BigInt(resultOfSaleDetails.data.tokenAmount?.toString() || '0');
-          const saleQuantity = BigInt(resultOfSaleDetails.data.saleQuantity?.toString() || '0');
-          const tokenAmountInEther = Number(formatEther(tokenAmount));
-          const saleQuantityInEther = Number(formatEther(saleQuantity));
-    
-          if (!initialProgressValue) {
-            setInitialProgressValue(tokenAmountInEther);
-          }
-    
-          setValue2(((tokenAmountInEther - (tokenAmountInEther-saleQuantityInEther))>0?(tokenAmountInEther - (tokenAmountInEther-saleQuantityInEther)):0));
-        }
-      }, [resultOfSaleDetails?.data]);
-    
+            const tokenAmount = BigInt(resultOfSaleDetails.data.tokenAmount?.toString() || '0');
+            const saleQuantity = BigInt(resultOfSaleDetails.data.saleQuantity?.toString() || '0');
+            const tokenAmountInEther = Number(formatEther(tokenAmount));
+            const saleQuantityInEther = Number(formatEther(saleQuantity));
 
-      const progressValue = initialProgressValue > 0 ? ((initialProgressValue - value2) / initialProgressValue) * 100 : 0;
-    
+            if (!initialProgressValue) {
+                setInitialProgressValue(tokenAmountInEther);
+            }
+
+            setValue2(((tokenAmountInEther - (tokenAmountInEther - saleQuantityInEther)) > 0 ? (tokenAmountInEther - (tokenAmountInEther - saleQuantityInEther)) : 0));
+        }
+    }, [resultOfSaleDetails?.data]);
+
+
+    const progressValue = initialProgressValue > 0 ? ((initialProgressValue - value2) / initialProgressValue) * 100 : 0;
+
 
     const resultOfUserContribution = useReadContract({
         abi: mmctIcoAbi,
@@ -423,7 +423,13 @@ const Dsboard = (props: CircularProgressProps) => {
                 abi: mmctReferralAbi,
                 address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
                 functionName: 'isValidReferrerOrStaker',
-                args: [address as Address,referrerAddress as Address]
+                args: [address as Address, referrerAddress as Address]
+            },
+            {
+                abi: mmctReferralAbi,
+                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
+                functionName: 'getReferrer',
+                args: [address as Address]
             },
         ]
     })
@@ -432,7 +438,7 @@ const Dsboard = (props: CircularProgressProps) => {
         {
             image: l1,
             title: 'Your Total $MMCT Balance',
-            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)),3)}`,
+            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)), 3)}`,
         },
         {
             image: l2,
@@ -442,12 +448,12 @@ const Dsboard = (props: CircularProgressProps) => {
         {
             image: l3,
             title: 'Your Spot Earnings',
-            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfReferralDetail?.data?.[0].result ? resultOfReferralDetail?.data?.[0].result.toString() : 0)),3)} MMCT`
+            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfReferralDetail?.data?.[0].result ? resultOfReferralDetail?.data?.[0].result.toString() : 0)), 3)} MMCT`
         },
         {
             image: l1,
             title: 'Your Community Earnings',
-            data: `${convertToAbbreviated(formatEther?.(BigInt(Number(resultOfUserCommunityReward?.data)>0 ? resultOfUserCommunityReward?.data?.claimedReward as bigint : 0)),3)} MMCT`
+            data: `${convertToAbbreviated(formatEther?.(BigInt(Number(resultOfUserCommunityReward?.data) > 0 ? resultOfUserCommunityReward?.data?.claimedReward as bigint : 0)), 3)} MMCT`
         },
     ]
 
@@ -594,7 +600,7 @@ const Dsboard = (props: CircularProgressProps) => {
                                         zIndex: '1',
 
                                     }}
-                                    ><Typography color={'#fff'}> Remaining:{convertToAbbreviated(value2,4)}</Typography></Box>
+                                    ><Typography color={'#fff'}> Remaining:{convertToAbbreviated(value2, 4)}</Typography></Box>
                                     <Box>
                                         {/* <Slider
                                     value={valueTop}
@@ -648,6 +654,18 @@ const Dsboard = (props: CircularProgressProps) => {
                                 <Box className={classes.worth}>
                                     {(resultOfRamaPriceInUSD?.data && buyInput) &&
                                         <>
+                                                 {/* <Image src={rmesta} alt={""} width={40} /> */}
+                                            <Typography color={'#999'}>COST:
+                                                <Typography component={'span'} color={'#fff'}> ${
+                                               ((Number(Number(buyInput) > 0 ? buyInput : 0) *
+                                            Number(
+                                                formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
+                                        ) 
+                                        ).toFixed(2)
+                
+                                                }
+                                                </Typography>
+                                            </Typography>
                                             <Image src={rmesta} alt={""} width={40} />
                                             <Typography color={'#999'}>RAMA PRICE:
                                                 <Typography component={'span'} color={'#fff'}> ${
@@ -670,48 +688,54 @@ const Dsboard = (props: CircularProgressProps) => {
                                     }</Typography></Typography>
                                 </Box>
 
-                                {address ? 
-                                <Button
+                                {address ?
+                                    <Button
 
-                                disabled={
+                                        disabled={
 
-                                    !buyInput || isPendingBuyForWrite || isLoading || (
-                                        buyInput && (Number(buyInput) *
-                                            Number(
-                                                formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
-                                        ) < 10
-                                    ) || (
-                                        Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))) < Number(Number(buyInput) > 0 ? buyInput : 0)
-                                    )
-                                }
-                                fullWidth={true}
-                                className={classes.buy__btn}
-                                sx={{
-                                    opacity: !(
-                                        !buyInput || isPendingBuyForWrite || isLoading || (
-                                            buyInput && (Number(buyInput) *
-                                                Number(
-                                                    formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
-                                            ) < 10
-                                        ) || (
-                                            Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))) < Number(Number(buyInput) > 0 ? buyInput : 0)
-                                        )
-                                    ) ? "1" : '0.3'
-                                }}
-                                onClick={async () => {
-                                    await writeContractAsync({
-                                        abi: mmctIcoAbi,
-                                        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_ico : mmctContractAddresses.pingaksha.mmct_ico,
-                                        functionName: 'buy',
-                                        args: [0, referrerAddress as Address],
-                                        account: address,
-                                        value: parseEther(buyInput),
-                                    })
+                                            (!buyInput || isPendingBuyForWrite || isLoading || (
+                                                buyInput && (Number(buyInput) *
+                                                    Number(
+                                                        formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
+                                                ) < 10
+                                            ) || (
+                                                Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))) < Number(Number(buyInput) > 0 ? buyInput : 0)
+                                            ) || (
+                                                !referrerAddress || !resultOfReferralDetail?.data?.[2].result
+                                            ) && resultOfReferralDetail?.data?.[3]?.result === zeroAddress
+                                            ) 
+                                        }
+                                        fullWidth={true}
+                                        className={classes.buy__btn}
+                                        sx={{
+                                            opacity: !((
+                                                !buyInput || isPendingBuyForWrite || isLoading || (
+                                                    buyInput && (Number(buyInput) *
+                                                        Number(
+                                                            formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
+                                                    ) < 10
+                                                ) || (
+                                                    Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))) < Number(Number(buyInput) > 0 ? buyInput : 0)
+                                                ) || (
+                                                    !referrerAddress || !resultOfReferralDetail?.data?.[2].result
+                                                ) && resultOfReferralDetail?.data?.[3]?.result === zeroAddress
+                                                ))
+                                             ? "1" : '0.3'
+                                        }}
+                                        onClick={async () => {
+                                            await writeContractAsync({
+                                                abi: mmctIcoAbi,
+                                                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_ico : mmctContractAddresses.pingaksha.mmct_ico,
+                                                functionName: 'buy',
+                                                args: [0, (resultOfReferralDetail?.data?.[3]?.result!==zeroAddress?resultOfReferralDetail?.data?.[3]?.result as Address:referrerAddress as Address)],
+                                                account: address,
+                                                value: parseEther(buyInput),
+                                            })
 
 
-                                }} >Buy</Button>
-                                :
-                                <ConnectWallet/>
+                                        }} >Buy</Button>
+                                    :
+                                    <ConnectWallet />
                                 }
 
                                 {
@@ -730,15 +754,15 @@ const Dsboard = (props: CircularProgressProps) => {
                                     </Box>
                                 }
 
-                                {
+                                {/* {
                                     !showInput && (
                                         <Box className={classes.apply} onClick={() => setShowInput(true)} >
                                             <Typography component={'span'} fontWeight={200} color={'#fff'}>Do you have any Referrer?</Typography>
                                         </Box>
                                     )
-                                }
+                                } */}
                                 {
-                                    showInput && (
+                                    (resultOfReferralDetail?.data && resultOfReferralDetail?.data?.[3]?.result === zeroAddress) && (
                                         <Box>
                                             <Box className={classes.apply_btn__wrap}>
                                                 <InputBase
@@ -757,26 +781,25 @@ const Dsboard = (props: CircularProgressProps) => {
                                                     placeholder={'Enter Referrer Address'}
                                                     type={'text'}
                                                 />
-                                                <Button className={classes.max_btn} >Apply</Button>
+                                                <Button className={classes.max_btn} onClick={(e)=>setReferrerAddress((resultOfReferralDetail?.data && resultOfReferralDetail?.data?.[3]?.result !== zeroAddress)?resultOfReferralDetail?.data?.[3]?.result as Address:referrerAddress)} >Apply</Button>
 
 
                                             </Box>
                                             {
                                                 (referrerAddress && !resultOfReferralDetail?.data?.[2].result) && (
-                                                    <>
-                                            <Box className={classes.validate__box} >
-                                                <Typography component={'span'} fontWeight={200} color={'red'}>Your Referrer is Invalid</Typography>
-                                            </Box>
-                                            {/* <Box className={classes.validate__box} > */}
-                                                 <Typography component={'span'} fontWeight={200} color={'#00FFFF'}>Note: If You have no any  valid referrer address then you can use this community referrer.</Typography>
-                                                 <Typography component={'h6'} fontWeight={200} color={'#00FFFF'}>Referrer: 0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af</Typography>
-                                             {/* </Box> */}
-                                             </>
-                                            )}
-                                        </Box>
-                                    )
-                                }
 
+                                                    <Box className={classes.validate__box} >
+                                                        <Typography component={'span'} fontWeight={200} color={'red'}>Your Referrer is Invalid</Typography>
+                                                    </Box>
+                                                )}
+                                            {/* <Box className={classes.validate__box} > */}
+                                            <Typography component={'span'} fontWeight={200} color={'#00FFFF'}>Note: If you have no any  valid referrer address then you can use this community referrer.</Typography>
+                                            <Typography component={'h6'} fontWeight={200} color={'#00FFFF'}>Referrer: 0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af</Typography>
+                                            {/* </Box> */}
+
+
+                                        </Box>
+                                    )}
                             </Box>
 
                         </Box>

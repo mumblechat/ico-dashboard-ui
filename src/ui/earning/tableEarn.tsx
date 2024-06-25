@@ -171,8 +171,8 @@ const TableEarn = ({ resultOfUserStakedList }: { resultOfUserStakedList: any }) 
         })
         return (
             <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                <Typography color={'#fff'}>{Number(mintReward?.data) > 0 ? Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))).toFixed(4) : '0.00'} MMCT</Typography>
-                <Typography color={'#999'}>${Number(mintReward?.data) > 0 ? (Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))) * 0.05).toFixed(4) : '0.00'}</Typography>
+                <Typography color={'#fff'}>{Number(mintReward?.data) > 0 ? Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))).toFixed(5) : '0.00000'} MMCT</Typography>
+                <Typography color={'#999'}>${Number(mintReward?.data) > 0 ? (Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))) * 0.05).toFixed(5) : '0.00000'}</Typography>
             </TableCell>
         )
     }
@@ -223,7 +223,7 @@ const TableEarn = ({ resultOfUserStakedList }: { resultOfUserStakedList: any }) 
                         <TableRow>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }}>User</TableCell>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">SA <HoverTool Title={"Staked Amount"} /></TableCell>
-                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">Tier</TableCell>
+                            {/* <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">Tier</TableCell> */}
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">Reward</TableCell>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">TRI365D <HoverTool Title={"Total Reward in 365 Days"} /></TableCell>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">TCR <HoverTool Title={"Till Claimed Rewards"} /></TableCell>
@@ -246,13 +246,13 @@ const TableEarn = ({ resultOfUserStakedList }: { resultOfUserStakedList: any }) 
                                     </Box>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{convertToAbbreviated(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0)))} MMCT</Typography>
-                                    <Typography color={'#999'}>{formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0))) * 0.05)}</Typography>
+                                    <Typography color={'#fff'}>{convertToAbbreviated(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0)),3)} MMCT</Typography>
+                                    <Typography color={'#999'}>{formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0))) * 0.05,3)}</Typography>
                                 </TableCell>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
+                                {/* <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
                                     <Typography color={'#fff'}>{formatTier(Number(item.tier))}</Typography>
 
-                                </TableCell>
+                                </TableCell> */}
 
                                 <Reward index={index} />
 
@@ -260,7 +260,8 @@ const TableEarn = ({ resultOfUserStakedList }: { resultOfUserStakedList: any }) 
                                     <Typography color={'#fff'}>$ {0}</Typography>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>$ {0}</Typography>
+                                <Typography color={'#fff'}>{convertToAbbreviated(formatEther?.(BigInt?.(item?.claimedMintRewards ? item.claimedMintRewards.toString() : 0)),5)} MMCT</Typography>
+                                    <Typography color={'#999'}>{formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(item?.claimedMintRewards ? item.claimedMintRewards.toString() : 0))) * 0.05,5)}</Typography>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
                                     <Typography color={'#fff'}>$ {0}</Typography>

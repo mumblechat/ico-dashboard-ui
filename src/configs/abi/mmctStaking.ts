@@ -737,11 +737,6 @@ export const mmctStakingAbi= [
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum IStakeMMCT.Tier",
-						"name": "tier",
-						"type": "uint8"
-					},
-					{
 						"internalType": "bool",
 						"name": "isUnstaked",
 						"type": "bool"
@@ -806,11 +801,6 @@ export const mmctStakingAbi= [
 						"internalType": "uint256",
 						"name": "volumeInUSD",
 						"type": "uint256"
-					},
-					{
-						"internalType": "enum IStakeMMCT.Tier",
-						"name": "tier",
-						"type": "uint8"
 					},
 					{
 						"internalType": "bool",

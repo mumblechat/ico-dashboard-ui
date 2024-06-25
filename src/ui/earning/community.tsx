@@ -69,13 +69,13 @@ const Community = () => {
         {
             id: 1,
             Title: 'Claimed Rewards',
-            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.claimedReward.toString() : 0)),4)}`,
+            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.claimedReward.toString() : 0)),5)}`,
             data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.claimedReward.toString() : 0))) * 0.05)}`
         },
         {
             id: 2,
             Title: 'Unclaimed Rewards',
-            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.amount.toString() : 0)),4)}`,
+            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.amount.toString() : 0)),5)}`,
             data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.amount.toString() : 0))) * 0.05)}`
         },
     ]

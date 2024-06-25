@@ -8,9 +8,10 @@ import { useAccount, useBalance, useChainId, useReadContract } from "wagmi";
 import { Address, formatEther, zeroAddress } from "viem";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 import { mmctTokenAbi } from "@/configs/abi/mmctToken";
-import { mmctContractAddresses } from "@/configs";
+import { formatTier, mmctContractAddresses } from "@/configs";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
+import { mmctReferralAbi } from "@/configs/abi/mmctReferral";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -94,33 +95,95 @@ const Earning = ({ Earning }: props) => {
         account: zeroAddress
     })
 
+    const resultOfUserTierAndBoostRateInPercent = useReadContract({
+        abi: mmctStakingAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+        functionName: 'getTierAndBoostRateInPercent',
+        args: [Number(resultOfUserStaked?.data?.volumeInUSD) > 0 ? resultOfUserStaked?.data?.volumeInUSD as bigint : BigInt(0)],
+        account: zeroAddress
+    })
+
+    const resultOfUsergReferralsCount= useReadContract({
+        abi: mmctReferralAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
+        functionName: 'getReferralsCount',
+        args: [address as Address],
+        account: zeroAddress
+    })
+
+
+
+    const resultOfUserPositionAndBoostRateInPercent = useReadContract({
+        abi: mmctStakingAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+        functionName: 'getPositionAndBoostRateInPercent',
+        args: [Number(resultOfUsergReferralsCount?.data) > 0 ? resultOfUsergReferralsCount?.data  as bigint : BigInt(0)],
+        account: zeroAddress
+    })
+
+    const resultOfUserCalculateMintRate = useReadContract({
+        abi: mmctStakingAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+        functionName: 'calculateMintRate',
+        args: [Number(resultOfUserStaked?.data?.volumeInUSD) > 0 ? resultOfUserStaked?.data?.volumeInUSD as bigint : BigInt(0),Number(resultOfUsergReferralsCount?.data) > 0 ? resultOfUsergReferralsCount?.data  as bigint : BigInt(0)],
+        account: zeroAddress
+    })
+
+
+
+
+
     // const totalUnclaimedRewards= resultOfUserStakedList?.data?.reduce((previousValue,currentValue)=> previousValue+  )
 
     const Card = [
         {
             id: 1,
             Title: 'Ramestta Wallet Balance',
-            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)),3)}`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0))) * 0.05,3)}`
+            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)), 3)} MMCT`,
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0))) * 0.05, 3)}`
         },
         {
             id: 2,
             Title: 'Your Stake',
-            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0)),3)}`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0))) * 0.05,3)}`
+            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0)), 3)} MMCT`,
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.amount.toString() : 0))) * 0.05, 3)}`
         },
         {
             id: 3,
             Title: 'Claimed Rewards',
-            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0)),3)}`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0))) * 0.05,3)}`
+            Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0)), 5)} MMCT`,
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0))) * 0.05, 3)}`
         },
         {
             id: 4,
             Title: 'Unclaimed Rewards',
-            Amount: `${" 0.000"
+            Amount: `${" 0.00000 MMCT"
                 }`,
-            data: '$0.000'
+            data: '$0.00000'
+        },
+        {
+            id: 5,
+            Title: 'Current Tier',
+            Amount: `${formatTier(Number(resultOfUserTierAndBoostRateInPercent?.data?.[0]))}`,
+            data: ``
+        },
+        {
+            id: 6,
+            Title: 'Your Position',
+            Amount: `${Number(resultOfUserPositionAndBoostRateInPercent?.data?.[0])+1}`,
+            data: ``
+        },
+        {
+            id: 7,
+            Title: 'Per Min Base Speed(%)',
+            Amount: `${((Number(resultOfUserCalculateMintRate?.data?.[1])/60)/1e15).toFixed(5)}`,
+            data: ``
+        },
+        {
+            id: 8,
+            Title: 'Per Hour Base Speed(%)',
+            Amount: `${(Number(resultOfUserCalculateMintRate?.data?.[1])/1e15).toFixed(5)}`,
+            data: ''
         },
     ]
     return (
@@ -149,7 +212,7 @@ const Earning = ({ Earning }: props) => {
                                 <Grid key={index} item lg={3} md={3} sm={6} xs={12}>
                                     <Box className={classes.Card}>
                                         <Typography color={'#fff'}>{item.Title}</Typography>
-                                        <Typography color={'#fff'} variant="h6">{item.Amount} MMCT</Typography>
+                                        <Typography color={'#fff'} variant="h6">{item.Amount}</Typography>
                                         <Typography color={'#999'}>{item.data}</Typography>
                                     </Box>
                                 </Grid>

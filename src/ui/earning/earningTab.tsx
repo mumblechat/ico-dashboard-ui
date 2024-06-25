@@ -116,14 +116,14 @@ export default function EarningTab() {
                                 zIndex: '1',
                             }
                         }} value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1 }} label="Mining" {...a11yProps(0)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1 }} label="Self Minting" {...a11yProps(0)} />
                         <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1 }} label="Community" {...a11yProps(1)} />
                         <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1 }} label="History" {...a11yProps(2)} />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
                     <Box mt={3}>
-                        <Earning Earning={'Mining'} />
+                        <Earning Earning={'Self Minting'} />
                     </Box>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>

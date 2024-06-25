@@ -94,9 +94,9 @@ export const mmctContractAddresses: MmctContractAddressesType = {
   },
   pingaksha: {
     mmct_token: "0x0537786A0C92439E0F70A92EC0477A8465B7Dade",
-    mmct_ico: "0xB8ba201630B39cB18A7874D17282E5FaC05c351A",
-    mmct_referral: "0xD819FCfCE76FF8503fa095FcEd3ED316e8261BC1",
-    mmct_staking: "0x70469a8DFcEc0c20824a61fDE866F8edc4D08639",
+    mmct_ico: "0xdf9E166Ca9d0a4857EEB535D359013469E56e53F",
+    mmct_referral: "0x15Cc8A56770D4B3a5dfCFA42cd036fb8897989b6",
+    mmct_staking: "0xb3339c3252b11F4Aa7534f00F8675f150c81e09c",
   }
 }
 
