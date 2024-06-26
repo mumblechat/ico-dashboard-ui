@@ -45,11 +45,18 @@ const CoinCalculate = () => {
                                 padding: '0.3rem 0.5rem',
                                 ':-moz-placeholder': {
                                     color: 'fff',
-                                }
+                                },
+                                '& input[type=number]': {
+                                    '-moz-appearance': 'textfield',
+                                  },
+                                  '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
+                                    '-webkit-appearance': 'none',
+                                    margin: 0,
+                                  },
                             }}
                             fullWidth
                             placeholder={'0.00 RAMA'}
-                            type={''}
+                            type={'number'}
                         />
                     </Box>
                 </Box>
@@ -65,11 +72,18 @@ const CoinCalculate = () => {
                                 padding: '0.3rem 0.5rem',
                                 ':-moz-placeholder': {
                                     color: 'fff',
-                                }
+                                },
+                                '& input[type=number]': {
+                                    '-moz-appearance': 'textfield',
+                                  },
+                                  '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
+                                    '-webkit-appearance': 'none',
+                                    margin: 0,
+                                  },
                             }}
                             fullWidth
                             placeholder={'$0.00'}
-                            type={''}
+                            type={'number'}
                         />
                     </Box>
                 </Box>

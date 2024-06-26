@@ -141,6 +141,10 @@ const Miningcalculate = () => {
         setValueTop(newValue as number[]);
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInput(e.target.value.trim());
+    };
+
     return (
         <>
             <Box className={classes.mainDiv}>
@@ -155,7 +159,7 @@ const Miningcalculate = () => {
                 <Typography mt={3} color={'#fff'} variant="h6">Enter how much $ you want to invest.</Typography>
                 <Box className={classes.max_btn__wrap}>
                     <InputBase
-                        onChange={(e) => setInput(e.target.value)}
+                        onChange={(e) => setInput(e.target.value.trim())}
                         value={input}
                         type={'number'}
                         sx={{
@@ -165,7 +169,14 @@ const Miningcalculate = () => {
                             padding: '0.3rem 0.5rem',
                             ':-moz-placeholder': {
                                 color: 'fff',
-                            }
+                            },
+                            '& input[type=number]': {
+                                '-moz-appearance': 'textfield',
+                              },
+                              '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
+                                '-webkit-appearance': 'none',
+                                margin: 0,
+                              },
                         }}
                         fullWidth
                         placeholder={'Enter Amount in $'}
@@ -177,7 +188,7 @@ const Miningcalculate = () => {
                 <Typography variant="h6" mt={2} mb={2} color={'#fff'}>Position <Typography component={'span'}><HoverTool Title={"1"} /></Typography></Typography>
 
                
-                <Box sx={{ margin: '0rem 2rem 0rem 0rem' }}>
+                <Box sx={{ margin: '0rem 2rem 0rem 2rem' }}>
                     
                         <StyledSlider
                             value={valueTop}

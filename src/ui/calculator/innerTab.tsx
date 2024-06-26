@@ -118,11 +118,18 @@ const InnerTab = () => {
                             padding: '0.3rem 0.5rem',
                             ':-moz-placeholder': {
                                 color: 'fff',
-                            }
+                            },
+                            '& input[type=number]': {
+                                '-moz-appearance': 'textfield',
+                              },
+                              '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
+                                '-webkit-appearance': 'none',
+                                margin: 0,
+                              },
                         }}
                         fullWidth
                         placeholder={'$10'}
-                        type={''}
+                        type={'number'}
                     />
                     <Link className={classes.max_btn} href={""}>Max</Link>
                 </Box>

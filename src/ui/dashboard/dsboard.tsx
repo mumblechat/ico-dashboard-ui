@@ -34,6 +34,7 @@ import ContributorsTable from "./contributorsTable";
 import { mmctIcoAbi } from "@/configs/abi/mmctIco";
 import ConnectWallet from "../shared/connectWallet";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
+import shortenString from "@/lib/shortenString";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -643,11 +644,18 @@ const Dsboard = (props: CircularProgressProps) => {
                                             padding: '0.3rem 0.5rem',
                                             ':-moz-placeholder': {
                                                 color: 'fff',
-                                            }
+                                            },
+                                            '& input[type=number]': {
+                                                '-moz-appearance': 'textfield',
+                                              },
+                                              '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
+                                                '-webkit-appearance': 'none',
+                                                margin: 0,
+                                              },
                                         }}
                                         fullWidth
                                         placeholder={'Enter Amount in RAMA'}
-                                        type={''}
+                                        type={'number'}
                                     />
                                     <Button className={classes.max_btn} onClick={handleMax} href={""} >Max</Button>
                                 </Box>
@@ -793,8 +801,11 @@ const Dsboard = (props: CircularProgressProps) => {
                                                     </Box>
                                                 )}
                                             {/* <Box className={classes.validate__box} > */}
-                                            <Typography component={'span'} fontWeight={200} color={'#00FFFF'}>Note: If you have no any  valid referrer address then you can use this community referrer.</Typography>
-                                            <Typography component={'h6'} fontWeight={200} color={'#00FFFF'}>Referrer: 0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af</Typography>
+                                            <Typography  fontWeight={200} color={'#00FFFF'} textAlign={'center'} mt={1}>Note: If you have no any  valid referrer address then you can use this community referrer.</Typography>
+                                           <Box sx={{background:'linear-gradient(90deg, #0808088a, #00FFFF, #0808088a)',gap:1,justifyContent:'center', padding:1,display:'flex', marginTop:'1rem',borderRadius:'8px', alignItems:'center',}}>
+                                           <Typography component={'h6'} fontWeight={700} color={'#000'}>Referrer:  </Typography>
+                                           <AddressCopy text={"0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af"} addresstext={"0x3B1...Da9af"}/>
+                                           </Box>
                                             {/* </Box> */}
 
 
