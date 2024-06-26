@@ -77,7 +77,7 @@ const Distribute = () => {
                         <Image src={chart_img} alt={""} />
                         </Box>
                         <Box className={classes.boxtext}>
-                           <Typography textAlign={'center'} fontSize={20} color={'#00FFFF'} fontFamily={'Bruce Forever !important'}>Ethereum is a decentralized, open-source blockchain with smart contract</Typography>
+                           <Typography textAlign={'center'} fontSize={20} color={'#00FFFF'} fontFamily={'Bruce Forever !important'}>RAMESTTA is a decentralized, open-source blockchain with smart contract</Typography>
                           
                         </Box>
 

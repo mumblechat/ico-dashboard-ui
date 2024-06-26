@@ -141,7 +141,7 @@ const Footer = () => {
                     <Grid item lg={3} md={3} sm={6} xs={12}>
                         <Box className={classes.box__listAlign}>
                             <Typography className={classes.heading__align} variant='h5' color={'#fff'}>SUBSCRIBE NEWSLETTER</Typography>
-                            <Typography mt={2} color={'#fff'}>Exerci tation ullamcorper suscipit lobortis nisl aliquip ex ea commodo</Typography>
+                            <Typography mt={2} color={'#fff'}>Subscribe now to get the latest updates</Typography>
                             <Box className={classes.input__box}>
                                         <InputBase
                                             sx={{

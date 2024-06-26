@@ -5,12 +5,10 @@ import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
 
 
 const data02 = [
-  { name: "Founding Allocation ", value: 40, fill: "#02CACA" },
-  { name: "Founding Allocation ", value: 35, fill: "#116262" },
-  { name: "Founding Allocation ", value: 15, fill: "#136F84" },
-  { name: "Founding Allocation ", value: 5, fill: "#00A3FF" },
-  { name: "Founding Allocation ", value: 2.5, fill: "#033356" },
-  { name: "Founding Allocation ", value: 2.5, fill: "#55558A" }
+  { name: "Founding Allocation ", value: 20, fill: "#02CACA" },
+  { name: "Founding Allocation ", value: 30, fill: "#116262" },
+  { name: "Founding Allocation ", value: 50, fill: "#136F84" },
+
 ];
 
 export default function ChartTwo() {

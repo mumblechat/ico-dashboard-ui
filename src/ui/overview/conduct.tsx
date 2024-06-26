@@ -59,7 +59,7 @@ const Conduct = () => {
             >
 
                 <Box textAlign={'center'}>
-                    <Heading heading={"The World's 1st ICO Platform That Offers Rewardsis a groundbreaking platform that revolutionizes the wayInitial Coin Offerings are conducted"} />
+                    <Heading heading={"World’s first  decentralized messaging solution that  prioritize users privacy, security, and control over personal data."} />
                     <Box sx={{
                         width: '50%',
                         height: '1px',
@@ -89,7 +89,7 @@ const Conduct = () => {
                                         textAlign: 'center'
                                     }
                                 }}>
-                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'} color={'#fff'}>Lifetime free and transaction</Typography>
+                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'} color={'#fff'}>Decentralized Architecture</Typography>
                                 </Box>
                             </Box>
                         </Grid>
@@ -112,7 +112,7 @@ const Conduct = () => {
                                         }
                                     }}
                                 >
-                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'} color={'#fff'}>Security Control over money</Typography>
+                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'} color={'#fff'}>End-to-End Encryption</Typography>
                                 </Box>
                             </Box>
                         </Grid>
@@ -135,7 +135,7 @@ const Conduct = () => {
                                         }
                                     }}
                                 >
-                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'}color={'#fff'}>Mobile Payment Make Easy</Typography>
+                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'}color={'#fff'}>Incentivized User Engagement</Typography>
                                 </Box>
                             </Box>
                         </Grid>

@@ -59,7 +59,7 @@ const Rewards = ({ reward_hding, reward_text, Image_r }: props) => {
             <Box>
           <Image src={linebox} alt={""} />
           </Box>
-            <Text text={reward_text} />
+            <Typography color={'#fff'}>{reward_text}</Typography>
           </Box>
           
           

@@ -9,29 +9,25 @@ import Heading from "@/theme/components/heading";
 const Accordion_list = [
     {
         id: 1,
-        title: 'What is the ICO?',
-        text: 'LessAccounting is 100% web-based, meaning it can be accessed from anywhere and there’s no software to install on your computer. You can easily use LessAccounting on your iPhone or any Android mobile device with our cloud accounting.'
+        title: 'what is ICO?',
+        text: 'ICO stands for Initial Coin Offering, a fundraising method where new cryptocurrencies or tokens are sold to investors before being listed on exchanges, often used by startups to raise capital for their projects.'
     },
     {
         id: 2,
-        title: 'What is the ICO?',
-        text: 'mumblechat is currently supporting all EVM (e.g., Ramestta, Ethereum, Binance Smart Chain, Polygon,RAMESTTA etc.), and we have plans to expand to other blockchains like Solana, Cosmos, Flow, Aptos, and Sui in the coming future.'
+        title: 'How MMCT Minting and Reward Tiers work.',
+        text: 'When you participate in the ICO by buying MMCT tokens, those tokens are locked in a contract for 365 days. As a result, you earn more tokens over time through a process called self-minting. The basic idea is that you get a small percentage of extra tokens every hour based on the amount you initially locked.'
     },
     {
         id: 3,
-        title: 'How can I connect API with my Current Site',
-        text: 'We deliver messages via "Communication Delivery Graph", which is a decentralized encryption network designed to protect the privacy of our users. '
+        title: 'What is  self minting process.',
+        text: 'The self-minting process in the ICO allows users to buy MMCT tokens from the ICO portal. The purchased MMCT tokens are instantly locked in a contract, and users earn a basic minting rate of 0.001% per hour on their locked amount. Additionally, users can increase their minting percentage by referring direct users, according to the Self minting  tiers. '
     },
     {
         id: 4,
-        title: 'What is the Payment Mathod',
-        text: 'We use both decentralized storage (e.g. IPFS, Arweave, etc.) and your local device. No messaging data will be stored on-chain due to security risks.'
+        title: 'What are the types of self minting tiers.',
+        text: 'Starter Minting Speed: For investments between $1 and $100. - Silver Minting Speed: For investments between $101 and $500. - Gold Minting Speed: For investments between $501 and $2000. - Platinum Minting Speed: For investments between $2001 and $5000.'
     },
-    {
-        id: 5,
-        title: 'What makes Less Accounting better than the rest?',
-        text: "mumblechat points indicate your level of engagement as a mumblechat user. We use the points to determine a user's eligibility for future rewards such as token airdrops."
-    },
+     
 
 ]
 

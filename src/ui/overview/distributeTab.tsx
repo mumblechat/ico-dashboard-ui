@@ -145,31 +145,25 @@ export default function DistributeTab() {
                             <Box component={'ul'}>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#02CACA'} className={classes.round}></Typography>
-                                    <Typography fontSize={14} color={'#fff'}>ICO (40%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Development (40%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#116262'} className={classes.round}></Typography>
-                                    <Typography fontSize={14} color={'#fff'}>Community Rewards (35%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Marketing (30%)</Typography>
                                 </Box>
-                                <Box className={classes.listItem} component={'li'}>
-                                    <Typography bgcolor={'#136F84'} className={classes.round}></Typography>
-                                    <Typography fontSize={14} color={'#fff'}>Future Development & Operations (15%)</Typography>
-                                </Box>
+                                
                             </Box>
 
                             <Box component={'ul'}>
-                                <Box className={classes.listItem} component={'li'}>
-                                    <Typography bgcolor={'#00A3FF'} className={classes.round}></Typography>
-                                    <Typography fontSize={14} color={'#fff'}>Team & Advisors (5%)</Typography>
+                            <Box className={classes.listItem} component={'li'}>
+                                    <Typography bgcolor={'#136F84'} className={classes.round}></Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Operations (20%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#033356'} className={classes.round}></Typography>
-                                    <Typography fontSize={14} color={'#fff'}>Ecosystem Growth (2.5%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Legal and Compliance (10%)</Typography>
                                 </Box>
-                                <Box className={classes.listItem} component={'li'}>
-                                    <Typography bgcolor={'#55558A'} className={classes.round}></Typography>
-                                    <Typography fontSize={14} color={'#fff'}>Liquidity Provision (2.5%)</Typography>
-                                </Box>
+                                 
                             </Box>
                         </Box>
                     </>
@@ -180,19 +174,19 @@ export default function DistributeTab() {
                             <Box component={'ul'}>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#02CACA'} className={classes.round}></Typography>
-                                    <Typography fontSize={14} color={'#fff'}>ICO (40%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Team and Development (20%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#116262'} className={classes.round}></Typography>
-                                    <Typography fontSize={14} color={'#fff'}>Community Rewards (35%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>Marketing and Partnerships (30%)</Typography>
                                 </Box>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#136F84'} className={classes.round}></Typography>
-                                    <Typography fontSize={14} color={'#fff'}>Future Development & Operations (15%)</Typography>
+                                    <Typography fontSize={14} color={'#fff'}>ICO, Ecosystem and Community Rewards (50%)</Typography>
                                 </Box>
                             </Box>
 
-                            <Box component={'ul'}>
+                            {/* <Box component={'ul'}>
                                 <Box className={classes.listItem} component={'li'}>
                                     <Typography bgcolor={'#00A3FF'} className={classes.round}></Typography>
                                     <Typography fontSize={14} color={'#fff'}>Team & Advisors (5%)</Typography>
@@ -205,7 +199,7 @@ export default function DistributeTab() {
                                     <Typography bgcolor={'#55558A'} className={classes.round}></Typography>
                                     <Typography fontSize={14} color={'#fff'}>Liquidity Provision (2.5%)</Typography>
                                 </Box>
-                            </Box>
+                            </Box> */}
                         </Box>
                     </>
                 </CustomTabPanel>

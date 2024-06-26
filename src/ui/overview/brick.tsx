@@ -89,11 +89,13 @@ function Brick() {
         ]
     };
 
+    const para="The MumbleChat platform is developed using open source principles, allowing developers from around the world to contribute code, suggest improvements, and participate in the platform's evolution. - Contributions to the MumbleChat project are welcomed and encouraged, fostering a collaborative and inclusive development enviroment."
     return (
         <Box className="slider-container">
              
-                <Box sx={{ textAlign: 'center', margin: '4rem 0rem 2rem 0rem' }}>
+                <Box sx={{ textAlign: 'center', margin: '4rem 1rem 2rem 1rem' }}>
                 <Heading heading={"Meet the Brick Veneers"} />
+                <Typography mt={2} color={'#fff'}>{para}</Typography>
                 <Box sx={{
                     width: '30%',
                     height: '1px',
