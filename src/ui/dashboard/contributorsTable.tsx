@@ -33,11 +33,12 @@ const useStyles = makeStyles({
     },
     noData: {
         height: '50px',
-        display: 'flex',
+        borderBottom:'none',
         width: '100%',
         justifyContent: 'center',
         justifyItems: "center",
-        backgroundColor: '#080808'
+        backgroundColor: '#080808',
+         
     }
 
 });
@@ -144,7 +145,7 @@ const ContributorsTable = ({ resultOfRamaPriceInUSD }: { resultOfRamaPriceInUSD:
             <Box mt={2}>
 
                 <TableContainer component={Paper} className={classes.tableContainer}>
-                    <Table sx={{ minWidth: 400, backgroundColor: '#080808', borderRadius: '0px' }} aria-label="simple table">
+                    <Table sx={{   backgroundColor: '#080808', borderRadius: '0px' }} aria-label="simple table">
                         <TableHead sx={{ backgroundColor: '#101012' }}>
                             <TableRow>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} >User</TableCell>
@@ -195,11 +196,15 @@ const ContributorsTable = ({ resultOfRamaPriceInUSD }: { resultOfRamaPriceInUSD:
 
                                     </TableRow>
 
-                                ))) :
-                                    (
-                                        <Box className={classes.noData}>
-                                            <Typography color={'#fff'} margin={'auto'}>No Data Found!</Typography>
-                                        </Box>
+                                ))) 
+                                :
+                                   
+                                (
+                                    <TableRow>
+                                    <TableCell colSpan={3} align="center" className={classes.noData}>
+                                        <Typography color={'#fff'}>No Data Found!</Typography>
+                                    </TableCell>
+                                </TableRow>
                                     )
                             }
 

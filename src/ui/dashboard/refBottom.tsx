@@ -13,7 +13,7 @@ import { useAccount } from "wagmi";
 const useStyles = makeStyles({
 
     ref__link: {
-        backgroundColor: '#00FFFF',
+        backgroundColor: '#00FFFF !important',
         padding: '0.5rem 1rem',
         borderRadius: '0px 0px 8px 8px',
         display: 'flex',

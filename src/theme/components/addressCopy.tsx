@@ -31,7 +31,7 @@ const StyledLink = styled(Link)(({ theme }) => ({
         }
 }));
 
-const AddressCopy = ({ text,textColor='#000', addresstext, hrefLink  }: props) => {
+const AddressCopy = ({ text,textColor, addresstext, hrefLink  }: props) => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const { address } = useAccount();
     const handleCopy = () => {

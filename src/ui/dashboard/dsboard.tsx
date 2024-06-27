@@ -21,6 +21,8 @@ import r2 from '../../icons/r2.svg'
 import AddressCopy from "@/theme/components/addressCopy";
 import linkbtnimg from '../../icons/linkbtnimg.svg'
 import Refer from "./refer";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import { useEffect, useState } from "react";
 import { useAccount, useBalance, useChainId, useReadContract, useReadContracts, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { Address, formatEther, parseEther, zeroAddress } from "viem";
@@ -36,6 +38,7 @@ import ConnectWallet from "../shared/connectWallet";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import shortenString from "@/lib/shortenString";
 import { useSearchParams } from "next/navigation";
+import DescriptionAlerts from "@/theme/components/descriptionAlerts";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -181,7 +184,8 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         gap: '10px',
         alignItems: 'center',
-        padding: '1rem 0rem'
+        padding: '1rem 0rem',
+        flexWrap: 'wrap'
     },
     apply: {
         cursor: 'pointer',
@@ -327,11 +331,11 @@ const Dsboard = (props: CircularProgressProps) => {
     const [buyInput, setBuyInput] = useState("")
     // const [showInput, setShowInput] = useState<boolean>(false);
     const refParam = searchParams.get('ref')
-    const [referrerAddress, setReferrerAddress] = useState<string|null>(refParam)
+    const [referrerAddress, setReferrerAddress] = useState<string | null>(refParam)
     const { address } = useAccount()
     const chainId = useChainId()
     const { writeContractAsync, data, isPending: isPendingBuyForWrite } = useWriteContract()
-    const { isLoading, isSuccess } = useWaitForTransactionReceipt({
+    const { isLoading, isSuccess, isError } = useWaitForTransactionReceipt({
         hash: data,
     })
 
@@ -370,7 +374,11 @@ const Dsboard = (props: CircularProgressProps) => {
 
             setValue2(((tokenAmountInEther - (tokenAmountInEther - saleQuantityInEther)) > 0 ? (tokenAmountInEther - (tokenAmountInEther - saleQuantityInEther)) : 0));
         }
+
+           
     }, [resultOfSaleDetails?.data]);
+
+
 
 
     const progressValue = initialProgressValue > 0 ? ((initialProgressValue - value2) / initialProgressValue) * 100 : 0;
@@ -475,9 +483,21 @@ const Dsboard = (props: CircularProgressProps) => {
     return (
         <>
             <Box>
+                {isSuccess &&
+                    <Alert sx={{ backgroundColor: '#101012', border: '1px solid rgb(43 114 47)', color: 'rgb(43 114 47)', position: 'absolute', top: 10, zIndex: 111, right: 10 }} severity="success">
+                        <AlertTitle>Success</AlertTitle>
+                        Successfully added network to your wallet.
+                    </Alert>}
 
+                {isError &&
+                    <Alert sx={{ backgroundColor: '#101012', border: '1px solid rgb(191 44 44)', color: 'rgb(191 44 44)', position: 'absolute', top: 10, zIndex: 111, right: 10 }} severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        This is invalid network.
+                    </Alert>}
             </Box>
+
             <Box className={classes.mainDiv}>
+
                 <Box className={classes.step__one}>
                     <Box className={classes.step__one_box}>
                         <Box><Image src={dleft} alt={""} /></Box>
@@ -693,13 +713,13 @@ const Dsboard = (props: CircularProgressProps) => {
                                     }
                                     <Image src={shield} alt={""} width={50} />
                                     <Typography color={'#999'}>MMCT WORTH : <Typography component={'span'} color={'#fff'}>{
-                                        buyInput&&resultOfRamaPriceInUSD?.data &&resultOfSaleDetails?.data ?((Number(Number(buyInput) > 0 ? buyInput : 0) *
+                                        buyInput && resultOfRamaPriceInUSD?.data && resultOfSaleDetails?.data ? ((Number(Number(buyInput) > 0 ? buyInput : 0) *
                                             Number(
                                                 formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
                                         ) /
                                             Number(
                                                 formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleRateInUsd ? resultOfSaleDetails?.data?.saleRateInUsd.toString() : 0)))
-                                        ).toFixed(2):"0.00"
+                                        ).toFixed(2) : "0.00"
                                     }</Typography></Typography>
                                 </Box>
 

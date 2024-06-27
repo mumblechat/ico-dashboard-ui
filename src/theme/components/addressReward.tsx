@@ -8,6 +8,7 @@ import React, { useState } from "react";
 interface props {
     text: any;
     address: any;
+    textColor?:string;
 }
 const StyledBox = styled(Box)(({ theme }) => ({
     // display: 'flex',
@@ -31,7 +32,7 @@ const StyledLink = styled(Link)(({ theme }) => ({
         }
 }));
 
-const AddressReward = ({ text, address,  }: props) => {
+const AddressReward = ({ text, address,textColor  }: props) => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const handleCopy = () => {
         copy(text);
@@ -64,8 +65,8 @@ const AddressReward = ({ text, address,  }: props) => {
                     cursor:'pointer',
                 }}
                  onClick={handleCopy}>
-                    <Typography color={'#000'} fontWeight={500}>Copy Referral Link</Typography>
-                    <ContentCopyIcon sx={{ color: '#000', width: 18 }} />
+                    <Typography color={textColor} fontWeight={500}>Copy Referral Link</Typography>
+                    <ContentCopyIcon sx={{ color: textColor, width: 18 }} />
                 </Box>
                 </Box>
                 <Snackbar

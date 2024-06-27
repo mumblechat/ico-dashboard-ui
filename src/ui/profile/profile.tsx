@@ -9,6 +9,7 @@ import AddressCopy from "@/theme/components/addressCopy";
 import { Address } from "viem";
 import { mmctReferralAbi } from "@/configs/abi/mmctReferral";
 import { mmctContractAddresses } from "@/configs";
+import shortenString from "@/lib/shortenString";
 
 
 
@@ -75,7 +76,7 @@ const Profile = () => {
                             '@media(max-width : 600px)': {
                                 fontSize: 11.7
                             }
-                        }} mt={1.5} color={'#fff'}>{address ?? ''}</Typography> */}
+                        }} mt={1.5} color={'#fff'}>{address ? vx4w3s b4v3xv5? ''}</Typography> */}
                         <AddressCopy
                             textColor="#00ffff"
                             hrefLink={
@@ -83,7 +84,7 @@ const Profile = () => {
                                     `https://pingaksha.ramascan.com/address/${address}`
                             }
                             text={address as string}
-                            addresstext={address as Address} />
+                            addresstext={shortenString(address as Address) } />
                     </Box>
                     {
                         resultOfReferrer?.data && <Box className={classes.js_Reigns}>
@@ -101,7 +102,7 @@ const Profile = () => {
                                         `https://pingaksha.ramascan.com/address/${resultOfReferrer?.data}`
                                 }
                                 text={resultOfReferrer?.data as string}
-                                addresstext={resultOfReferrer?.data as Address} />
+                                addresstext={shortenString(resultOfReferrer?.data as Address)} />
                         </Box>
                     }
                     <RefBottom />

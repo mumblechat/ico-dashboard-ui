@@ -39,9 +39,7 @@ const LoginStyled = styled(Link)(({ theme }) => ({
   },
   '@media(max-width : 1200px)': {
     padding: '14px',
-    '@media(max-width : 600px)': {
-      display: 'none'
-    }
+     
   }
 
 }));

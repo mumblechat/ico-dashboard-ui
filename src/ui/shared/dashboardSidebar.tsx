@@ -107,7 +107,7 @@ export default function DashboardSidebar() {
 
                 <Box className={classes.mob}>
                     <Sidebardb />
-                    <Link className={classes.logoutbtn} href={''}>Logout</Link>
+                    {/* <Link className={classes.logoutbtn} href={''}>Logout</Link> */}
                 </Box>
 
             </Box>
