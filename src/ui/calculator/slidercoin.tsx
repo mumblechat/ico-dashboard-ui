@@ -1,5 +1,5 @@
 "use client"
-import { Box, Grid, InputBase, LinearProgress, Slider, TextField, Typography, linearProgressClasses, styled, useTheme } from "@mui/material";
+import { Box, Grid, InputBase, LinearProgress, Slider, TextField, Tooltip, Typography, linearProgressClasses, styled, useTheme } from "@mui/material";
 import Link from "next/link";
 import { useContext, useState } from "react";
 import { ColorModeContext } from "@/context";
@@ -48,12 +48,30 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     },
 }));
 
-const Slidercoin = () => {
+const ValueLabelComponent = (props: { children: any; open: any; value: any; }) => {
+    const { children, open, value } = props;
 
-    const [valueTop, setValueTop] = useState<number[]>([10,]);
+    return (
+        <Tooltip
+            open={open}
+            enterTouchDelay={0}
+            placement="top"
+            title={`$${value}`}
+            arrow
+        >
+            {children}
+        </Tooltip>
+    );
+};
+
+
+const Slidercoin = ({setValue}:{setValue:any}) => {
+
+    const [valueTop, setValueTop] = useState<number[]>([0.05,]);
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         setValueTop(newValue as number[]);
+        setValue(newValue as number[])
     };
 
     return (
@@ -75,8 +93,12 @@ const Slidercoin = () => {
                         value={valueTop}
                         onChange={handleChange}
                         aria-labelledby="range-slider"
-                        min={0}
-                        max={100}
+                        min={0.05}
+                        step={0.001}
+                        max={10}
+                        valueLabelDisplay="auto"
+                        slots={{valueLabel:ValueLabelComponent}}
+                        slot="lol"
                         sx={{
                             backgroundColor: '#101012',
                             border: '1px solid #1D1D20',

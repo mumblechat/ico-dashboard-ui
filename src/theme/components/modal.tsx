@@ -45,6 +45,8 @@ import {
     WorkplaceShareButton,
     XIcon,
 } from "react-share";
+import shortenString from '@/lib/shortenString';
+import { Address } from 'viem';
 
 
 const BoxSocial = styled(Box)(({ theme }) => ({
@@ -113,7 +115,7 @@ export default function Modal() {
                         <Typography mt={2} color={'#fff'}>Share your unique link below and receive <Typography component={'span'}><Link style={{ textDecoration: 'none', color: '#00FFFF' }} href={''}>10%</Link>  of all transactions realized with your link <Typography component={'span'}><Link style={{ textDecoration: 'none', color: '#00FFFF' }} href={''}>instantly </Link>!</Typography></Typography></Typography>
                     </Box>
                 </DialogContent>
-                <AddressReward text={address} address={"https://ico.dashboard.mumblechat.com/?ref=0x7..ae6"} />
+                <AddressReward text={`https://ico.mumblechat.com/dashboard/?ref=${address}`} address={`https://ico.mumblechat.com/dashboard/?ref=${shortenString(address as Address)}`} />
                 <BoxSocial>
 
 

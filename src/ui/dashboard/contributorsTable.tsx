@@ -9,6 +9,7 @@ import { useAccount, useChainId, useReadContract } from "wagmi";
 import shortenString from "@/lib/shortenString";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
+import AddressCopy from "@/theme/components/addressCopy";
 
 
 const useStyles = makeStyles({
@@ -41,75 +42,75 @@ const useStyles = makeStyles({
 
 });
 
-const TableList = [
-    {
-        id: 1,
-        ProfileAddress: "0xcc5...be31",
-        RAMA: '5',
-        MMCT: '15.2'
-    },
-    {
-        id: 2,
-        ProfileAddress: "0xcc5...be31",
-        RAMA: '3',
-        MMCT: '9.12'
-    },
-    {
-        id: 3,
-        ProfileAddress: "0xcc5...be31",
-        RAMA: '2',
-        MMCT: '6.08'
-    },
-    {
-        id: 4,
-        ProfileAddress: "0xcc5...be31",
-        RAMA: '6',
-        MMCT: '18.24'
-    },
-    {
-        id: 5,
-        ProfileAddress: "0xcc5...be31",
-        RAMA: '8',
-        MMCT: '24.32'
-    },
+// const TableList = [
+//     {
+//         id: 1,
+//         ProfileAddress: "0xcc5...be31",
+//         RAMA: '5',
+//         MMCT: '15.2'
+//     },
+//     {
+//         id: 2,
+//         ProfileAddress: "0xcc5...be31",
+//         RAMA: '3',
+//         MMCT: '9.12'
+//     },
+//     {
+//         id: 3,
+//         ProfileAddress: "0xcc5...be31",
+//         RAMA: '2',
+//         MMCT: '6.08'
+//     },
+//     {
+//         id: 4,
+//         ProfileAddress: "0xcc5...be31",
+//         RAMA: '6',
+//         MMCT: '18.24'
+//     },
+//     {
+//         id: 5,
+//         ProfileAddress: "0xcc5...be31",
+//         RAMA: '8',
+//         MMCT: '24.32'
+//     },
 
-    {
-        id: 6,
-        ProfileAddress: "0xcc5...be31",
-        RAMA: '7',
-        MMCT: '21.28'
-    },
+//     {
+//         id: 6,
+//         ProfileAddress: "0xcc5...be31",
+//         RAMA: '7',
+//         MMCT: '21.28'
+//     },
 
-    {
-        id: 7,
-        ProfileAddress: "0xcc5...be31",
-        RAMA: '2',
-        MMCT: '6.08'
-    },
-    {
-        id: 8,
-        ProfileAddress: "0xcc5...be31",
-        RAMA: '5',
-        MMCT: '15.2'
-    },
-    {
-        id: 9,
-        ProfileAddress: "0xcc5...be31",
-        RAMA: '3',
-        MMCT: '9.12'
-    },
-    {
-        id: 10,
-        ProfileAddress: "0xcc5...be31",
-        RAMA: '5',
-        MMCT: '15.2'
-    },
-
-
-]
+//     {
+//         id: 7,
+//         ProfileAddress: "0xcc5...be31",
+//         RAMA: '2',
+//         MMCT: '6.08'
+//     },
+//     {
+//         id: 8,
+//         ProfileAddress: "0xcc5...be31",
+//         RAMA: '5',
+//         MMCT: '15.2'
+//     },
+//     {
+//         id: 9,
+//         ProfileAddress: "0xcc5...be31",
+//         RAMA: '3',
+//         MMCT: '9.12'
+//     },
+//     {
+//         id: 10,
+//         ProfileAddress: "0xcc5...be31",
+//         RAMA: '5',
+//         MMCT: '15.2'
+//     },
 
 
-const ContributorsTable = ({resultOfRamaPriceInUSD}:{resultOfRamaPriceInUSD:  bigint | undefined}) => {
+// ]
+
+
+const ContributorsTable = ({ resultOfRamaPriceInUSD }: { resultOfRamaPriceInUSD: bigint | undefined }) => {
 
     const classes = useStyles();
 
@@ -165,9 +166,16 @@ const ContributorsTable = ({resultOfRamaPriceInUSD}:{resultOfRamaPriceInUSD:  bi
                                                 gap: '10px',
                                                 alignItems: 'center'
                                             }}>
-                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                                <Image src={t1} alt={""} width={44} />
-                                               <Typography color={'#fff'}>{shortenString(item.user as Address)}</Typography>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.23rem' }}>
+                                                    <Image src={t1} alt={""} width={36} />
+                                                    <AddressCopy
+                                                        textColor="#00ffff"
+                                                        hrefLink={
+                                                            chainId === 1370 ? `https://ramascan.com/address/${item.user}` :
+                                                                `https://pingaksha.ramascan.com/address/${item.user}`
+                                                        }
+                                                        text={item.user as string}
+                                                        addresstext={shortenString(item.user as Address)} />
                                                 </Box>
                                             </Box>
                                         </TableCell>
@@ -175,7 +183,7 @@ const ContributorsTable = ({resultOfRamaPriceInUSD}:{resultOfRamaPriceInUSD:  bi
 
                                             <Typography color={'#fff'}>{convertToAbbreviated(formatEther?.(BigInt?.(item.amount)))} RAMA</Typography>
                                             <Typography color={'#999'}>{formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0))) * Number(
-                                                    formatEther?.(BigInt?.(resultOfRamaPriceInUSD ? resultOfRamaPriceInUSD.toString() : 0))))}</Typography>
+                                                formatEther?.(BigInt?.(resultOfRamaPriceInUSD ? resultOfRamaPriceInUSD.toString() : 0))))}</Typography>
                                         </TableCell>
 
                                         <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1 }} align="right">

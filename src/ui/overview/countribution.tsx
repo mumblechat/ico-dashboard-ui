@@ -6,6 +6,10 @@ import contribution_shape02 from '../../icons/contribution_shape02.png'
 import Image from "next/image";
 import Link from "next/link";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { useBalance, useChainId, useReadContract } from "wagmi";
+import { mmctContractAddresses } from "@/configs";
+import { formatEther, zeroAddress } from "viem";
+import { mmctIcoAbi } from "@/configs/abi/mmctIco";
 
 const useStyles = makeStyles({
     heading: {
@@ -98,13 +102,34 @@ const useStyles = makeStyles({
 
 const Countribution = () => {
     const classes = useStyles();
+    const chainId = useChainId()
+    const {data:ramaBalanceOfIco}=useBalance({
+        address: chainId===1370?mmctContractAddresses.ramestta.mmct_ico:mmctContractAddresses.pingaksha.mmct_ico,
+        query:{
+            select(data) {
+                return Number(formatEther(data.value))
+            },
+        }
+      })
+    const {data:ramaPriceInUSD} = useReadContract({
+        abi: mmctIcoAbi ,
+        address: chainId===1370?mmctContractAddresses.ramestta.mmct_ico:mmctContractAddresses.pingaksha.mmct_ico,
+        functionName: 'ramaPriceInUSD',
+        account: zeroAddress,
+        query:{
+            select(data) {
+                return Number(formatEther(data))
+            },
+        }
+      }) 
     return (
         <>
             <Box>
                 <Box className={classes.heading}>
                     <Box>
-                        <Heading heading={'$9,880'} />
+                        <Heading heading={`${ramaPriceInUSD&&ramaBalanceOfIco?ramaBalanceOfIco*ramaPriceInUSD:'0'}`} />
                     </Box>
+                    
 
                     <Typography sx={{
                          '@media(max-width : 900px)':{
@@ -147,8 +172,8 @@ const Countribution = () => {
                     </Box>
 
                     <Box className={classes.datacount}>
-                        <Typography sx={{ '@media(max-width : 600px)': { fontSize: '15px' } }} fontWeight={600} variant="h5" color={'#fff'}>65000 RAMA raised</Typography>
-                        <Typography sx={{ '@media(max-width : 600px)': { fontSize: '15px' } }} fontWeight={600} variant="h5" color={'#fff'}>1 RAMA = $0.152 = 3.04 MMCT</Typography>
+                        <Typography sx={{ '@media(max-width : 600px)': { fontSize: '15px' } }} fontWeight={600} variant="h5" color={'#fff'}>{ramaBalanceOfIco?ramaBalanceOfIco.toFixed(2):0} RAMA raised</Typography>
+                        <Typography sx={{ '@media(max-width : 600px)': { fontSize: '15px' } }} fontWeight={600} variant="h5" color={'#fff'}>1 RAMA = ${ramaPriceInUSD?ramaPriceInUSD.toFixed(4):'0.1450'} = {ramaPriceInUSD?(ramaPriceInUSD/0.05).toFixed(4):(0.145/0.05).toFixed(4)} MMCT</Typography>
                     </Box>
                 </Container>
 

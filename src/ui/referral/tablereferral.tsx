@@ -17,6 +17,7 @@ import { mmctReferralAbi } from "@/configs/abi/mmctReferral";
 import shortenString from "@/lib/shortenString";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
+import AddressCopy from "@/theme/components/addressCopy";
 
 
 const useStyles = makeStyles({
@@ -148,15 +149,22 @@ const Tablereferral = ({ referralsCount }: { referralsCount: string }) => {
                                                 gap: '10px',
                                                 alignItems: 'center'
                                             }}>
-                                                <Image src={r2} alt={""} />
-                                                <Typography>{shortenString(resultOfDirectReferrals.data[0][index] as Address)}</Typography>
+                                                <Image src={r2} alt={""} width={50} />
+                                                <AddressCopy 
+                                             textColor="#00ffff" 
+                                             hrefLink={
+                                                chainId===1370?`https://ramascan.com/address/${resultOfDirectReferrals.data[0][index]}`:
+                                                `https://pingaksha.ramascan.com/address/${resultOfDirectReferrals.data[0][index]}`
+                                             } 
+                                             text={resultOfDirectReferrals.data[0][index] as string} 
+                                             addresstext={shortenString(resultOfDirectReferrals.data[0][index] as Address)}/>
                                             </Box>
                                         </TableCell>
                                         <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
                                             <Typography color={'#fff'}>{resultOfDirectReferrals.data[1][index] ?
                                                 (
                                                     <>
-                                                        {convertToAbbreviated(Number(formatEther?.(BigInt?.(resultOfDirectReferrals.data[1][index].toString()))),3)} MMCT
+                                                        {convertToAbbreviated(Number(formatEther?.(BigInt?.(resultOfDirectReferrals.data[1][index].toString()))),5)} MMCT
                                                     </>
                                                 )
                                                 : '-'}
@@ -165,18 +173,18 @@ const Tablereferral = ({ referralsCount }: { referralsCount: string }) => {
                                             {resultOfDirectReferrals.data[1][index] ?
                                                 (
                                                     <>
-                                                        {formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfDirectReferrals.data[1][index].toString())))*0.05,3)}
+                                                        {formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfDirectReferrals.data[1][index].toString())))*0.05,5)}
                                                     </>
                                                 )
                                                 : '-'}
                                             </Typography>
                                         </TableCell>
-                                        <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">10%</TableCell>
+                                        <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">5%</TableCell>
                                         <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="right">
                                             <Typography color={'#fff'}>{resultOfDirectReferrals.data[1][index] ?
                                                 (
                                                     <>
-                                                        {convertToAbbreviated(Number(formatEther?.(BigInt?.(resultOfDirectReferrals.data[1][index].toString()))) * 0.1,3)} MMCT
+                                                        {convertToAbbreviated(Number(formatEther?.(BigInt?.(resultOfDirectReferrals.data[1][index].toString()))) * 0.05,5)} MMCT
                                                     </>
                                                 )
                                                 : '-'}
@@ -185,7 +193,7 @@ const Tablereferral = ({ referralsCount }: { referralsCount: string }) => {
                                             {resultOfDirectReferrals.data[1][index] ?
                                                 (
                                                     <>
-                                                        {formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfDirectReferrals.data[1][index].toString()))) * 0.05 * 0.1,3)}
+                                                        {formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfDirectReferrals.data[1][index].toString()))) * 0.05 * 0.05,5)}
                                                     </>
                                                 )
                                                 : '-'}

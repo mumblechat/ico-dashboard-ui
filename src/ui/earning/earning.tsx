@@ -7,7 +7,7 @@ import TableEarn from "./tableEarn";
 import { useAccount, useBalance, useChainId, useReadContract } from "wagmi";
 import { Address, formatEther, zeroAddress } from "viem";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
-import { mmctTokenAbi } from "@/configs/abi/mmctToken";
+import { mmctTokenAbi } from "@/configs/abi/mmctTokenAbi";
 import { formatTier, mmctContractAddresses } from "@/configs";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
@@ -121,12 +121,17 @@ const Earning = ({ Earning }: props) => {
         account: zeroAddress
     })
 
-    const resultOfUserCalculateMintRate = useReadContract({
+    const {data:mintRatePerHour} = useReadContract({
         abi: mmctStakingAbi,
         address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
         functionName: 'calculateMintRate',
         args: [Number(resultOfUserStaked?.data?.volumeInUSD) > 0 ? resultOfUserStaked?.data?.volumeInUSD as bigint : BigInt(0),Number(resultOfUsergReferralsCount?.data) > 0 ? resultOfUsergReferralsCount?.data  as bigint : BigInt(0)],
-        account: zeroAddress
+        account: zeroAddress,
+        query:{
+            select(data) {
+                return Number(data[1])/1e15
+            },
+        }
     })
 
 
@@ -152,7 +157,7 @@ const Earning = ({ Earning }: props) => {
             id: 3,
             Title: 'Claimed Rewards',
             Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0)), 5)} MMCT`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0))) * 0.05, 3)}`
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserStaked?.data ? resultOfUserStaked.data.claimedMintRewards.toString() : 0))) * 0.05, 5)}`
         },
         {
             id: 4,
@@ -175,14 +180,14 @@ const Earning = ({ Earning }: props) => {
         },
         {
             id: 7,
-            Title: 'Per Min Base Speed(%)',
-            Amount: `${((Number(resultOfUserCalculateMintRate?.data?.[1])/60)/1e15).toFixed(5)}`,
+            Title: 'Per Hour Base Speed(%)',
+            Amount: `${mintRatePerHour?mintRatePerHour.toFixed(5):'0.00000'}`,
             data: ``
         },
         {
             id: 8,
-            Title: 'Per Hour Base Speed(%)',
-            Amount: `${(Number(resultOfUserCalculateMintRate?.data?.[1])/1e15).toFixed(5)}`,
+            Title: 'Per Day Base Speed(%)',
+            Amount: `${mintRatePerHour?(mintRatePerHour*24).toFixed(5):'0.00000'}`,
             data: ''
         },
     ]
@@ -222,9 +227,11 @@ const Earning = ({ Earning }: props) => {
                     </Box>
 
                 </Box>
-                <Box className={classes.boxCr} sx={{ marginTop: '1rem' }}>
-                    <TableEarn resultOfUserStakedList={resultOfUserStakedList?.data} />
+                
+                 <Box className={classes.boxCr} sx={{ marginTop: '1rem' }}>
+                    <TableEarn resultOfUserStakedList={resultOfUserStakedList?.data} mintRatePerYear={mintRatePerHour?mintRatePerHour*24*365:0.00000} />
                 </Box>
+                
             </Box>
 
         </>

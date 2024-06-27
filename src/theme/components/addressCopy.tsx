@@ -7,14 +7,17 @@ import React, { useState } from "react";
 import { useAccount } from "wagmi";
 
 interface props {
-    text: any;
-    addresstext: any;
+    text: string;
+    textColor?: string;
+    addresstext: string;
+    hrefLink: string;
+    
 }
 const StyledBox = styled(Box)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
-    justifyContent: 'space-between',
+    justifyContent: 'inherit',
     borderRadius: '8px',
 }));
 
@@ -28,7 +31,7 @@ const StyledLink = styled(Link)(({ theme }) => ({
         }
 }));
 
-const AddressCopy = ({ text, addresstext,  }: props) => {
+const AddressCopy = ({ text,textColor='#000', addresstext, hrefLink  }: props) => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const { address } = useAccount();
     const handleCopy = () => {
@@ -44,12 +47,12 @@ const AddressCopy = ({ text, addresstext,  }: props) => {
     return (
         <>
             <StyledBox>
-                <StyledLink href={`https://ico.dashboard.mumblechat.com/dashboard/?ref=${address}`} target="_black">
+                <StyledLink sx={{color: textColor}} href={hrefLink} target="_black">
                     {addresstext}
                 </StyledLink>
 
                 <Box onClick={handleCopy}>
-                    <ContentCopyIcon sx={{ color: '#000', width: 18 }} />
+                    <ContentCopyIcon sx={{ color: textColor, width: 18 }} />
                 </Box>
                 <Snackbar
 

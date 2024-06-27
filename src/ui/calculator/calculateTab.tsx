@@ -104,7 +104,7 @@ export default function CalculateTab() {
 
                     <Box><Typography>$0.001</Typography></Box>
                 </Box>
-                <CustomTabPanel value={value} index={0}>
+                {/* <CustomTabPanel value={value} index={0}>
                     <Box mt={2}>
                         <InnerTab />
                     </Box>
@@ -118,7 +118,7 @@ export default function CalculateTab() {
                     <Box mt={2}>
                     <InnerTab />
                     </Box>
-                </CustomTabPanel>
+                </CustomTabPanel> */}
             </Box>
         </Box>
     );

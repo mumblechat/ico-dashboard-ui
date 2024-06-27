@@ -88,9 +88,9 @@ type MmctContractAddressesType= {
 export const mmctContractAddresses: MmctContractAddressesType = {
   ramestta: { 
     mmct_token: "0x4b1853C1882ee5c50e5Cb3d7ff05334047AC66Bd",
-    mmct_ico: "0x4DF1Aa05B49068bCE8dc00BFd8b2cA26aEd5101E",
-    mmct_referral: "0xE0AD91DaBbD69F055463438E62ee3b73F5a0b626",
-    mmct_staking: "0x06A4CD8EE1a8D99C62B06C607611AB924B6310a6",
+    mmct_ico: "0xF14CFCA3D7f35815024197a117eA82d2816Fbc23",
+    mmct_referral: "0xe7A53699DE32B1e33492cbf5398744498B3D2ddc",
+    mmct_staking: "0xE91A1C7B5689d918D40aAA848CDA96dbAa2aba67",
   },
   pingaksha: {
     mmct_token: "0x0537786A0C92439E0F70A92EC0477A8465B7Dade",

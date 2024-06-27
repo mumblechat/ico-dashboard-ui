@@ -1,5 +1,5 @@
 import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import mmct from '../../icons/Sheild.svg'
+import r2 from '../../icons/r2.svg'
 import { makeStyles } from '@mui/styles';
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import { formatTier, mmctContractAddresses } from "@/configs";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
 import HoverTool from "@/theme/components/hoverTool";
+import AddressCopy from "@/theme/components/addressCopy";
 
 
 
@@ -61,6 +62,23 @@ const useStyles = makeStyles({
         backgroundColor: '#080808'
     }
 });
+const mapLevel2RewardPercent={
+    "1": "10",
+    "2": "2",
+    "3": "2",
+    "4": "2",
+    "5": "0.5",
+    "6": "0.5",
+    "7": "0.5",
+    "8": "0.3",
+    "9": "0.3",
+    "10": "0.3",
+    "11": "0.2",
+    "12": "0.2",
+    "13": "0.2",
+    "14": "1",
+    "15": "5",
+} as any
 
 const TableCummunityEarn = ({resultOfUserCommunityReward}:{resultOfUserCommunityReward:any}) => {
     const classes = useStyles();
@@ -215,6 +233,7 @@ const TableCummunityEarn = ({resultOfUserCommunityReward}:{resultOfUserCommunity
                         <TableRow>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }}>From</TableCell>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">Level</TableCell>
+                            <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">Bonus</TableCell>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">FCR <HoverTool Title={"From Claimed Reward"}/></TableCell>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="left">FCT <HoverTool Title={"From Claimed Time"}/></TableCell>
                             <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 16, color: '#fff' }} align="right">Reward</TableCell>
@@ -228,12 +247,23 @@ const TableCummunityEarn = ({resultOfUserCommunityReward}:{resultOfUserCommunity
                             <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} component="th" scope="row">
                                     <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                                    <Image src={mmct} alt={"lol"} width={50} />
-                                        <Typography>{shortenString(item.from as Address)}</Typography>
+                                    <Image src={r2} alt={"lol"} width={50} />
+                                        <AddressCopy 
+                                             textColor="#00ffff" 
+                                             hrefLink={
+                                                chainId===1370?`https://ramascan.com/address/${item.from}`:
+                                                `https://pingaksha.ramascan.com/address/${item.from}`
+                                             } 
+                                             text={item.from as string} 
+                                             addresstext={shortenString(item.from as Address)}/>
                                     </Box>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
                                     <Typography color={'#fff'}>{item.level.toString()}</Typography>
+
+                                </TableCell>
+                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
+                                    <Typography color={'#fff'}>{mapLevel2RewardPercent[item.level.toString()]}%</Typography>
 
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">

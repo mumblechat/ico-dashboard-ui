@@ -128,7 +128,7 @@ function Brick() {
                         ))}
                     </Slider>
                     <Box sx={{ textAlign: 'center', marginTop: '2rem' }}>
-                        <StyledLink href={""}>
+                        <StyledLink href={"/dashboard"}>
                             <Typography>Purchase a Token</Typography>
                         </StyledLink>
                     </Box>

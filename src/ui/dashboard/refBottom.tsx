@@ -36,7 +36,7 @@ const RefBottom = () => {
     return (
         <>
             <Box className={classes.ref__link}>
-                 <AddressCopy text={`https://ico.mumblechat.com/dashboard/?ref=${address}`} addresstext={`https://ico.mumblechat.com/dashboard/?ref=${shortenString(address as Address)}`} /> 
+                 <AddressCopy hrefLink={`https://ico.mumblechat.com/dashboard/?ref=${address}`}  text={`https://ico.mumblechat.com/dashboard/?ref=${address}`} addresstext={`https://ico.mumblechat.com/dashboard/?ref=${shortenString(address as Address)}`} /> 
                 <Modal />
             </Box>
         </>

@@ -3,8 +3,12 @@ import { makeStyles } from '@mui/styles';
 import Heading from "@/theme/components/heading";
 import RefBottom from "../dashboard/refBottom";
 import Image from "next/image";
-import rmesta from '../../icons/rmesta.svg'
-import { useAccount } from "wagmi";
+import r2 from '../../icons/r2.svg'
+import { useAccount, useChainId, useReadContract } from "wagmi";
+import AddressCopy from "@/theme/components/addressCopy";
+import { Address } from "viem";
+import { mmctReferralAbi } from "@/configs/abi/mmctReferral";
+import { mmctContractAddresses } from "@/configs";
 
 
 
@@ -33,7 +37,7 @@ const useStyles = makeStyles({
         gap: '10px',
     },
     js_Reigns: {
-        padding: '1.5rem',
+        padding: '0.7rem',
         '@media(max-width : 600px)': {
             padding: '0.5rem',
         }
@@ -48,7 +52,14 @@ const useStyles = makeStyles({
 
 const Profile = () => {
     const classes = useStyles();
-    const {address} = useAccount()
+    const { address } = useAccount()
+    const chainId = useChainId()
+    const resultOfReferrer = useReadContract({
+        abi: mmctReferralAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
+        functionName: 'getReferrer',
+        args: [address as Address]
+    })
     return (
         <>
 
@@ -57,15 +68,42 @@ const Profile = () => {
                 <Box border={'1px solid #1D1D20'} borderRadius={'8px'} mt={3}>
                     <Box className={classes.js_Reigns}>
                         <Box className={classes.profile}>
-                            <Image src={rmesta} alt={""} />
+                            <Image src={r2} alt={""} />
                             <Typography color={'#999'}>Rank: <Typography component={'span'} color={'#fff'}>1</Typography></Typography>
                         </Box>
-                        <Typography sx={{
+                        {/* <Typography sx={{
                             '@media(max-width : 600px)': {
                                 fontSize: 11.7
                             }
-                        }} mt={1.5} color={'#fff'}>{address??''}</Typography>
+                        }} mt={1.5} color={'#fff'}>{address ?? ''}</Typography> */}
+                        <AddressCopy
+                            textColor="#00ffff"
+                            hrefLink={
+                                chainId === 1370 ? `https://ramascan.com/address/${address}` :
+                                    `https://pingaksha.ramascan.com/address/${address}`
+                            }
+                            text={address as string}
+                            addresstext={address as Address} />
                     </Box>
+                    {
+                        resultOfReferrer?.data && <Box className={classes.js_Reigns}>
+
+                            {/* <Typography sx={{
+                            '@media(max-width : 600px)': {
+                                fontSize: 11.7
+                            }
+                        }} mt={1.5} color={'#fff'}>{address}</Typography> */}
+                            <Typography color={'#999'}>You Referred By:</Typography>
+                            <AddressCopy
+                                textColor="#00ffff"
+                                hrefLink={
+                                    chainId === 1370 ? `https://ramascan.com/address/${resultOfReferrer?.data}` :
+                                        `https://pingaksha.ramascan.com/address/${resultOfReferrer?.data}`
+                                }
+                                text={resultOfReferrer?.data as string}
+                                addresstext={resultOfReferrer?.data as Address} />
+                        </Box>
+                    }
                     <RefBottom />
                 </Box>
 

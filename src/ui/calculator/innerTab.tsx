@@ -47,13 +47,13 @@ const useStyles = makeStyles({
         marginTop: '1rem !important',
     },
     current__main__wrap: {
-        background: 'linear-gradient(0deg, #080C0C, #02B3B3, #02B3B3)',
+        background: 'linear-gradient(0deg, #02B3B3, #02B3B3, #02B3B3)',
         padding: '1.5rem',
         margin: 'auto',
         width: '400px',
         borderRadius: '20px',
         border: '1px solid #1D1D20',
-        marginTop: '-8rem',
+        marginTop: '0.5rem',
         '@media(max-width : 600px)': {
             width: '100%',
             marginTop: '2rem',
@@ -77,9 +77,9 @@ const StyledBox = styled('form')(({ theme }) => ({
 
 
 
-const InnerTab = () => {
+const InnerTab = ({setValue,selectedCurrency,setSelectedCurrency}:{setValue:any,selectedCurrency:any,setSelectedCurrency:any}) => {
     const classes = useStyles();
-    const [selectedCurrency, setSelectedCurrency] = useState('0.05');
+    // const [selectedCurrency, setSelectedCurrency] = useState('0.05');
 
     const [selectedLable, setSelectedLable] = useState('Private Sale');
 
@@ -106,10 +106,10 @@ const InnerTab = () => {
                     noValidate
                     autoComplete="off"
                 >
-                    <Dropdown onSelect={handleSelect} label={"Private Sale"} />
+                    <Dropdown onSelect={handleSelect}  onLabel={handleSelectLable} />
 
                 </StyledBox>
-                <Box className={classes.max_btn__wrap}>
+                {/* <Box className={classes.max_btn__wrap}>
                     <InputBase
                         sx={{
                             flex: 1,
@@ -132,9 +132,9 @@ const InnerTab = () => {
                         type={'number'}
                     />
                     <Link className={classes.max_btn} href={""}>Max</Link>
-                </Box>
+                </Box> */}
 
-                <Box className={classes.emptyBox}>
+                {/* <Box className={classes.emptyBox}> */}
 
                 </Box>
                 <Box className={classes.current__main__wrap}>
@@ -151,16 +151,16 @@ const InnerTab = () => {
                         <Box className={classes.line} />
                         <Box>
                             <Typography>Current Price</Typography>
-                            <Typography fontSize={20} fontWeight={500}>$3.04</Typography>
+                            <Typography fontSize={20} fontWeight={500}>$0.05</Typography>
                         </Box>
                     </Box>
 
-                    <Link className={classes.currentPrice} href={""}>Current Price</Link>
+                    {/* <Link className={classes.currentPrice} href={""}></Link> */}
 
                 </Box>
 
-                <Slidercoin />
-            </Box>
+                <Slidercoin setValue={setValue} />
+            {/* </Box> */}
         </>
     )
 }

@@ -2,6 +2,10 @@ import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import t1 from '../../icons/t1.svg'
 import { makeStyles } from '@mui/styles';
 import Image from "next/image";
+import { useChainId, useReadContract } from "wagmi";
+import { mmctContractAddresses } from "@/configs";
+import { parseEther, zeroAddress } from "viem";
+import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 
 
 const useStyles = makeStyles({
@@ -28,40 +32,36 @@ const useStyles = makeStyles({
 
 
 
-const MiningCalculatorTable = () => {
+const MiningCalculatorTable = ({inputInUsd,member}:{inputInUsd:string,member:string}) => {
 
     const classes = useStyles();
-
-
-    const TableList = [
-        {
-            id: 1,
-            Userprofile: t1,
-            ProfileAddress: "0xcc5...be31",
-            Bonus: 'Total Transactions',
-            Profit: '5',
-            MMCT: '12'
-
-        },
-
-
-    ]
-
-
-
-
+    const chainId = useChainId()
+    const {data:mintRatePerHour} = useReadContract({
+        abi: mmctStakingAbi,
+        address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+        functionName: 'calculateMintRate',
+        args: [parseEther(inputInUsd),BigInt(member)],
+        account: zeroAddress,
+        query:{
+            enabled: Number(inputInUsd)>0,
+            select(data) {
+                return Number(data[1])/1e15
+            },
+        }
+    })
 
 
     return (
 
         <>
-            <Box mt={5}>
+           { 
+           mintRatePerHour && <Box mt={5}>
                 {/* <Typography>You Will </Typography> */}
                 <TableContainer component={Paper} className={classes.tableContainer}>
                     <Table sx={{ minWidth: 400, backgroundColor: '#080808', borderRadius: '0px' }} aria-label="simple table">
                         <TableHead sx={{ backgroundColor: '#101012' }}>
                             <TableRow>
-                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} >Per Hour Base Speed (%)</TableCell>
+                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} >Per Hour Base Speed</TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">Per Day</TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">Per Month</TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="right">Per Year</TableCell>
@@ -87,30 +87,30 @@ const MiningCalculatorTable = () => {
                                             </Box> */}
                                         <Box>
 
-                                            <Typography color={'#fff'}>{0.0011}</Typography>
-                                            <Typography fontSize={13} color={'#999'}>{0.0011} MMCT</Typography>
-                                            <Typography fontSize={13} color={'#999'}>${0.0011}</Typography>
+                                            <Typography color={'#fff'}>{mintRatePerHour}%</Typography>
+                                            <Typography fontSize={13} color={'#999'}>{((Number(mintRatePerHour)/100)*Number(inputInUsd)).toFixed(5)} MMCT</Typography>
+                                            <Typography fontSize={13} color={'#999'}>${(((Number(mintRatePerHour)/100)*Number(inputInUsd))*0.05).toFixed(5)}</Typography>
                                         </Box>
                                     </Box>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1 }} align="left">
 
-                                    <Typography color={'#fff'}>{0.0264} </Typography>
-                                    <Typography fontSize={13} color={'#999'}>{0.0011} MMCT</Typography>
-                                    <Typography fontSize={13} color={'#999'}>${0.0011}</Typography>
+                                    <Typography color={'#fff'}>{mintRatePerHour*24}% </Typography>
+                                    <Typography fontSize={13} color={'#999'}>{(((Number(mintRatePerHour)*24)/100)*Number(inputInUsd)).toFixed(5)} MMCT</Typography>
+                                            <Typography fontSize={13} color={'#999'}>${((((Number(mintRatePerHour)*24)/100)*Number(inputInUsd))*0.05).toFixed(5)}</Typography>
                                 </TableCell>
 
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1 }} align="left">
 
-                                    <Typography color={'#fff'}>{0.792} </Typography>
-                                    <Typography fontSize={13} color={'#999'}>{0.0011} MMCT</Typography>
-                                    <Typography fontSize={13} color={'#999'}>${0.0011}</Typography>
+                                    <Typography color={'#fff'}>{mintRatePerHour*24*30}% </Typography>
+                                    <Typography fontSize={13} color={'#999'}>{(((Number(mintRatePerHour)*24*30)/100)*Number(inputInUsd)).toFixed(5)} MMCT</Typography>
+                                            <Typography fontSize={13} color={'#999'}>${((((Number(mintRatePerHour)*24*30)/100)*Number(inputInUsd))*0.05).toFixed(5)}</Typography>
                                 </TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1 }} align="right">
 
-                                    <Typography color={'#fff'}>{9.636} </Typography>
-                                    <Typography fontSize={13} color={'#999'}>{0.0011} MMCT</Typography>
-                                    <Typography fontSize={13} color={'#999'}>${0.0011}</Typography>
+                                    <Typography color={'#fff'}>{mintRatePerHour*24*365}% </Typography>
+                                    <Typography fontSize={13} color={'#999'}>{(((Number(mintRatePerHour)*24*365)/100)*Number(inputInUsd)).toFixed(5)} MMCT</Typography>
+                                            <Typography fontSize={13} color={'#999'}>${((((Number(mintRatePerHour)*24*365)/100)*Number(inputInUsd))*0.05).toFixed(5)}</Typography>
                                 </TableCell>
 
 
@@ -121,6 +121,7 @@ const MiningCalculatorTable = () => {
                     </Table>
                 </TableContainer>
             </Box>
+            }
         </>
 
     );

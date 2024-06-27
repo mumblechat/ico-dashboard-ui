@@ -16,6 +16,7 @@ import { mmctContractAddresses } from "@/configs";
 import shortenString from "@/lib/shortenString";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
+import AddressCopy from "@/theme/components/addressCopy";
 
 
 const useStyles = makeStyles({
@@ -157,6 +158,7 @@ const Tablereferral2 = () => {
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">SA <HoverTool Title={"Staking Amount"} /></TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">RE <HoverTool Title={"Referral Earning"}/></TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">level</TableCell>
+                                <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="left">Bonus</TableCell>
                                 <TableCell sx={{ borderBottom: '1px solid #1D1D20', fontSize: 18, color: '#fff', padding: 1 }} align="right">EFY <HoverTool Title={"Earning From You"} /></TableCell>
 
                             </TableRow>
@@ -178,8 +180,15 @@ const Tablereferral2 = () => {
                                                 gap: '10px',
                                                 alignItems: 'center'
                                             }}>
-                                                <Image src={r2} alt={""} />
-                                                <Typography>{shortenString(resultOfUplineReferrals.data[0][index] as Address)}</Typography>
+                                                <Image src={r2} alt={""}  width={50} />
+                                                <AddressCopy 
+                                             textColor="#00ffff" 
+                                             hrefLink={
+                                                chainId===1370?`https://ramascan.com/address/${resultOfUplineReferrals.data[0][index]}`:
+                                                `https://pingaksha.ramascan.com/address/${resultOfUplineReferrals.data[0][index]}`
+                                             } 
+                                             text={resultOfUplineReferrals.data[0][index] as string} 
+                                             addresstext={shortenString(resultOfUplineReferrals.data[0][index] as Address)}/>
                                             </Box>
                                         </TableCell>
                                         <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
@@ -205,7 +214,7 @@ const Tablereferral2 = () => {
                                         <Typography color={'#fff'}>{resultOfUplineReferrals.data[2][index] ?
                                                 (
                                                     <>
-                                                        {convertToAbbreviated(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString()))),3)} MMCT
+                                                        {convertToAbbreviated(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString()))),5)} MMCT
                                                     </>
                                                 )
                                                 : '-'}
@@ -214,18 +223,21 @@ const Tablereferral2 = () => {
                                             {resultOfUplineReferrals.data[2][index] ?
                                                 (
                                                     <>
-                                                        {formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString())))*0.05,3)}
+                                                        {formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString())))*0.05,5)}
                                                     </>
                                                 )
                                                 : '-'}
                                                 </Typography>
                                         </TableCell>
                                         <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">{index+1}</TableCell>
+                                        <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
+                                            <Typography color={'#fff'}>{rewardPercentages[index]*100}% </Typography>
+                                        </TableCell>
                                         <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="right">
                                         <Typography color={'#fff'}>{resultOfUplineReferrals.data[2][index] ?
                                                 (
                                                     <>
-                                                        {convertToAbbreviated(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString())))*rewardPercentages[index],3)} MMCT
+                                                        {convertToAbbreviated(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString())))*rewardPercentages[index],5)} MMCT
                                                     </>
                                                 )
                                                 : '-'}
@@ -234,7 +246,7 @@ const Tablereferral2 = () => {
                                             {resultOfUplineReferrals.data[2][index] ?
                                                 (
                                                     <>
-                                                        {formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString())))*rewardPercentages[index]*0.05,3)}
+                                                        {formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUplineReferrals.data[2][index].toString())))*rewardPercentages[index]*0.05,5)}
                                                     </>
                                                 )
                                                 : '-'}

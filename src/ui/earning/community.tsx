@@ -6,7 +6,7 @@ import TableEarn from "./tableEarn";
 import { useAccount, useBalance, useChainId, useReadContract } from "wagmi";
 import { Address, formatEther, zeroAddress } from "viem";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
-import { mmctTokenAbi } from "@/configs/abi/mmctToken";
+import { mmctTokenAbi } from "@/configs/abi/mmctTokenAbi";
 import { mmctContractAddresses } from "@/configs";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
@@ -70,13 +70,13 @@ const Community = () => {
             id: 1,
             Title: 'Claimed Rewards',
             Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.claimedReward.toString() : 0)),5)}`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.claimedReward.toString() : 0))) * 0.05)}`
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.claimedReward.toString() : 0))) * 0.05,5)}`
         },
         {
             id: 2,
             Title: 'Unclaimed Rewards',
             Amount: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.amount.toString() : 0)),5)}`,
-            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.amount.toString() : 0))) * 0.05)}`
+            data: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfUserCommunityReward?.data ? resultOfUserCommunityReward.data.amount.toString() : 0))) * 0.05,5)}`
         },
     ]
     return (

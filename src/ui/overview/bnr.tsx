@@ -9,7 +9,7 @@ import { makeStyles } from '@mui/styles';
 import { Box, Grid } from "@mui/material";
 import Link from "next/link";
 import backward from '../../icons/backward.svg'
-import { useChainId, useReadContract,useConfig, useAccount } from "wagmi";
+import { useChainId, useReadContract,useConfig, useAccount, useBalance } from "wagmi";
 import { mmctContractAddresses } from "@/configs";
 import { Abi, zeroAddress } from "viem";
 import { mmctIcoAbi } from "@/configs/abi/mmctIco";
@@ -68,6 +68,7 @@ const Bnr = () => {
         args: [0],
         account: zeroAddress
       }) 
+
       
     const targetDate = new Date(result?.data ?Number(result?.data?.startAt)*1000: new Date().getTime());
     return (

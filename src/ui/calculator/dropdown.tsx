@@ -18,7 +18,7 @@ const currencies = [
 
 interface Props {
     onSelect: any;
-    label: any;
+    onLabel: any;
 }
 
 const StyledFormControl = styled(FormControl)({
@@ -43,7 +43,7 @@ const StyledSelect = styled(Select)({
     },
 });
 
-const Dropdown = ({ onSelect, label }: Props) => {
+const Dropdown = ({ onSelect, onLabel }: Props) => {
     const [selectedCurrency, setSelectedCurrency] = useState('0.05');
     
 
@@ -51,6 +51,10 @@ const Dropdown = ({ onSelect, label }: Props) => {
         const value = event.target.value;
         setSelectedCurrency(value);
         onSelect(value);
+        onLabel(
+            currencies.filter((item)=>item.value===value)[0].label
+            )
+
     };
 
     return (

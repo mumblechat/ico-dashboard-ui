@@ -24,7 +24,7 @@ import Refer from "./refer";
 import { useEffect, useState } from "react";
 import { useAccount, useBalance, useChainId, useReadContract, useReadContracts, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { Address, formatEther, parseEther, zeroAddress } from "viem";
-import { mmctTokenAbi } from "@/configs/abi/mmctToken";
+import { mmctTokenAbi } from "@/configs/abi/mmctTokenAbi";
 import { mmctContractAddresses } from "@/configs";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 
@@ -35,6 +35,7 @@ import { mmctIcoAbi } from "@/configs/abi/mmctIco";
 import ConnectWallet from "../shared/connectWallet";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import shortenString from "@/lib/shortenString";
+import { useSearchParams } from "next/navigation";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -322,10 +323,11 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 const Dsboard = (props: CircularProgressProps) => {
     const classes = useStyles();
     const [valueTop, setValueTop] = useState<number>(1);
-
+    const searchParams = useSearchParams()
     const [buyInput, setBuyInput] = useState("")
     // const [showInput, setShowInput] = useState<boolean>(false);
-    const [referrerAddress, setReferrerAddress] = useState<string>("")
+    const refParam = searchParams.get('ref')
+    const [referrerAddress, setReferrerAddress] = useState<string|null>(refParam)
     const { address } = useAccount()
     const chainId = useChainId()
     const { writeContractAsync, data, isPending: isPendingBuyForWrite } = useWriteContract()
@@ -438,23 +440,27 @@ const Dsboard = (props: CircularProgressProps) => {
     const Box__list = [
         {
             image: l1,
-            title: 'Your Total $MMCT Balance',
-            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)), 3)}`,
+            title: 'Your Wallet Balance',
+            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0)), 3)} MMCT`,
+            valueInUsd: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfBalance?.data ? resultOfBalance.data.toString() : 0))) * 0.05, 3)}`
         },
         {
             image: l2,
             title: 'Your Coin Worth at Launch',
-            data: `$${resultOfUserContribution?.data ? Number(Number(formatEther?.(BigInt?.(resultOfUserContribution?.data?.volume ? resultOfUserContribution?.data?.volume.toString() : 0))) * Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleRateInUsd ? resultOfSaleDetails?.data?.saleRateInUsd.toString() : 0)))).toFixed(3) : 0.000}`
+            data: `$${resultOfUserContribution?.data ? Number(Number(formatEther?.(BigInt?.(resultOfUserContribution?.data?.volume ? resultOfUserContribution?.data?.volume.toString() : 0))) * Number(formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleRateInUsd ? resultOfSaleDetails?.data?.saleRateInUsd.toString() : 0)))).toFixed(3) : 0.000}`,
+            valueInUsd: ''
         },
         {
             image: l3,
             title: 'Your Spot Earnings',
-            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfReferralDetail?.data?.[0].result ? resultOfReferralDetail?.data?.[0].result.toString() : 0)), 3)} MMCT`
+            data: `${convertToAbbreviated(formatEther?.(BigInt?.(resultOfReferralDetail?.data?.[0].result ? resultOfReferralDetail?.data?.[0].result.toString() : 0)), 3)} MMCT`,
+            valueInUsd: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(resultOfReferralDetail?.data?.[0].result ? resultOfReferralDetail?.data?.[0].result.toString() : 0))) * 0.05, 3)}`
         },
         {
             image: l1,
             title: 'Your Community Earnings',
-            data: `${convertToAbbreviated(formatEther?.(BigInt(Number(resultOfUserCommunityReward?.data) > 0 ? resultOfUserCommunityReward?.data?.claimedReward as bigint : 0)), 3)} MMCT`
+            data: `${convertToAbbreviated(formatEther?.(BigInt(Number(resultOfUserCommunityReward?.data) > 0 ? resultOfUserCommunityReward?.data?.claimedReward as bigint : 0)), 5)} MMCT`,
+            valueInUsd: `${formatNumberToCurrencyString(Number(formatEther?.(BigInt(Number(resultOfUserCommunityReward?.data) > 0 ? resultOfUserCommunityReward?.data?.claimedReward as bigint : 0))) * 0.05, 5)}`
         },
     ]
 
@@ -541,9 +547,10 @@ const Dsboard = (props: CircularProgressProps) => {
                         {Box__list.map((item, index) => (
                             <Grid key={index} item lg={3} md={3} sm={12} xs={12}>
                                 <Box className={classes.list___bx}>
-                                    <Image src={item.image} alt={""} />
+                                    <Image src={item.image} alt={""} width={44} />
                                     <Typography color={'#fff'}>{item.title}</Typography>
                                     <Typography color={'#fff'} fontWeight={500} variant="h6">{item.data}</Typography>
+                                    <Typography color={'#999'}>{item.valueInUsd}</Typography>
                                 </Box>
                             </Grid>
                         ))}
@@ -647,11 +654,11 @@ const Dsboard = (props: CircularProgressProps) => {
                                             },
                                             '& input[type=number]': {
                                                 '-moz-appearance': 'textfield',
-                                              },
-                                              '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
+                                            },
+                                            '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {
                                                 '-webkit-appearance': 'none',
                                                 margin: 0,
-                                              },
+                                            },
                                         }}
                                         fullWidth
                                         placeholder={'Enter Amount in RAMA'}
@@ -662,15 +669,15 @@ const Dsboard = (props: CircularProgressProps) => {
                                 <Box className={classes.worth}>
                                     {(resultOfRamaPriceInUSD?.data && buyInput) &&
                                         <>
-                                                 {/* <Image src={rmesta} alt={""} width={40} /> */}
+                                            {/* <Image src={rmesta} alt={""} width={40} /> */}
                                             <Typography color={'#999'}>COST:
                                                 <Typography component={'span'} color={'#fff'}> ${
-                                               ((Number(Number(buyInput) > 0 ? buyInput : 0) *
-                                            Number(
-                                                formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
-                                        ) 
-                                        ).toFixed(2)
-                
+                                                    ((Number(Number(buyInput) > 0 ? buyInput : 0) *
+                                                        Number(
+                                                            formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
+                                                    )
+                                                    ).toFixed(2)
+
                                                 }
                                                 </Typography>
                                             </Typography>
@@ -686,13 +693,13 @@ const Dsboard = (props: CircularProgressProps) => {
                                     }
                                     <Image src={shield} alt={""} width={50} />
                                     <Typography color={'#999'}>MMCT WORTH : <Typography component={'span'} color={'#fff'}>{
-                                        ((Number(Number(buyInput) > 0 ? buyInput : 0) *
+                                        buyInput&&resultOfRamaPriceInUSD?.data &&resultOfSaleDetails?.data ?((Number(Number(buyInput) > 0 ? buyInput : 0) *
                                             Number(
                                                 formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
                                         ) /
                                             Number(
                                                 formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleRateInUsd ? resultOfSaleDetails?.data?.saleRateInUsd.toString() : 0)))
-                                        ).toFixed(2)
+                                        ).toFixed(2):"0.00"
                                     }</Typography></Typography>
                                 </Box>
 
@@ -707,11 +714,11 @@ const Dsboard = (props: CircularProgressProps) => {
                                                         formatEther?.(BigInt?.(resultOfRamaPriceInUSD?.data ? resultOfRamaPriceInUSD.data.toString() : 0)))
                                                 ) < 10
                                             ) || (
-                                                Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))) < Number(Number(buyInput) > 0 ? buyInput : 0)
-                                            ) || (
-                                                !referrerAddress || !resultOfReferralDetail?.data?.[2].result
-                                            ) && resultOfReferralDetail?.data?.[3]?.result === zeroAddress
-                                            ) 
+                                                    Number(formatEther?.(BigInt?.(balanceOfRama?.data?.value ? balanceOfRama?.data?.value.toString() : 0))) < Number(Number(buyInput) > 0 ? buyInput : 0)
+                                                ) || (
+                                                    !referrerAddress || !resultOfReferralDetail?.data?.[2].result
+                                                ) && resultOfReferralDetail?.data?.[3]?.result === zeroAddress
+                                            )
                                         }
                                         fullWidth={true}
                                         className={classes.buy__btn}
@@ -727,15 +734,15 @@ const Dsboard = (props: CircularProgressProps) => {
                                                 ) || (
                                                     !referrerAddress || !resultOfReferralDetail?.data?.[2].result
                                                 ) && resultOfReferralDetail?.data?.[3]?.result === zeroAddress
-                                                ))
-                                             ? "1" : '0.3'
+                                            ))
+                                                ? "1" : '0.3'
                                         }}
                                         onClick={async () => {
                                             await writeContractAsync({
                                                 abi: mmctIcoAbi,
                                                 address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_ico : mmctContractAddresses.pingaksha.mmct_ico,
                                                 functionName: 'buy',
-                                                args: [0, (resultOfReferralDetail?.data?.[3]?.result!==zeroAddress?resultOfReferralDetail?.data?.[3]?.result as Address:referrerAddress as Address)],
+                                                args: [0, (resultOfReferralDetail?.data?.[3]?.result !== zeroAddress ? resultOfReferralDetail?.data?.[3]?.result as Address : referrerAddress as Address)],
                                                 account: address,
                                                 value: parseEther(buyInput),
                                             })
@@ -789,7 +796,7 @@ const Dsboard = (props: CircularProgressProps) => {
                                                     placeholder={'Enter Referrer Address'}
                                                     type={'text'}
                                                 />
-                                                <Button className={classes.max_btn} onClick={(e)=>setReferrerAddress((resultOfReferralDetail?.data && resultOfReferralDetail?.data?.[3]?.result !== zeroAddress)?resultOfReferralDetail?.data?.[3]?.result as Address:referrerAddress)} >Apply</Button>
+                                                <Button className={classes.max_btn} onClick={(e) => setReferrerAddress((resultOfReferralDetail?.data && resultOfReferralDetail?.data?.[3]?.result !== zeroAddress) ? resultOfReferralDetail?.data?.[3]?.result as Address : referrerAddress)} >Apply</Button>
 
 
                                             </Box>
@@ -801,11 +808,11 @@ const Dsboard = (props: CircularProgressProps) => {
                                                     </Box>
                                                 )}
                                             {/* <Box className={classes.validate__box} > */}
-                                            <Typography  fontWeight={200} color={'#00FFFF'} textAlign={'center'} mt={1}>Note: If you have no any  valid referrer address then you can use this community referrer.</Typography>
-                                           <Box sx={{background:'linear-gradient(90deg, #0808088a, #00FFFF, #0808088a)',gap:1,justifyContent:'center', padding:1,display:'flex', marginTop:'1rem',borderRadius:'8px', alignItems:'center',}}>
-                                           <Typography component={'h6'} fontWeight={700} color={'#000'}>Referrer:  </Typography>
-                                           <AddressCopy text={"0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af"} addresstext={"0x3B1...Da9af"}/>
-                                           </Box>
+                                            <Typography fontWeight={200} color={'#00FFFF'} textAlign={'center'} mt={1}>Note: If you have no any  valid referrer address then you can use this community referrer.</Typography>
+                                            <Box sx={{ background: 'linear-gradient(90deg, #0808088a, #00FFFF, #0808088a)', gap: 1, justifyContent: 'center', padding: 1, display: 'flex', marginTop: '1rem', borderRadius: '8px', alignItems: 'center', }}>
+                                                <Typography component={'h6'} fontWeight={700} color={'#000'}>Referrer:  </Typography>
+                                                <AddressCopy hrefLink={`https://ico.mumblechat.com/dashboard/?ref=0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af`} text={"0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af"} addresstext={"0x3B1...Da9af"} />
+                                            </Box>
                                             {/* </Box> */}
 
 
@@ -818,7 +825,7 @@ const Dsboard = (props: CircularProgressProps) => {
                     <Grid item lg={5} md={6} sm={12} xs={12}>
                         <Box className={classes.step__three}>
                             <Box className={classes.coin_hding}>
-                                <Typography variant="h5" color={'#fff'}>Your Contributions</Typography>
+                                <Typography variant="h5" color={'#fff'}>Your Mining Portfolio</Typography>
                             </Box>
                             <ContributorsTable resultOfRamaPriceInUSD={resultOfRamaPriceInUSD?.data} />
                         </Box>

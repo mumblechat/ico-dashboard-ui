@@ -14,6 +14,7 @@ import HoverTool from "@/theme/components/hoverTool";
 import MiningCalculatorTable from "./miningCalculatorTable";
 
 
+
 const useStyles = makeStyles({
     coin__lunch: {
         textAlign: 'center',
@@ -116,34 +117,22 @@ const StyledSlider = styled(Slider)(
   `
 );
 
-const ValueLabelComponent = (props: { children: any; open: any; value: any; }) => {
-    const { children, open, value } = props;
-
-    return (
-        <Tooltip
-            open={open}
-            enterTouchDelay={0}
-            placement="top"
-            title={`Value ${value}`}
-            arrow
-        >
-            {children}
-        </Tooltip>
-    );
-};
-
 const Miningcalculate = () => {
     const classes = useStyles();
-    const [valueTop, setValueTop] = useState<number[]>([1,]);
-    const [input, setInput] = useState<string>('');
+    const [valueTop, setValueTop] = useState<number[]>([0,]);
+    const [inputInUsd, setInputInUsd] = useState<string>('');
+    
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         setValueTop(newValue as number[]);
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInput(e.target.value.trim());
+        setInputInUsd(e.target.value.trim());
     };
+
+
+    
 
     return (
         <>
@@ -159,8 +148,8 @@ const Miningcalculate = () => {
                 <Typography mt={3} color={'#fff'} variant="h6">Enter how much $ you want to invest.</Typography>
                 <Box className={classes.max_btn__wrap}>
                     <InputBase
-                        onChange={(e) => setInput(e.target.value.trim())}
-                        value={input}
+                        onChange={(e) => setInputInUsd(e.target.value.trim())}
+                        value={inputInUsd}
                         type={'number'}
                         sx={{
                             flex: 1,
@@ -178,6 +167,7 @@ const Miningcalculate = () => {
                                 margin: 0,
                               },
                         }}
+                        
                         fullWidth
                         placeholder={'Enter Amount in $'}
 
@@ -185,7 +175,7 @@ const Miningcalculate = () => {
                     {/* <Link className={classes.max_btn} href={""}>Max</Link> */}
                 </Box>
 
-                <Typography variant="h6" mt={2} mb={2} color={'#fff'}>Position <Typography component={'span'}><HoverTool Title={"1"} /></Typography></Typography>
+                <Typography variant="h6" mt={2} mb={2} color={'#fff'}>Members <Typography component={'span'}><HoverTool Title={"How many people you referred?"} /></Typography></Typography>
 
                
                 <Box sx={{ margin: '0rem 2rem 0rem 2rem' }}>
@@ -194,12 +184,9 @@ const Miningcalculate = () => {
                             value={valueTop}
                             onChange={handleChange}
                             aria-labelledby="range-slider"
-                            min={1}
-                            max={8}
+                            min={0}
+                            max={100}
                             valueLabelDisplay="auto"
-                            components={{
-                                ValueLabel: ValueLabelComponent,
-                            }}
                             sx={{
                                 backgroundColor: '#101012',
                                 border: '1px solid #1D1D20',
@@ -212,7 +199,7 @@ const Miningcalculate = () => {
                      
                 </Box>
 
-                {input && <MiningCalculatorTable />}
+                { Number(inputInUsd)>0 && <MiningCalculatorTable inputInUsd={inputInUsd} member={valueTop[0].toString()} />}
             </Box>
         </>
     )

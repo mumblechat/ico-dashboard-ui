@@ -2,6 +2,7 @@ import { Box, InputBase, Typography } from "@mui/material"
 import { makeStyles } from '@mui/styles';
 import CalculateTab from "./calculateTab";
 import InnerTab from "./innerTab";
+import { useState } from "react";
 
 const useStyles = makeStyles({
     coin__lunch: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles({
         border: '1px solid #1D1D20',
         borderRadius: '8px',
         padding: '2px',
-        marginTop: '0.5rem'
+        marginTop: '0.5rem',
     },
     top__input: {
         marginTop: '1.5rem'
@@ -27,6 +28,9 @@ const useStyles = makeStyles({
 
 const CoinCalculate = () => {
     const classes = useStyles();
+    const [value,setValue]=useState("")
+    const [value1,setValue1]= useState<number[]>([0.05,]);
+    const [selectedCurrency, setSelectedCurrency] = useState('0.05');
     return (
         <>
             <Box className={classes.mainDiv}>
@@ -35,9 +39,11 @@ const CoinCalculate = () => {
                 </Box>
 
                 <Box className={classes.top__input}>
-                    <Typography color={'#fff'}>Enter how much RAMA coins you have in the input below.</Typography>
+                    <Typography color={'#fff'}>Enter how much MMCT coins you have in the input below.</Typography>
                     <Box className={classes.max_btn__wrap}>
                         <InputBase
+                        value={value}
+                        onChange={(e)=>setValue(e.target.value)}
                             sx={{
                                 flex: 1,
                                 color: '#fff',
@@ -55,7 +61,7 @@ const CoinCalculate = () => {
                                   },
                             }}
                             fullWidth
-                            placeholder={'0.00 RAMA'}
+                            placeholder={'0.00 MMCT'}
                             type={'number'}
                         />
                     </Box>
@@ -64,7 +70,8 @@ const CoinCalculate = () => {
                 <Box className={classes.top__input}>
                     <Typography color={'#fff'}>USD Amount</Typography>
                     <Box className={classes.max_btn__wrap}>
-                        <InputBase
+                        {/* <InputBase
+                        value={Number(value)*0.05}
                             sx={{
                                 flex: 1,
                                 color: '#fff',
@@ -84,11 +91,21 @@ const CoinCalculate = () => {
                             fullWidth
                             placeholder={'$0.00'}
                             type={'number'}
-                        />
+                            disabled={value===''?true:false}
+                        /> */}
+                        <Typography    
+                        sx={{
+                                flex: 1,
+                                width: '100%',
+                                padding: '0.55rem 0.5rem',
+                            }} 
+                            color={value?'#fff':'#999'}>
+                            {value && value1?`$${Number(value)*Number(selectedCurrency&& Number(value1)<=0.05?selectedCurrency:value1)}`:'$0.00'}
+                        </Typography>
                     </Box>
                 </Box>
 
-                <InnerTab />
+                <InnerTab setValue={setValue1} selectedCurrency={selectedCurrency} setSelectedCurrency={setSelectedCurrency} />
             </Box>
         </>
     )
