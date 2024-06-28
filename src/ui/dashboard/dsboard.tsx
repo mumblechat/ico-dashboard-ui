@@ -345,7 +345,7 @@ const Dsboard = (props: CircularProgressProps) => {
     const queryClient = useQueryClient()
     const { data: blockNumber } = useBlockNumber({ watch: true, })
 
-    const { writeContractAsync, data, isPending: isPendingBuyForWrite } = useWriteContract()
+    const { writeContractAsync, data,isSuccess:isSuccess1,isError:isError1, isPending: isPendingBuyForWrite } = useWriteContract()
     const { isLoading, isSuccess, isError ,error} = useWaitForTransactionReceipt({
         hash: data,
     })
@@ -514,10 +514,10 @@ const Dsboard = (props: CircularProgressProps) => {
                         This is invalid network.
                     </Alert>} */}
                     {
-                        isSuccess && <DescriptionAlerts isSucess={true} title={"Success"} msg={'You Buy MMCT Successfully'}  />
+                        (isSuccess || isSuccess1) && <DescriptionAlerts isSucess={true} title={"Success"} msg={'You Buy MMCT Successfully'}  />
                     }
                       {
-                        isError && <DescriptionAlerts isSucess={false} title={"Error"} msg={'Something went wrong'}  />
+                        (isError|| isError1) && <DescriptionAlerts isSucess={false} title={"Error"} msg={'Something went wrong'}  />
                     }
             </Box>
 

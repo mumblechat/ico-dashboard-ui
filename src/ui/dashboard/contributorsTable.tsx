@@ -5,11 +5,13 @@ import Image from "next/image";
 import { mmctIcoAbi } from "@/configs/abi/mmctIco";
 import { mmctContractAddresses } from "@/configs";
 import { Address, formatEther, zeroAddress } from "viem";
-import { useAccount, useChainId, useReadContract } from "wagmi";
+import { useAccount, useBlockNumber, useChainId, useReadContract } from "wagmi";
 import shortenString from "@/lib/shortenString";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
 import AddressCopy from "@/theme/components/addressCopy";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 
 const useStyles = makeStyles({
@@ -118,6 +120,8 @@ const ContributorsTable = ({ resultOfRamaPriceInUSD }: { resultOfRamaPriceInUSD:
 
     const { address } = useAccount()
     const chainId = useChainId()
+    const queryClient = useQueryClient()
+    const { data: blockNumber } = useBlockNumber({ watch: true, })
 
     const resultOfUserContributorLength = useReadContract({
         abi: mmctIcoAbi,
@@ -138,6 +142,11 @@ const ContributorsTable = ({ resultOfRamaPriceInUSD }: { resultOfRamaPriceInUSD:
 
 
 
+// use to refetch
+useEffect(() => {
+    queryClient.invalidateQueries({ queryKey:resultOfUserContributorLength.queryKey }) 
+    queryClient.invalidateQueries({ queryKey:resultOfUserContributorList.queryKey })
+}, [blockNumber, queryClient])
 
     return (
 
