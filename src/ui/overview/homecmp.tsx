@@ -15,6 +15,10 @@ import Faqs from "./faqs";
 import Application from "./application";
 import GetInTouch from "./getInTouch";
 import Footer from "../shared/footer";
+import { useBalance, useChainId, useReadContract } from "wagmi";
+import { formatEther, zeroAddress } from "viem";
+import { mmctContractAddresses } from "@/configs";
+import { mmctIcoAbi } from "@/configs/abi/mmctIco";
 
 
 
@@ -28,6 +32,33 @@ import Footer from "../shared/footer";
 
 const Homecmp = () => {
 
+    const chainId = useChainId()
+    const {data:ramaBalanceOfIco}=useBalance({
+        address: chainId===1370?mmctContractAddresses.ramestta.mmct_ico:mmctContractAddresses.pingaksha.mmct_ico,
+        query:{
+            select(data) {
+                return Number(formatEther(data.value))
+            },
+        }
+      })
+    const {data:ramaPriceInUSD} = useReadContract({
+        abi: mmctIcoAbi ,
+        address: chainId===1370?mmctContractAddresses.ramestta.mmct_ico:mmctContractAddresses.pingaksha.mmct_ico,
+        functionName: 'ramaPriceInUSD',
+        account: zeroAddress,
+        query:{
+            select(data) {
+                return Number(formatEther(data))
+            },
+        }
+      }) 
+      const resultOfIcoDetail = useReadContract({
+        abi: mmctIcoAbi ,
+        address: chainId===1370?mmctContractAddresses.ramestta.mmct_ico:mmctContractAddresses.pingaksha.mmct_ico,
+        functionName: 'saleType2IcoDetail',
+        args: [0],
+        account: zeroAddress
+      }) 
 
     return (
 
@@ -45,10 +76,10 @@ const Homecmp = () => {
                 }}>
 
                     <Header />
-                    <Bnr />
+                    <Bnr resultOfIcoDetail={resultOfIcoDetail} />
 
                 </Box>
-                <Countribution />
+                <Countribution ramaPriceInUSD={ramaPriceInUSD} ramaBalanceOfIco={ramaBalanceOfIco} />
                 <Box
                     sx={{
                         padding: '3rem 0rem',
@@ -60,7 +91,7 @@ const Homecmp = () => {
 
                 <Box component={'section'} id="chart"> <Platform /></Box>
                 <Conduct />
-                <Distribute />
+                <Distribute ramaPriceInUSD={ramaPriceInUSD} ramaBalanceOfIco={ramaBalanceOfIco} />
                 <Box component={'section'} id="roadmap"><Roadmap /></Box>
 
                 <Brick />

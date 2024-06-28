@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 import Image from "next/image";
 import Heading from "@/theme/components/heading";
 import TableEarn from "./tableEarn";
-import { useAccount, useBalance, useChainId, useReadContract } from "wagmi";
+import { useAccount, useChainId, useReadContract } from "wagmi";
 import { Address, formatEther, zeroAddress } from "viem";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 import { mmctTokenAbi } from "@/configs/abi/mmctTokenAbi";
@@ -11,6 +11,7 @@ import { mmctContractAddresses } from "@/configs";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
 import TableCummunityEarn from "./tableCummunityEarn";
+
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -116,7 +117,7 @@ const Community = () => {
 
                 </Box>
                 <Box className={classes.boxCr} sx={{ marginTop: '1rem' }}>
-                    <TableCummunityEarn resultOfUserCommunityReward={resultOfUserCommunityReward?.data} />
+                    <TableCummunityEarn resultOfUserCommunityReward={resultOfUserCommunityReward} />
                 </Box>
             </Box>
 

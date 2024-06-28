@@ -18,31 +18,15 @@ import discord from '../../icons/discord.png'
 import github from '../../icons/github.png'
 
 import {
-    EmailShareButton,
     FacebookIcon,
     FacebookShareButton,
-    GabShareButton,
-    HatenaShareButton,
-    InstapaperIcon,
-    InstapaperShareButton,
-    LineShareButton,
     LinkedinIcon,
     LinkedinShareButton,
-    LivejournalShareButton,
-    MailruShareButton,
-    OKShareButton,
-    PinterestShareButton,
-    PocketShareButton,
-    RedditShareButton,
     TelegramIcon,
     TelegramShareButton,
-    TumblrShareButton,
     TwitterShareButton,
-    ViberShareButton,
-    VKShareButton,
     WhatsappIcon,
     WhatsappShareButton,
-    WorkplaceShareButton,
     XIcon,
 } from "react-share";
 import shortenString from '@/lib/shortenString';
@@ -83,6 +67,8 @@ export default function Modal() {
         }
     }, [open]);
 
+    const referLink=`https://ico.mumblechat.com/dashboard/?ref=${address}`
+
     return (
         <React.Fragment>
 
@@ -115,14 +101,17 @@ export default function Modal() {
                         <Typography mt={2} color={'#fff'}>Share your unique link below and receive <Typography component={'span'}><Link style={{ textDecoration: 'none', color: '#00FFFF' }} href={''}>5%</Link>  of all transactions realized with your link <Typography component={'span'}><Link style={{ textDecoration: 'none', color: '#00FFFF' }} href={''}>instantly </Link>!</Typography></Typography></Typography>
                     </Box>
                 </DialogContent>
-                <AddressReward textColor={'#000'} text={`https://ico.mumblechat.com/dashboard/?ref=${address}`} address={`https://ico.mumblechat.com/dashboard/?ref=${shortenString(address as Address)}`} />
+                <AddressReward textColor={'#000'} text={referLink} address={`https://ico.mumblechat.com/dashboard/?ref=${shortenString(address as Address)}`} />
                 <BoxSocial>
 
-
-                    <Link href={'https://x.com/mumblchat'} target='_blank'><XIcon size={32} round={true}/></Link>
+                    <TwitterShareButton
+                     url={referLink}
+                    >
+                        <XIcon size={32} round={true} />
+                    </TwitterShareButton>
 
                     <WhatsappShareButton
-                        url="https://www.npmjs.com/package/react-copy-to-clipboard"
+                        url={referLink}
                     >
                         <WhatsappIcon size={32} round={true} />
                     </WhatsappShareButton>
@@ -130,20 +119,20 @@ export default function Modal() {
                     <Link href={'https://www.instagram.com/mumblechat/'} target='_blank'><Image src={instagram} alt={''} width={32}/></Link>
 
                     <FacebookShareButton
-                        url="https://www.facebook.com/MumbleChat/"
+                        url={referLink}
                     >
                         <FacebookIcon size={32} round={true} />
                     </FacebookShareButton>
 
                     <LinkedinShareButton
-                        url="https://www.linkedin.com/company/mumblechat/about/"
+                        url={referLink}
                     >
                         <LinkedinIcon size={32} round={true} />
                     </LinkedinShareButton>
 
 
                     <TelegramShareButton
-                        url="https://t.me/mumblechat"
+                        url={referLink}
                     >
                         <TelegramIcon size={32} round={true} />
                     </TelegramShareButton>

@@ -1,18 +1,19 @@
 'use client'
-import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import r2 from '../../icons/r2.svg'
 import { makeStyles } from '@mui/styles';
 import Image from "next/image";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 import shortenString from "@/lib/shortenString";
-import { useAccount, useChainId, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { useAccount, useBlockNumber, useChainId, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { Address, formatEther, zeroAddress } from "viem";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import { formatTier, mmctContractAddresses } from "@/configs";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
 import HoverTool from "@/theme/components/hoverTool";
 import AddressCopy from "@/theme/components/addressCopy";
-
+import { useQueryClient } from '@tanstack/react-query'
+import { useEffect } from "react";
 
 
 const useStyles = makeStyles({
@@ -62,11 +63,13 @@ const useStyles = makeStyles({
     }
 });
 
-const TableEarn = ({ resultOfUserStakedList,mintRatePerYear }: { resultOfUserStakedList: any,mintRatePerYear: Number }) => {
+const TableEarn = ({ resultOfUserStakedList, mintRatePerYear }: { resultOfUserStakedList: any, mintRatePerYear: Number }) => {
     const classes = useStyles();
 
     const { address } = useAccount()
     const chainId = useChainId()
+    // const queryClient = useQueryClient()
+    // const { data: blockNumber } = useBlockNumber({ watch: true })
 
     // const TableList = [
     //     {
@@ -177,16 +180,16 @@ const TableEarn = ({ resultOfUserStakedList,mintRatePerYear }: { resultOfUserSta
         return (
             <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
                 <Typography color={'#fff'}>{Number(mintReward?.data) > 0 ? Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))).toFixed(5) : '0.00000'} MMCT
-                <Button
+                    <Button
                         disabled={
-                            (isPendingClaimForWrite || isLoading) ? true : false
+                            (isPendingClaimForWrite || isLoading) 
                         }
                         className={classes.stakebtn}
                         sx={{
                             opacity: !(
                                 isPendingClaimForWrite || isLoading
                             ) ? "1" : '0.3',
-                            marginLeft:'7px'
+                            marginLeft: '7px'
                         }}
                         onClick={async () => {
                             await writeContractAsync({
@@ -197,7 +200,11 @@ const TableEarn = ({ resultOfUserStakedList,mintRatePerYear }: { resultOfUserSta
                                 account: address
                             })
                         }}
-                >Claim</Button>
+                    >Claim
+                        {
+                            (isPendingClaimForWrite || isLoading) && <CircularProgress sx={{ml:"7px"}} size={18} color="inherit" />
+                        }
+                    </Button>
                 </Typography>
                 <Typography color={'#999'}>${Number(mintReward?.data) > 0 ? (Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))) * 0.05).toFixed(5) : '0.00000'}</Typography>
             </TableCell>
@@ -215,7 +222,10 @@ const TableEarn = ({ resultOfUserStakedList,mintRatePerYear }: { resultOfUserSta
 
 
 
-
+    // // use to refetch
+    // useEffect(() => {
+    //     queryClient.invalidateQueries({ queryKey:resultOfUserStakedList.queryKey }) 
+    // }, [blockNumber, queryClient])
 
 
     return (
@@ -245,15 +255,15 @@ const TableEarn = ({ resultOfUserStakedList,mintRatePerYear }: { resultOfUserSta
                                     <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} component="th" scope="row">
                                         <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                                             <Image src={r2} alt={"lol"} width={50} />
-                                             <AddressCopy 
-                                             textColor="#00ffff" 
-                                             hrefLink={
-                                                chainId===1370?`https://ramascan.com/address/${address}`:
-                                                `https://pingaksha.ramascan.com/address/${address}`
-                                             } 
-                                             text={address as string} 
-                                             addresstext={shortenString(address as Address)}/>
-                                             
+                                            <AddressCopy
+                                                textColor="#00ffff"
+                                                hrefLink={
+                                                    chainId === 1370 ? `https://ramascan.com/address/${address}` :
+                                                        `https://pingaksha.ramascan.com/address/${address}`
+                                                }
+                                                text={address as string}
+                                                addresstext={shortenString(address as Address)} />
+
                                         </Box>
                                     </TableCell>
                                     <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
@@ -268,16 +278,16 @@ const TableEarn = ({ resultOfUserStakedList,mintRatePerYear }: { resultOfUserSta
                                     <Reward index={index} />
 
                                     <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                        <Typography color={'#fff'}>{convertToAbbreviated((Number(mintRatePerYear)*Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0)))/100),5)} MMCT</Typography>
-                                        <Typography color={'#999'}>{formatNumberToCurrencyString((Number(mintRatePerYear)*Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0)))/100) * 0.05, 5)}</Typography>
+                                        <Typography color={'#fff'}>{convertToAbbreviated((Number(mintRatePerYear) * Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0))) / 100), 5)} MMCT</Typography>
+                                        <Typography color={'#999'}>{formatNumberToCurrencyString((Number(mintRatePerYear) * Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0))) / 100) * 0.05, 5)}</Typography>
                                     </TableCell>
                                     <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
                                         <Typography color={'#fff'}>{convertToAbbreviated(formatEther?.(BigInt?.(item?.claimedMintRewards ? item.claimedMintRewards.toString() : 0)), 5)} MMCT</Typography>
                                         <Typography color={'#999'}>{formatNumberToCurrencyString(Number(formatEther?.(BigInt?.(item?.claimedMintRewards ? item.claimedMintRewards.toString() : 0))) * 0.05, 5)}</Typography>
                                     </TableCell>
                                     <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
-                                    <Typography color={'#fff'}>{convertToAbbreviated(((Number(mintRatePerYear)*Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0)))/100)-Number(formatEther?.(BigInt?.(item?.claimedMintRewards ? item.claimedMintRewards.toString() : 0)))),5)} MMCT</Typography>
-                                        <Typography color={'#999'}>{formatNumberToCurrencyString(((Number(mintRatePerYear)*Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0)))/100)-Number(formatEther?.(BigInt?.(item?.claimedMintRewards ? item.claimedMintRewards.toString() : 0)))) * 0.05, 5)}</Typography>
+                                        <Typography color={'#fff'}>{convertToAbbreviated(((Number(mintRatePerYear) * Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0))) / 100) - Number(formatEther?.(BigInt?.(item?.claimedMintRewards ? item.claimedMintRewards.toString() : 0)))), 5)} MMCT</Typography>
+                                        <Typography color={'#999'}>{formatNumberToCurrencyString(((Number(mintRatePerYear) * Number(formatEther?.(BigInt?.(item?.amount ? item.amount.toString() : 0))) / 100) - Number(formatEther?.(BigInt?.(item?.claimedMintRewards ? item.claimedMintRewards.toString() : 0)))) * 0.05, 5)}</Typography>
                                     </TableCell>
                                     <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
                                         <Typography color={'#fff'}>{new Date(Number(item?.startTime) * 1000).toLocaleString()}</Typography>

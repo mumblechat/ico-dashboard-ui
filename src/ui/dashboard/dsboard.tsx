@@ -24,7 +24,7 @@ import Refer from "./refer";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { useEffect, useState } from "react";
-import { useAccount, useBalance, useChainId, useReadContract, useReadContracts, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { useAccount,useBlockNumber, useBalance, useChainId, useReadContract, useReadContracts, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { Address, formatEther, parseEther, zeroAddress } from "viem";
 import { mmctTokenAbi } from "@/configs/abi/mmctTokenAbi";
 import { mmctContractAddresses } from "@/configs";
@@ -39,6 +39,7 @@ import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import shortenString from "@/lib/shortenString";
 import { useSearchParams } from "next/navigation";
 import DescriptionAlerts from "@/theme/components/descriptionAlerts";
+import { useQueryClient } from '@tanstack/react-query'
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -216,7 +217,8 @@ const useStyles = makeStyles({
         color: '#000 !important',
         textDecoration: 'none',
         fontWeight: 700,
-        display: 'block',
+        gap:"8px",
+        display: 'flex',
         textAlign: 'center',
         fontSize: '20px',
         '&:hover': {
@@ -340,8 +342,11 @@ const Dsboard = (props: CircularProgressProps) => {
     const [referrerAddress, setReferrerAddress] = useState<string | null>(refParam)
     const { address } = useAccount()
     const chainId = useChainId()
+    const queryClient = useQueryClient()
+    const { data: blockNumber } = useBlockNumber({ watch: true, })
+
     const { writeContractAsync, data, isPending: isPendingBuyForWrite } = useWriteContract()
-    const { isLoading, isSuccess, isError } = useWaitForTransactionReceipt({
+    const { isLoading, isSuccess, isError ,error} = useWaitForTransactionReceipt({
         hash: data,
     })
 
@@ -482,14 +487,22 @@ const Dsboard = (props: CircularProgressProps) => {
     //     setValue2(newValue);
     // };
 
-
-
+// use to refetch
+    useEffect(() => {
+        queryClient.invalidateQueries({ queryKey:balanceOfRama.queryKey }) 
+        queryClient.invalidateQueries({ queryKey:resultOfSaleDetails.queryKey })
+        queryClient.invalidateQueries({ queryKey:resultOfUserContribution.queryKey })
+        queryClient.invalidateQueries({ queryKey:resultOfRamaPriceInUSD.queryKey })
+        queryClient.invalidateQueries({ queryKey:resultOfBalance.queryKey })
+        queryClient.invalidateQueries({ queryKey:resultOfUserCommunityReward.queryKey })
+        queryClient.invalidateQueries({ queryKey:resultOfReferralDetail.queryKey })
+    }, [blockNumber, queryClient])
 
 
     return (
         <>
-            <Box>
-                {isSuccess &&
+            <Box >
+                {/* {buyInput &&
                     <Alert sx={{ backgroundColor: '#101012', border: '1px solid rgb(43 114 47)', color: 'rgb(43 114 47)', position: 'absolute', top: 10, zIndex: 111, right: 10 }} severity="success">
                         <AlertTitle>Success</AlertTitle>
                         Successfully added network to your wallet.
@@ -499,7 +512,13 @@ const Dsboard = (props: CircularProgressProps) => {
                     <Alert sx={{ backgroundColor: '#101012', border: '1px solid rgb(191 44 44)', color: 'rgb(191 44 44)', position: 'absolute', top: 10, zIndex: 111, right: 10 }} severity="error">
                         <AlertTitle>Error</AlertTitle>
                         This is invalid network.
-                    </Alert>}
+                    </Alert>} */}
+                    {
+                        isSuccess && <DescriptionAlerts isSucess={true} title={"Success"} msg={'You Buy MMCT Successfully'}  />
+                    }
+                      {
+                        isError && <DescriptionAlerts isSucess={false} title={"Error"} msg={'Something went wrong'}  />
+                    }
             </Box>
 
             <Box className={classes.mainDiv}>
@@ -658,8 +677,8 @@ const Dsboard = (props: CircularProgressProps) => {
 
                                 </Box>
                                 <Box className={classes.currentsale2}>
-                                    <Typography fontWeight={500} color={'#fff'}>$0.05 USDT = 1 MMCT</Typography>
-                                    <Typography fontWeight={500} color={'#fff'}>Pre-Sale: 0.1 USDT</Typography>
+                                    <Typography fontWeight={500} color={'#fff'}>$0.05 = 1 MMCT</Typography>
+                                    <Typography fontWeight={500} color={'#fff'}>Pre-Sale: $0.1</Typography>
                                 </Box>
 
                                 <Box className={classes.rama__log}>
@@ -774,7 +793,11 @@ const Dsboard = (props: CircularProgressProps) => {
                                             })
 
 
-                                        }} >Buy</Button>
+                                        }} >Buy
+                                        {
+                                          (isPendingBuyForWrite || isLoading) &&  <CircularProgress size={18} color="inherit" />
+                                        }
+                                        </Button>
                                     :
                                     <ConnectWallet />
                                 }

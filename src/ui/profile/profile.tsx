@@ -6,7 +6,7 @@ import Image from "next/image";
 import r2 from '../../icons/r2.svg'
 import { useAccount, useChainId, useReadContract } from "wagmi";
 import AddressCopy from "@/theme/components/addressCopy";
-import { Address } from "viem";
+import { Address, zeroAddress } from "viem";
 import { mmctReferralAbi } from "@/configs/abi/mmctReferral";
 import { mmctContractAddresses } from "@/configs";
 import shortenString from "@/lib/shortenString";
@@ -77,7 +77,8 @@ const Profile = () => {
                                 fontSize: 11.7
                             }
                         }} mt={1.5} color={'#fff'}>{address ? vx4w3s b4v3xv5? ''}</Typography> */}
-                        <AddressCopy
+                        {
+                            address && <AddressCopy
                             textColor="#00ffff"
                             hrefLink={
                                 chainId === 1370 ? `https://ramascan.com/address/${address}` :
@@ -85,6 +86,7 @@ const Profile = () => {
                             }
                             text={address as string}
                             addresstext={shortenString(address as Address) } />
+                        }
                     </Box>
                     {
                         resultOfReferrer?.data && <Box className={classes.js_Reigns}>
@@ -95,6 +97,8 @@ const Profile = () => {
                             }
                         }} mt={1.5} color={'#fff'}>{address}</Typography> */}
                             <Typography color={'#999'}>You Referred By:</Typography>
+                            {
+                                resultOfReferrer?.data!==zeroAddress ?(
                             <AddressCopy
                                 textColor="#00ffff"
                                 hrefLink={
@@ -103,6 +107,10 @@ const Profile = () => {
                                 }
                                 text={resultOfReferrer?.data as string}
                                 addresstext={shortenString(resultOfReferrer?.data as Address)} />
+                                ):(
+                                    <Typography color={'#fff'}>You are not referred by anyone:</Typography>
+                                )
+                            }
                         </Box>
                     }
                     <RefBottom />

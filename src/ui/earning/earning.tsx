@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 import Image from "next/image";
 import Heading from "@/theme/components/heading";
 import TableEarn from "./tableEarn";
-import { useAccount, useBalance, useChainId, useReadContract } from "wagmi";
+import { useAccount, useBalance, useBlockNumber, useChainId, useReadContract } from "wagmi";
 import { Address, formatEther, zeroAddress } from "viem";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 import { mmctTokenAbi } from "@/configs/abi/mmctTokenAbi";
@@ -12,6 +12,8 @@ import { formatTier, mmctContractAddresses } from "@/configs";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString";
 import { mmctReferralAbi } from "@/configs/abi/mmctReferral";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -59,9 +61,9 @@ const Earning = ({ Earning }: props) => {
     const classes = useStyles();
     const { address } = useAccount()
     const chainId = useChainId()
-    const balanceOfRama = useBalance({
-        address: address
-    })
+    const queryClient = useQueryClient()
+    const { data: blockNumber } = useBlockNumber({ watch: true })
+
     const resultOfBalance = useReadContract({
         abi: mmctTokenAbi,
         address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_token : mmctContractAddresses.pingaksha.mmct_token,
@@ -191,6 +193,11 @@ const Earning = ({ Earning }: props) => {
             data: ''
         },
     ]
+
+    // use to refetch
+useEffect(() => {
+    queryClient.invalidateQueries({ queryKey:resultOfUserStakedList.queryKey }) 
+}, [blockNumber, queryClient])
     return (
         <>
 

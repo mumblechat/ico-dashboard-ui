@@ -6,7 +6,7 @@ import Link from "next/link";
 import { convertToNumber } from "@/lib/convertToNumber";
 import { convertToAbbreviated } from "@/lib/convertToAbbreviated";
 import shortenString from "@/lib/shortenString";
-import { useAccount, useChainId, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { useAccount, useChainId,useBlockNumber, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { Address, formatEther, zeroAddress } from "viem";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import { formatTier, mmctContractAddresses } from "@/configs";
@@ -14,7 +14,8 @@ import { formatNumberToCurrencyString } from "@/lib/formatNumberToCurrencyString
 import HoverTool from "@/theme/components/hoverTool";
 import AddressCopy from "@/theme/components/addressCopy";
 
-
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 const useStyles = makeStyles({
     tableContainer: {
@@ -85,6 +86,9 @@ const TableCummunityEarn = ({resultOfUserCommunityReward}:{resultOfUserCommunity
 
     const { address } = useAccount()
     const chainId = useChainId()
+
+    const queryClient = useQueryClient()
+    const { data: blockNumber } = useBlockNumber({ watch: true })
 
     // const TableList = [
     //     {
@@ -202,7 +206,12 @@ const TableCummunityEarn = ({resultOfUserCommunityReward}:{resultOfUserCommunity
         hash: data,
       }) 
     
-
+    // use to refetch
+    useEffect(() => {
+            queryClient.invalidateQueries({ queryKey:resultOfUserCommunityReward.queryKey }) 
+            queryClient.invalidateQueries({ queryKey:resultOfUserCommunityRewardLength.queryKey }) 
+            queryClient.invalidateQueries({ queryKey:resultOfUserCommunityRewardList.queryKey }) 
+        }, [blockNumber, queryClient])
 
     return (
         <Box>
@@ -210,12 +219,12 @@ const TableCummunityEarn = ({resultOfUserCommunityReward}:{resultOfUserCommunity
             <Box className={classes.claimbtn__wrp}>
             <Button
                 disabled={
-                    (Number(resultOfUserCommunityReward?.amount)===0 || isPendingClaimForWrite || isLoading) ? true : false
+                    (Number(resultOfUserCommunityReward?.data?.amount)===0 || isPendingClaimForWrite || isLoading) ? true : false
                 }
                 className={classes.claimbtn}
                 sx={{
                     opacity: !(
-                        Number(resultOfUserCommunityReward?.amount)===0 || isPendingClaimForWrite || isLoading
+                        Number(resultOfUserCommunityReward?.data?.amount)===0 || isPendingClaimForWrite || isLoading
                     ) ? "1" : '0.3'
                 }}
                 onClick={async () => {

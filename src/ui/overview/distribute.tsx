@@ -48,7 +48,7 @@ const useStyles = makeStyles({
 
 })
 
-const Distribute = () => {
+const Distribute = ({ramaPriceInUSD,ramaBalanceOfIco}:{ramaPriceInUSD:number|undefined,ramaBalanceOfIco:number|undefined}) => {
     const classes = useStyles();
     return (
         <>
@@ -88,7 +88,7 @@ const Distribute = () => {
                             </Box>
                             <Box className={classes.listItem} component={'li'}>
                                 <Typography className={classes.round} color={'#fff'}>1</Typography>
-                                <Typography color={'#fff'}>Initial Value : 1 RAMA = 3.20 MMCT</Typography>
+                                <Typography color={'#fff'}>Initial Value : 1 RAMA = ${ramaPriceInUSD?ramaPriceInUSD.toFixed(4):'0.1450'} = {ramaPriceInUSD?(ramaPriceInUSD/0.05).toFixed(4):(0.145/0.05).toFixed(4)} MMCT</Typography>
                             </Box>
                             <Box className={classes.listItem} component={'li'}>
                                 <Typography className={classes.round} color={'#fff'}>1</Typography>

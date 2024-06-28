@@ -9,10 +9,6 @@ import { makeStyles } from '@mui/styles';
 import { Box, Grid } from "@mui/material";
 import Link from "next/link";
 import backward from '../../icons/backward.svg'
-import { useChainId, useReadContract,useConfig, useAccount, useBalance } from "wagmi";
-import { mmctContractAddresses } from "@/configs";
-import { Abi, zeroAddress } from "viem";
-import { mmctIcoAbi } from "@/configs/abi/mmctIco";
 
 
 
@@ -57,20 +53,11 @@ const useStyles = makeStyles({
 
 
 
-const Bnr = () => {
+const Bnr = ({resultOfIcoDetail}:any) => {
     const classes = useStyles();
-    const chainId = useChainId()
-
-    const result = useReadContract({
-        abi: mmctIcoAbi ,
-        address: chainId===1370?mmctContractAddresses.ramestta.mmct_ico:mmctContractAddresses.pingaksha.mmct_ico,
-        functionName: 'saleType2IcoDetail',
-        args: [0],
-        account: zeroAddress
-      }) 
 
       
-    const targetDate = new Date(result?.data ?Number(result?.data?.startAt)*1000: new Date().getTime());
+    const targetDate = new Date(resultOfIcoDetail?.data ?Number(resultOfIcoDetail?.data?.startAt)*1000: new Date().getTime());
     return (
         <>
             <Box className={classes.dotBox} mt={3}>

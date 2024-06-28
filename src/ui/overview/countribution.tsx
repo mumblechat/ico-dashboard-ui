@@ -1,15 +1,7 @@
 import Heading from "@/theme/components/heading";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { makeStyles } from '@mui/styles';
-import contribution_shape01 from '../../icons/contribution_shape01.png'
-import contribution_shape02 from '../../icons/contribution_shape02.png'
-import Image from "next/image";
 import Link from "next/link";
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { useBalance, useChainId, useReadContract } from "wagmi";
-import { mmctContractAddresses } from "@/configs";
-import { formatEther, zeroAddress } from "viem";
-import { mmctIcoAbi } from "@/configs/abi/mmctIco";
 
 const useStyles = makeStyles({
     heading: {
@@ -100,34 +92,15 @@ const useStyles = makeStyles({
 })
 
 
-const Countribution = () => {
+const Countribution = ({ramaPriceInUSD,ramaBalanceOfIco}:{ramaPriceInUSD:number|undefined,ramaBalanceOfIco:number|undefined}) => {
     const classes = useStyles();
-    const chainId = useChainId()
-    const {data:ramaBalanceOfIco}=useBalance({
-        address: chainId===1370?mmctContractAddresses.ramestta.mmct_ico:mmctContractAddresses.pingaksha.mmct_ico,
-        query:{
-            select(data) {
-                return Number(formatEther(data.value))
-            },
-        }
-      })
-    const {data:ramaPriceInUSD} = useReadContract({
-        abi: mmctIcoAbi ,
-        address: chainId===1370?mmctContractAddresses.ramestta.mmct_ico:mmctContractAddresses.pingaksha.mmct_ico,
-        functionName: 'ramaPriceInUSD',
-        account: zeroAddress,
-        query:{
-            select(data) {
-                return Number(formatEther(data))
-            },
-        }
-      }) 
+ 
     return (
         <>
             <Box>
                 <Box className={classes.heading}>
                     <Box>
-                        <Heading heading={`${ramaPriceInUSD&&ramaBalanceOfIco?ramaBalanceOfIco*ramaPriceInUSD:'0'}`} />
+                        <Heading heading={`$${ramaPriceInUSD&&ramaBalanceOfIco?ramaBalanceOfIco*ramaPriceInUSD:'1000'}`} />
                     </Box>
                     
 
