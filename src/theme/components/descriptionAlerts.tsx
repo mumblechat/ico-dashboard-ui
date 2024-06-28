@@ -17,13 +17,14 @@ export default function DescriptionAlerts({isSucess,title,msg}:{isSucess:boolean
   }, []);
 
   return (
-    <Stack  sx={{ width: '40%' }} spacing={2}>
+    <Stack  sx={{ width: '300px', }} spacing={2}>
        <Collapse in={open}>
         <Alert
-          sx={{ backgroundColor: '#101012', border: `${isSucess}?'1px solid rgb(43 114 47)':'1px solid rgb(191 44 44)'`, color: `${isSucess}?'rgb(43 114 47)':'rgb(191 44 44)'`  }}
+          sx={{ backgroundColor: '#101012', border:isSucess?"1px solid #23c552":"1px solid #f84f31", color: isSucess?'#23c552':'#f84f31'  }}
           severity={isSucess?'success':"error"}
           action={
             <IconButton
+             
             aria-label="close"
             color="inherit"
             size="small"
@@ -31,7 +32,7 @@ export default function DescriptionAlerts({isSucess,title,msg}:{isSucess:boolean
               setOpen(false);
             }}
           >
-              <CloseIcon fontSize="inherit" />
+              <CloseIcon sx={{color: isSucess?'#23c552':'#f84f31'}} fontSize="inherit" />
             </IconButton>
           }
         >

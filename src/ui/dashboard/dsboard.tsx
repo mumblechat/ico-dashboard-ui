@@ -24,7 +24,7 @@ import Refer from "./refer";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { useEffect, useState } from "react";
-import { useAccount,useBlockNumber, useBalance, useChainId, useReadContract, useReadContracts, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { useAccount, useBlockNumber, useBalance, useChainId, useReadContract, useReadContracts, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { Address, formatEther, parseEther, zeroAddress } from "viem";
 import { mmctTokenAbi } from "@/configs/abi/mmctTokenAbi";
 import { mmctContractAddresses } from "@/configs";
@@ -217,7 +217,7 @@ const useStyles = makeStyles({
         color: '#000 !important',
         textDecoration: 'none',
         fontWeight: 700,
-        gap:"8px",
+        gap: "8px",
         display: 'flex',
         textAlign: 'center',
         fontSize: '20px',
@@ -345,8 +345,8 @@ const Dsboard = (props: CircularProgressProps) => {
     const queryClient = useQueryClient()
     const { data: blockNumber } = useBlockNumber({ watch: true, })
 
-    const { writeContractAsync, data,isSuccess:isSuccess1,isError:isError1, isPending: isPendingBuyForWrite } = useWriteContract()
-    const { isLoading, isSuccess, isError ,error} = useWaitForTransactionReceipt({
+    const { writeContractAsync, data, isSuccess: isSuccess1, isError: isError1, isPending: isPendingBuyForWrite } = useWriteContract()
+    const { isLoading, isSuccess, isError, error } = useWaitForTransactionReceipt({
         hash: data,
     })
 
@@ -386,7 +386,7 @@ const Dsboard = (props: CircularProgressProps) => {
             setValue2(((tokenAmountInEther - (tokenAmountInEther - saleQuantityInEther)) > 0 ? (tokenAmountInEther - (tokenAmountInEther - saleQuantityInEther)) : 0));
         }
 
-           
+
     }, [resultOfSaleDetails?.data]);
 
 
@@ -487,38 +487,37 @@ const Dsboard = (props: CircularProgressProps) => {
     //     setValue2(newValue);
     // };
 
-// use to refetch
+    // use to refetch
     useEffect(() => {
-        queryClient.invalidateQueries({ queryKey:balanceOfRama.queryKey }) 
-        queryClient.invalidateQueries({ queryKey:resultOfSaleDetails.queryKey })
-        queryClient.invalidateQueries({ queryKey:resultOfUserContribution.queryKey })
-        queryClient.invalidateQueries({ queryKey:resultOfRamaPriceInUSD.queryKey })
-        queryClient.invalidateQueries({ queryKey:resultOfBalance.queryKey })
-        queryClient.invalidateQueries({ queryKey:resultOfUserCommunityReward.queryKey })
-        queryClient.invalidateQueries({ queryKey:resultOfReferralDetail.queryKey })
+        queryClient.invalidateQueries({ queryKey: balanceOfRama.queryKey })
+        queryClient.invalidateQueries({ queryKey: resultOfSaleDetails.queryKey })
+        queryClient.invalidateQueries({ queryKey: resultOfUserContribution.queryKey })
+        queryClient.invalidateQueries({ queryKey: resultOfRamaPriceInUSD.queryKey })
+        queryClient.invalidateQueries({ queryKey: resultOfBalance.queryKey })
+        queryClient.invalidateQueries({ queryKey: resultOfUserCommunityReward.queryKey })
+        queryClient.invalidateQueries({ queryKey: resultOfReferralDetail.queryKey })
     }, [blockNumber, queryClient])
 
 
     return (
         <>
-            <Box >
-                {/* {buyInput &&
-                    <Alert sx={{ backgroundColor: '#101012', border: '1px solid rgb(43 114 47)', color: 'rgb(43 114 47)', position: 'absolute', top: 10, zIndex: 111, right: 10 }} severity="success">
-                        <AlertTitle>Success</AlertTitle>
-                        Successfully added network to your wallet.
-                    </Alert>}
+            <Box sx={{
+                position: 'fixed',
+                top: '0.6rem',
+                right: '2.5rem',
+                zIndex: 1000,
+                '@media(max-width : 600px)':{
+                    right: '1.2rem',
+                }
 
-                {isError &&
-                    <Alert sx={{ backgroundColor: '#101012', border: '1px solid rgb(191 44 44)', color: 'rgb(191 44 44)', position: 'absolute', top: 10, zIndex: 111, right: 10 }} severity="error">
-                        <AlertTitle>Error</AlertTitle>
-                        This is invalid network.
-                    </Alert>} */}
-                    {
-                        (isSuccess || isSuccess1) && <DescriptionAlerts isSucess={true} title={"Success"} msg={'You Buy MMCT Successfully'}  />
-                    }
-                      {
-                        (isError|| isError1) && <DescriptionAlerts isSucess={false} title={"Error"} msg={'Something went wrong'}  />
-                    }
+            }}>
+                 
+                {
+                    (isSuccess || isSuccess1) && <DescriptionAlerts isSucess={true} title={"Success"} msg={'You Buy MMCT Successfully'} />
+                }
+                {
+                    (isError || isError1) && <DescriptionAlerts isSucess={false} title={"Error"} msg={'Something went wrong'} />
+                }
             </Box>
 
             <Box className={classes.mainDiv}>
@@ -795,9 +794,9 @@ const Dsboard = (props: CircularProgressProps) => {
 
                                         }} >Buy
                                         {
-                                          (isPendingBuyForWrite || isLoading) &&  <CircularProgress size={18} color="inherit" />
+                                            (isPendingBuyForWrite || isLoading) && <CircularProgress size={18} color="inherit" />
                                         }
-                                        </Button>
+                                    </Button>
                                     :
                                     <ConnectWallet />
                                 }

@@ -16,8 +16,8 @@ const useStyles = makeStyles({
         border: '1px solid #1D1D20',
         padding: '30px 20px',
         display: 'flex',
-        justifyContent: 'space-between',
-        gap:'12px',
+         
+        gap:'15px',
         alignItems: 'center',
         borderRadius: '12px',
         '@media(max-width : 600px)': {
@@ -89,7 +89,7 @@ const Conduct = () => {
                                         textAlign: 'center'
                                     }
                                 }}>
-                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'} color={'#fff'}>Decentralized Architecture</Typography>
+                                    <Typography className={classes.hding}   fontFamily={'Bruce Forever!important'} color={'#fff'}>Earn while messaging</Typography>
                                 </Box>
                             </Box>
                         </Grid>
@@ -112,7 +112,7 @@ const Conduct = () => {
                                         }
                                     }}
                                 >
-                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'} color={'#fff'}>End-to-End Encryption</Typography>
+                                    <Typography className={classes.hding}   fontFamily={'Bruce Forever!important'} color={'#fff'}>No Data stealing</Typography>
                                 </Box>
                             </Box>
                         </Grid>
@@ -135,7 +135,7 @@ const Conduct = () => {
                                         }
                                     }}
                                 >
-                                    <Typography className={classes.hding} variant="h6" fontFamily={'Bruce Forever!important'}color={'#fff'}>Incentivized User Engagement</Typography>
+                                    <Typography className={classes.hding}   fontFamily={'Bruce Forever!important'}color={'#fff'}>App which belongs only to you</Typography>
                                 </Box>
                             </Box>
                         </Grid>
