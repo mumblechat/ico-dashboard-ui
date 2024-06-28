@@ -49,7 +49,7 @@ const useStyles = makeStyles({
 
 const StyledMenu = styled(Link)(({ theme }) => ({
     backgroundColor: '#00FFFF !important',
-    color: '#000',
+    color: '#000 !important',
     padding: '14px',
     display: 'inline-flex',
     textDecoration: 'none',
