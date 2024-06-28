@@ -52,25 +52,6 @@ interface props{
 
 const Referral = ({refTitle}:props) => {
     const classes = useStyles();
-    const { address } = useAccount()
-    const chainId = useChainId()
-
-    const resultOfReferralDetail = useReadContracts({
-        contracts: [
-            {
-                abi: mmctReferralAbi,
-                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
-                functionName: 'getReferralRewards',
-                args: [address as Address]
-            },
-            {
-                abi: mmctReferralAbi,
-                address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_referral : mmctContractAddresses.pingaksha.mmct_referral,
-                functionName: 'getReferralsCount',
-                args: [address as Address]
-            },
-        ]
-    })
     return (
         <>
 

@@ -16,6 +16,8 @@ import AddressCopy from "@/theme/components/addressCopy";
 
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { extractDetailsFromError } from "@/lib/extractDetailsFromError";
 
 const useStyles = makeStyles({
     tableContainer: {
@@ -201,7 +203,17 @@ const TableCummunityEarn = ({resultOfUserCommunityReward}:{resultOfUserCommunity
         account: zeroAddress
     })
 
-    const { writeContractAsync,data,isPending:isPendingClaimForWrite } = useWriteContract()
+    const { writeContractAsync,data,isPending:isPendingClaimForWrite } = useWriteContract({
+        mutation:{
+            onSettled(data, error, variables, context) {
+                if(error){
+                    toast.error(extractDetailsFromError(error.message as string) as string)
+                }else{
+                    toast.success("Community Reward claimed successfully")
+                }
+            },
+         }
+    })
     const {isLoading,isSuccess} = useWaitForTransactionReceipt({
         hash: data,
       }) 

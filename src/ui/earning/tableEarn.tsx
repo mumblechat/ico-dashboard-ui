@@ -14,6 +14,8 @@ import HoverTool from "@/theme/components/hoverTool";
 import AddressCopy from "@/theme/components/addressCopy";
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from "react";
+import { extractDetailsFromError } from "@/lib/extractDetailsFromError";
+import { toast } from "react-toastify";
 
 
 const useStyles = makeStyles({
@@ -173,16 +175,31 @@ const TableEarn = ({ resultOfUserStakedList, mintRatePerYear }: { resultOfUserSt
             args: [address as Address, BigInt(index)],
             account: zeroAddress
         })
-        const { writeContractAsync, data, isPending: isPendingClaimForWrite } = useWriteContract()
-        const { isLoading, isSuccess } = useWaitForTransactionReceipt({
+        const { writeContractAsync, data, isPending: isPendingClaimForWrite, isSuccess: isSuccess1, isError: isError1 } = useWriteContract({
+            mutation: {
+                onSettled(data, error, variables, context) {
+                    if (error) {
+                        toast.error(extractDetailsFromError(error.message as string) as string)
+                    } else {
+                        toast.success("Reward claimed successfully")
+                    }
+                },
+            }
+        })
+        const { isLoading, isSuccess, isError } = useWaitForTransactionReceipt({
             hash: data,
         })
+        // use to refetch
+        // useEffect(() => {
+        //     queryClient.invalidateQueries({ queryKey: mintReward.queryKey })
+        // }, [blockNumber, queryClient])
         return (
+
             <TableCell sx={{ borderBottom: '1px solid #1D1D20', padding: 1, color: '#fff' }} align="left">
                 <Typography color={'#fff'}>{Number(mintReward?.data) > 0 ? Number(formatEther?.(BigInt?.(mintReward?.data ? mintReward.data.toString() : 0))).toFixed(5) : '0.00000'} MMCT
                     <Button
                         disabled={
-                            (isPendingClaimForWrite || isLoading) 
+                            (isPendingClaimForWrite || isLoading)
                         }
                         className={classes.stakebtn}
                         sx={{
@@ -202,7 +219,7 @@ const TableEarn = ({ resultOfUserStakedList, mintRatePerYear }: { resultOfUserSt
                         }}
                     >Claim
                         {
-                            (isPendingClaimForWrite || isLoading) && <CircularProgress sx={{ml:"7px"}} size={18} color="inherit" />
+                            (isPendingClaimForWrite || isLoading) && <CircularProgress sx={{ ml: "7px" }} size={18} color="inherit" />
                         }
                     </Button>
                 </Typography>
@@ -213,19 +230,53 @@ const TableEarn = ({ resultOfUserStakedList, mintRatePerYear }: { resultOfUserSt
 
 
     const Action = ({ index }: { index: number }) => {
+        const { writeContractAsync, data, isPending: isPendingUnstakeForWrite } = useWriteContract({
+            mutation: {
+                onSettled(data, error, variables, context) {
+                    if (error) {
+                        toast.error(extractDetailsFromError(error.message as string) as string)
+                    } else {
+                        toast.success("Unstake successfully")
+                    }
+                },
+            }
+        })
+        const { isLoading } = useWaitForTransactionReceipt({
+            hash: data,
+        })
         return (
             <Box className={classes.stakebtn__wrp}>
-                <Button className={classes.stakebtn} >Unstake</Button>
+                <Button
+                    disabled={
+                        (isPendingUnstakeForWrite || isLoading)
+                    }
+                    className={classes.stakebtn}
+                    sx={{
+                        opacity: !(
+                            isPendingUnstakeForWrite || isLoading
+                        ) ? "1" : '0.3',
+                        marginLeft: '7px'
+                    }}
+                    onClick={async () => {
+                        await writeContractAsync({
+                            abi: mmctStakingAbi,
+                            address: chainId === 1370 ? mmctContractAddresses.ramestta.mmct_staking : mmctContractAddresses.pingaksha.mmct_staking,
+                            functionName: 'unstake',
+                            args: [BigInt(index)],
+                            account: address
+                        })
+                    }}
+
+                >Unstake
+                    {
+                        (isPendingUnstakeForWrite || isLoading) && <CircularProgress sx={{ ml: "7px" }} size={18} color="inherit" />
+                    }
+                </Button>
             </Box>
         )
     }
 
 
-
-    // // use to refetch
-    // useEffect(() => {
-    //     queryClient.invalidateQueries({ queryKey:resultOfUserStakedList.queryKey }) 
-    // }, [blockNumber, queryClient])
 
 
     return (

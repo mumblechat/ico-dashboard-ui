@@ -40,6 +40,8 @@ import shortenString from "@/lib/shortenString";
 import { useSearchParams } from "next/navigation";
 import DescriptionAlerts from "@/theme/components/descriptionAlerts";
 import { useQueryClient } from '@tanstack/react-query'
+import { extractDetailsFromError } from "@/lib/extractDetailsFromError";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles({
     mainDiv: {
@@ -345,8 +347,20 @@ const Dsboard = (props: CircularProgressProps) => {
     const queryClient = useQueryClient()
     const { data: blockNumber } = useBlockNumber({ watch: true, })
 
-    const { writeContractAsync, data, isSuccess: isSuccess1, isError: isError1, isPending: isPendingBuyForWrite } = useWriteContract()
-    const { isLoading, isSuccess, isError, error } = useWaitForTransactionReceipt({
+    const { writeContractAsync, data, isPending: isPendingBuyForWrite} = useWriteContract(
+        {
+            mutation:{
+               onSettled(data, error, variables, context) {
+                   if(error){
+                       toast.error(extractDetailsFromError(error.message as string) as string)
+                   }else{
+                       toast.success("Your MMCT Buy successfully")
+                   }
+               },
+            }
+           }
+    )
+    const { isLoading } = useWaitForTransactionReceipt({
         hash: data,
     })
 
@@ -498,28 +512,10 @@ const Dsboard = (props: CircularProgressProps) => {
         queryClient.invalidateQueries({ queryKey: resultOfReferralDetail.queryKey })
     }, [blockNumber, queryClient])
 
+    
 
     return (
         <>
-            <Box sx={{
-                position: 'fixed',
-                top: '0.6rem',
-                right: '2.5rem',
-                zIndex: 1000,
-                '@media(max-width : 600px)':{
-                    right: '1.2rem',
-                }
-
-            }}>
-                 
-                {
-                    (isSuccess || isSuccess1) && <DescriptionAlerts isSucess={true} title={"Success"} msg={'You Buy MMCT Successfully'} />
-                }
-                {
-                    (isError || isError1) && <DescriptionAlerts isSucess={false} title={"Error"} msg={'Something went wrong'} />
-                }
-            </Box>
-
             <Box className={classes.mainDiv}>
 
                 <Box className={classes.step__one}>

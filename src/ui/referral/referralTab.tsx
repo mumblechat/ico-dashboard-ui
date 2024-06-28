@@ -11,13 +11,13 @@ import Heading from '@/theme/components/heading';
 import Referral from './referral';
 import Tablereferral from './tablereferral';
 import Refer from '../dashboard/refer';
-import { useAccount, useChainId, useReadContracts } from 'wagmi';
+import { useAccount, useBlockNumber, useChainId, useReadContracts } from 'wagmi';
 import { mmctReferralAbi } from '@/configs/abi/mmctReferral';
 import { mmctContractAddresses } from '@/configs';
 import { Address } from 'viem';
 import Tablereferral2 from './tablereferral2';
-
-
+import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from "react";
 
 
 interface TabPanelProps {
@@ -91,6 +91,8 @@ export default function ReferralTab() {
 
     const { address } = useAccount()
     const chainId = useChainId()
+    const queryClient = useQueryClient()
+    const { data: blockNumber } = useBlockNumber({ watch: true })
     const resultOfReferralDetail = useReadContracts({
         contracts: [
             {
@@ -107,6 +109,10 @@ export default function ReferralTab() {
             },
         ]
     })
+    // use to refetch
+    useEffect(() => {
+        queryClient.invalidateQueries({ queryKey:resultOfReferralDetail.queryKey }) 
+    }, [blockNumber, queryClient])
 
     return (
         <Box className={classes.mainDiv}>

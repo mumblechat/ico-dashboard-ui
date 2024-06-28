@@ -9,6 +9,8 @@ import createTheme from "@mui/material/styles/createTheme";
 import { ThemeProvider } from "@mui/material/styles";
 import "./globals.css";
 import { ColorModeContext } from "@/context";
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.min.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -123,6 +125,7 @@ const RootLayout = ({
           <ColorModeContext.Provider value={colorMode}>
             {/* <ThemeProvider theme={theme}> */}
               <CssBaseline />
+              <ToastContainer theme="dark"/>
               {children}
             {/* </ThemeProvider> */}
           </ColorModeContext.Provider>
