@@ -1,6 +1,6 @@
 
-import { Box, Grid, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Box, Grid, Tooltip, Typography,  } from '@mui/material';
+import { makeStyles, withStyles } from '@mui/styles';
 import Image from 'next/image';
 import control from '../../icons/control.svg'
 import Heading from '@/theme/components/heading';
@@ -9,7 +9,13 @@ import download_btn01 from '../../icons/download_btn01.png'
 import download_btn02 from '../../icons/download_btn02.png'
 
 
-
+const CustomTooltip = withStyles((theme) => ({
+    tooltip: {
+        backgroundColor: '#00FFFF !important', // Change to your desired background color
+        color: '#000 !important',          // Change to your desired text color
+        fontSize: '18px !important',
+    },
+}))(Tooltip);
 
 const useStyles = makeStyles({
     box: {
@@ -25,7 +31,7 @@ const useStyles = makeStyles({
         borderRadius: '6rem',
         justifyContent: 'center',
         backgroundColor: '#000',
-        boder:'1px solid #1D1D20'
+        boder: '1px solid #1D1D20'
     },
     wrap: {
         display: 'flex',
@@ -54,7 +60,7 @@ const useStyles = makeStyles({
         }
     },
     mainBox: {
-        backgroundColor:'#101012',
+        backgroundColor: '#101012',
         border: '1px solid rgba(43 44 56 / 46%)',
         padding: '2rem 2rem 0rem 2rem',
         margin: '0rem 2rem 0rem 2rem',
@@ -80,11 +86,12 @@ const Application = () => {
             <Box className={classes.mainBox}>
                 <Grid container spacing={2}>
                     <Grid item lg={6} md={6} sm={12} xs={12}>
-                        <Box sx={{ marginTop: '10rem',
-                            '@media(max-width:900px)':{
+                        <Box sx={{
+                            marginTop: '10rem',
+                            '@media(max-width:900px)': {
                                 marginTop: '1rem',
                             }
-                         }}>
+                        }}>
                             <Box sx={{
                                 '@media(max-width : 900px)': {
                                     textAlign: 'center'
@@ -105,12 +112,21 @@ const Application = () => {
                             </Box>
 
                             <Box className={classes.wrap2}>
-                                <Link href={''}>
-                                    <Image src={download_btn01} alt={''} width={180} />
-                                </Link>
-                                <Link href={''}>
-                                    <Image src={download_btn02} alt={''} width={180} />
-                                </Link>
+                                <CustomTooltip title="Coming Soon" placement="top">
+                                    <Link href={'javascript:void(0)'}>
+                                        <Image src={download_btn01} alt={''} width={180} />
+                                    </Link>
+                                </CustomTooltip>
+
+                                <CustomTooltip title="Coming Soon" placement="top">
+                                <Link href={'javascript:void(0)'}>
+                                        <Image src={download_btn02} alt={''} width={180} />
+                                    </Link>
+                                </CustomTooltip>
+
+                                
+
+
 
                             </Box>
                         </Box>

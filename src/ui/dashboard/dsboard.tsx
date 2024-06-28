@@ -71,13 +71,19 @@ const useStyles = makeStyles({
         display: 'flex',
         alignItems: 'center',
         gap: '10px',
-        justifyContent: 'left'
+        justifyContent: 'left',
+        '@media(max-width : 600px)': {
+            justifyContent: 'center',
+        }
     },
     box__logo2: {
         display: 'flex',
         alignItems: 'center',
         gap: '10px',
-        justifyContent: 'end'
+        justifyContent: 'end',
+        '@media(max-width : 600px)': {
+            justifyContent: 'center',
+        }
     },
     step__two_box: {
         display: 'flex',
@@ -652,7 +658,7 @@ const Dsboard = (props: CircularProgressProps) => {
 
                                 </Box>
                                 <Box className={classes.currentsale2}>
-                                    <Typography fontWeight={500} color={'#fff'}>0.05 USDT = 1 MMCT</Typography>
+                                    <Typography fontWeight={500} color={'#fff'}>$0.05 USDT = 1 MMCT</Typography>
                                     <Typography fontWeight={500} color={'#fff'}>Pre-Sale: 0.1 USDT</Typography>
                                 </Box>
 
@@ -831,7 +837,7 @@ const Dsboard = (props: CircularProgressProps) => {
                                             <Typography fontWeight={200} color={'#00FFFF'} textAlign={'center'} mt={1}>Note: If you have no any  valid referrer address then you can use this community referrer.</Typography>
                                             <Box sx={{ background: 'linear-gradient(90deg, #0808088a, #00FFFF, #0808088a)', gap: 1, justifyContent: 'center', padding: 1, display: 'flex', marginTop: '1rem', borderRadius: '8px', alignItems: 'center', }}>
                                                 <Typography component={'h6'} fontWeight={700} color={'#000'}>Referrer:  </Typography>
-                                                <AddressCopy hrefLink={`https://ico.mumblechat.com/dashboard/?ref=0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af`} text={"0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af"} addresstext={"0x3B1...Da9af"} />
+                                                <AddressCopy hrefLink={`https://ico.mumblechat.com/dashboard/?ref=0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af`} text={"0x3B1E0F41ea1a6b1426b9C57262C73e7cD3FDa9af"} addresstext={"0x3B1...3FDa9af"} />
                                             </Box>
                                             {/* </Box> */}
 

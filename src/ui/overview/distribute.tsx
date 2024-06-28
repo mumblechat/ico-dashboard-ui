@@ -77,7 +77,7 @@ const Distribute = () => {
                         <Image src={chart_img} alt={""} />
                         </Box>
                         <Box className={classes.boxtext}>
-                           <Typography textAlign={'center'} fontSize={20} color={'#00FFFF'} fontFamily={'Bruce Forever !important'}>RAMESTTA is a decentralized, open-source blockchain with smart contract</Typography>
+                           <Typography textAlign={'center'} fontSize={20} color={'#00FFFF'} fontFamily={'Bruce Forever !important'}>RAMESTTA is a decentralized, open-source blockchain</Typography>
                           
                         </Box>
 
@@ -88,7 +88,7 @@ const Distribute = () => {
                             </Box>
                             <Box className={classes.listItem} component={'li'}>
                                 <Typography className={classes.round} color={'#fff'}>1</Typography>
-                                <Typography color={'#fff'}>Initial Value : 1 RAMA = 3.04 MMCT</Typography>
+                                <Typography color={'#fff'}>Initial Value : 1 RAMA = 3.20 MMCT</Typography>
                             </Box>
                             <Box className={classes.listItem} component={'li'}>
                                 <Typography className={classes.round} color={'#fff'}>1</Typography>

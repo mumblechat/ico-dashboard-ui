@@ -15,16 +15,16 @@ const Accordion_list = [
     {
         id: 2,
         title: 'How MMCT Minting and Reward Tiers work.',
-        text: 'When you participate in the ICO by buying MMCT tokens, those tokens are locked in a contract for 365 days. As a result, you earn more tokens over time through a process called self-minting. The basic idea is that you get a small percentage of extra tokens every hour based on the amount you initially locked.'
+        text: 'When you participate in the ICO by buying MMCT tokens, those tokens are locked in a contract for 365 days. As a result, you earn more tokens over time through a process called minining. The basic idea is that you get a small percentage of extra tokens every hour based on the amount you initially locked.'
     },
     {
         id: 3,
-        title: 'What is  self minting process.',
-        text: 'The self-minting process in the ICO allows users to buy MMCT tokens from the ICO portal. The purchased MMCT tokens are instantly locked in a contract, and users earn a basic minting rate of 0.001% per hour on their locked amount. Additionally, users can increase their minting percentage by referring direct users, according to the Self minting  tiers. '
+        title: 'What is  self minining process.',
+        text: 'The minining process in the ICO allows users to buy MMCT tokens from the ICO portal. The purchased MMCT tokens are instantly locked in a contract, and users earn a basic minining rate of 0.001% per hour on their locked amount. Additionally, users can increase their minining percentage by referring direct users, according to the Self minining  tiers. '
     },
     {
         id: 4,
-        title: 'What are the types of self minting tiers.',
+        title: 'What are the types of self minining tiers.',
         text: 'Starter Minting Speed: For investments between $1 and $100. - Silver Minting Speed: For investments between $101 and $500. - Gold Minting Speed: For investments between $501 and $2000. - Platinum Minting Speed: For investments between $2001 and $5000.'
     },
      
