@@ -118,7 +118,7 @@ export default function DistributeTab() {
 
                                     '.MuiTabs-indicator': {
                                         height: 46,
-                                        color: '#000',
+                                        color: '#000 !important',
                                         background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
                                         borderRadius: '30px',
                                         backgroundColor: 'transparent'

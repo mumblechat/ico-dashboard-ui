@@ -122,7 +122,7 @@ export default function DashboardSidebar() {
                     <StyledMenu
                         onClick={toggleDrawer(anchor, true)}
                         href={""}>
-                        <MenuIcon />
+                        <MenuIcon sx={{color:'#000 !important'}}/>
                     </StyledMenu>
                     <Drawer
                     sx={{

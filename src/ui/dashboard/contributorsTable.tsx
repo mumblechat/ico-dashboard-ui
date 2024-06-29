@@ -179,7 +179,7 @@ useEffect(() => {
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.23rem' }}>
                                                     <Image src={t1} alt={""} width={36} />
                                                     <AddressCopy
-                                                        textColor="#00ffff"
+                                                        textColor="#00ffff !important"
                                                         hrefLink={
                                                             chainId === 1370 ? `https://ramascan.com/address/${item.user}` :
                                                                 `https://pingaksha.ramascan.com/address/${item.user}`

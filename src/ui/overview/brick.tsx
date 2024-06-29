@@ -8,7 +8,7 @@ import Heading from "@/theme/components/heading";
 
 const StyledLink = styled(Link)(({ theme }) => ({
     backgroundColor: '#00FFFF !important',
-    color: '#000',
+    color: '#000 !important',
     padding: '12px 22px',
     display: 'inline-flex',
     textDecoration: 'none',
@@ -129,7 +129,7 @@ function Brick() {
                     </Slider>
                     <Box sx={{ textAlign: 'center', marginTop: '2rem' }}>
                         <StyledLink href={"/dashboard"}>
-                            <Typography>Purchase a Token</Typography>
+                            <Typography color={'#000 !important'}>Purchase a Token</Typography>
                         </StyledLink>
                     </Box>
                  

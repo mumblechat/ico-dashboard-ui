@@ -307,7 +307,7 @@ const TableEarn = ({ resultOfUserStakedList, mintRatePerYear }: { resultOfUserSt
                                         <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                                             <Image src={r2} alt={"lol"} width={50} />
                                             <AddressCopy
-                                                textColor="#00ffff"
+                                                textColor="#00ffff !important"
                                                 hrefLink={
                                                     chainId === 1370 ? `https://ramascan.com/address/${address}` :
                                                         `https://pingaksha.ramascan.com/address/${address}`

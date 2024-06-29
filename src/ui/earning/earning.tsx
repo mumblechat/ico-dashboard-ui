@@ -197,7 +197,7 @@ const Earning = ({ Earning }: props) => {
     // use to refetch
 useEffect(() => {
     queryClient.invalidateQueries({ queryKey:resultOfUserStakedList.queryKey }) 
-}, [blockNumber, queryClient])
+}, [blockNumber, queryClient,resultOfUserStakedList])
     return (
         <>
 

@@ -79,7 +79,7 @@ const Profile = () => {
                         }} mt={1.5} color={'#fff'}>{address ? vx4w3s b4v3xv5? ''}</Typography> */}
                         {
                             address && <AddressCopy
-                            textColor="#00ffff"
+                            textColor="#00ffff !important"
                             hrefLink={
                                 chainId === 1370 ? `https://ramascan.com/address/${address}` :
                                     `https://pingaksha.ramascan.com/address/${address}`
@@ -100,7 +100,7 @@ const Profile = () => {
                             {
                                 resultOfReferrer?.data!==zeroAddress ?(
                             <AddressCopy
-                                textColor="#00ffff"
+                                textColor="#00ffff !important"
                                 hrefLink={
                                     chainId === 1370 ? `https://ramascan.com/address/${resultOfReferrer?.data}` :
                                         `https://pingaksha.ramascan.com/address/${resultOfReferrer?.data}`

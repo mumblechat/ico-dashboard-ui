@@ -223,7 +223,7 @@ const TableCummunityEarn = ({resultOfUserCommunityReward}:{resultOfUserCommunity
             queryClient.invalidateQueries({ queryKey:resultOfUserCommunityReward.queryKey }) 
             queryClient.invalidateQueries({ queryKey:resultOfUserCommunityRewardLength.queryKey }) 
             queryClient.invalidateQueries({ queryKey:resultOfUserCommunityRewardList.queryKey }) 
-        }, [blockNumber, queryClient])
+        }, [blockNumber, queryClient,resultOfUserCommunityReward,resultOfUserCommunityRewardLength,resultOfUserCommunityRewardList])
 
     return (
         <Box>
@@ -270,7 +270,7 @@ const TableCummunityEarn = ({resultOfUserCommunityReward}:{resultOfUserCommunity
                                     <Box sx={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                                     <Image src={r2} alt={"lol"} width={50} />
                                         <AddressCopy 
-                                             textColor="#00ffff" 
+                                             textColor="#00ffff !important" 
                                              hrefLink={
                                                 chainId===1370?`https://ramascan.com/address/${item.from}`:
                                                 `https://pingaksha.ramascan.com/address/${item.from}`

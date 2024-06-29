@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     },
     btn: {
         backgroundColor: '#00FFFF !important',
-        color: '#000',
+        color: '#000 !important',
         padding: '14px 22px',
         display: 'inline-flex',
         textDecoration: 'none',

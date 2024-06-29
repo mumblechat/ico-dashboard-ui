@@ -38,7 +38,8 @@ const useStyles = makeStyles({
         textDecoration: 'none',
         display: 'flex',
         alignItems: 'center',
-        gap: '10px'
+        gap: '10px',
+        backgroundColor:'transparent !important'
     },
     texthdr: {
         '@media(max-width : 900px)': {

@@ -151,7 +151,7 @@ const Tablereferral = ({ referralsCount }: { referralsCount: string }) => {
                                             }}>
                                                 <Image src={r2} alt={""} width={50} />
                                                 <AddressCopy 
-                                             textColor="#00ffff" 
+                                             textColor="#00ffff !important" 
                                              hrefLink={
                                                 chainId===1370?`https://ramascan.com/address/${resultOfDirectReferrals.data[0][index]}`:
                                                 `https://pingaksha.ramascan.com/address/${resultOfDirectReferrals.data[0][index]}`

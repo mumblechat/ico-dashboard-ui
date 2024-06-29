@@ -14,7 +14,7 @@ const Accordion_list = [
     },
     {
         id: 2,
-        title: 'How MMCT Minting and Reward Tiers work.',
+        title: 'How MMCT Mining and Reward Tiers work.',
         text: 'When you participate in the ICO by buying MMCT tokens, those tokens are locked in a contract for 365 days. As a result, you earn more tokens over time through a process called minining. The basic idea is that you get a small percentage of extra tokens every hour based on the amount you initially locked.'
     },
     {

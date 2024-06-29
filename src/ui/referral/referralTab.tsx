@@ -74,7 +74,7 @@ const useStyles = makeStyles({
     },
     boxref: {
         padding: '1rem',
-         
+
     }
 });
 
@@ -111,13 +111,13 @@ export default function ReferralTab() {
     })
     // use to refetch
     useEffect(() => {
-        queryClient.invalidateQueries({ queryKey:resultOfReferralDetail.queryKey }) 
-    }, [blockNumber, queryClient])
+        queryClient.invalidateQueries({ queryKey: resultOfReferralDetail.queryKey })
+    }, [blockNumber, queryClient,resultOfReferralDetail])
 
     return (
         <Box className={classes.mainDiv}>
 
-<Refer resultOfReferralDetail={resultOfReferralDetail} />
+            <Refer resultOfReferralDetail={resultOfReferralDetail} />
 
             <Box sx={{ width: '100%', border: '1px solid #1D1D20', borderRadius: '8px', marginTop: '1.5rem' }}>
 
@@ -151,8 +151,8 @@ export default function ReferralTab() {
                         <Box sx={{ marginTop: '1rem' }}>
                             <Tablereferral referralsCount={resultOfReferralDetail?.data?.[1].result?.toString() as string} />
                         </Box>
-                        
-                        
+
+
                     </Box>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>

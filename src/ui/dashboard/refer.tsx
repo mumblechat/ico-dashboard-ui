@@ -221,7 +221,7 @@ const Refer =({resultOfReferralDetail}:{resultOfReferralDetail: any})=>{
                                         <Typography color={'#999'}>YOUR REFERRALS</Typography>
                                         <Typography color={'#fff'} variant="h4">{resultOfReferralDetail?.data?.[1].result>0?resultOfReferralDetail?.data?.[1].result.toString():0}</Typography>
                                     </Box>
-                                    <Box>
+                                    <Box sx={{backgroundColor:'transparent !important'}}>
                                         <Image src={r1} alt={""} />
                                     </Box>
                                 </Box>
@@ -231,7 +231,7 @@ const Refer =({resultOfReferralDetail}:{resultOfReferralDetail: any})=>{
                                         <Typography color={'#999'}>YOUR REFERRAL EARNINGS</Typography>
                                         <Typography color={'#fff'} variant="h4">{convertToAbbreviated(formatEther?.(BigInt?.(resultOfReferralDetail?.data?.[0].result ? resultOfReferralDetail?.data?.[0].result.toString() : 0)))}</Typography>
                                     </Box>
-                                    <Box>
+                                    <Box sx={{backgroundColor:'transparent !important'}}>
                                         <Image src={r2} alt={""} />
                                     </Box>
                                 </Box>

@@ -73,7 +73,7 @@ export default function Modal() {
         <React.Fragment>
 
 
-            <Link onClick={handleClickOpen('body')} href={"#"}><Image src={linkbtnimg} alt={""} /></Link>
+            <Link onClick={handleClickOpen('body')} href={"#"} style={{backgroundColor:'transparent'}}><Image src={linkbtnimg} alt={""} /></Link>
             <Dialog
                 sx={{
                     backgroundColor: '#0000008f',
@@ -101,7 +101,7 @@ export default function Modal() {
                         <Typography mt={2} color={'#fff'}>Share your unique link below and receive <Typography component={'span'}><Link style={{ textDecoration: 'none', color: '#00FFFF' }} href={''}>5%</Link>  of all transactions realized with your link <Typography component={'span'}><Link style={{ textDecoration: 'none', color: '#00FFFF' }} href={''}>instantly </Link>!</Typography></Typography></Typography>
                     </Box>
                 </DialogContent>
-                <AddressReward textColor={'#000'} text={referLink} address={`https://ico.mumblechat.com/dashboard/?ref=${shortenString(address as Address)}`} />
+                <AddressReward textColor={'#000 !important'} text={referLink} address={`https://ico.mumblechat.com/dashboard/?ref=${shortenString(address as Address)}`} />
                 <BoxSocial>
 
                     <TwitterShareButton

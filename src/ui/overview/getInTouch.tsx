@@ -9,7 +9,7 @@ import pdf from '../../icons/pdf.svg'
 
 const StyledLink = styled(Link)(({ theme }) => ({
     backgroundColor: '#00FFFF !important',
-    color: '#000',
+    color: '#000 !important',
     padding: '12px 30px',
     display: 'inline-flex',
     textDecoration: 'none',
@@ -203,7 +203,7 @@ const GetInTouch = () => {
 
                                 <Box className={classes.send}>
                                     <StyledLink href={""}>
-                                        <Typography>Send Message</Typography>
+                                        <Typography color={'#000 !important'}>Send Message</Typography>
 
                                     </StyledLink>
                                 </Box>
@@ -238,7 +238,7 @@ const GetInTouch = () => {
 
                                 <Box className={classes.send}>
                                     <StyledLink href={""}>
-                                        <Typography>Download All</Typography>
+                                        <Typography color={'#000 !important'}>Download All</Typography>
                                     </StyledLink>
                                 </Box>
                             </Box>

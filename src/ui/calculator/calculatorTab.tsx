@@ -97,7 +97,7 @@ export default function CalculatorTab() {
                             padding: '4px 6px 6px 6px',
                             '.MuiTabs-indicator': {
                                 height: 46,
-                                color: '#000',
+                                color: '#000 !important',
                                 background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
                                 borderRadius: '8px',
                                 backgroundColor: 'transparent',
@@ -108,8 +108,8 @@ export default function CalculatorTab() {
                                 zIndex: '1',
                             }
                         }} value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1,'@media(max-width : 600px)':{} }} label="Coin Amount Calculator" {...a11yProps(0)} />
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1,'@media(max-width : 600px)':{} }} label="Mining Profit Calculator" {...a11yProps(1)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1,'@media(max-width : 600px)':{padding:'4px 16px'} }} label="Coin Amount Calculator" {...a11yProps(0)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1,'@media(max-width : 600px)':{padding:'4px 16px'} }} label="Mining Profit Calculator" {...a11yProps(1)} />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>

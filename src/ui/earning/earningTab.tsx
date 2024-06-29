@@ -105,7 +105,7 @@ export default function EarningTab() {
                             padding: '4px 6px 6px 6px',
                             '.MuiTabs-indicator': {
                                 height: 46,
-                                color: '#000',
+                                color: '#000 !important',
                                 background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
                                 borderRadius: '8px',
                                 backgroundColor: 'transparent',

@@ -182,7 +182,7 @@ const Tablereferral2 = () => {
                                             }}>
                                                 <Image src={r2} alt={""}  width={50} />
                                                 <AddressCopy 
-                                             textColor="#00ffff" 
+                                             textColor="#00ffff !important" 
                                              hrefLink={
                                                 chainId===1370?`https://ramascan.com/address/${resultOfUplineReferrals.data[0][index]}`:
                                                 `https://pingaksha.ramascan.com/address/${resultOfUplineReferrals.data[0][index]}`

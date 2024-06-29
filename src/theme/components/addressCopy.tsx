@@ -23,7 +23,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const StyledLink = styled(Link)(({ theme }) => ({
     textDecoration: 'none',
-    color: '#000',
+    color: '#000 !important',
     fontWeight: 500,
     fontSize:'17px !important',
     '@media(max-width : 600px)':{

@@ -16,7 +16,7 @@ import l3 from '../../icons/l3.svg'
 import Text from "@/theme/components/text";
 import coinline from '../../icons/coinline.svg'
 import Link from "next/link";
-import r1 from '../../icons/r1.svg'
+import dollar from '../../icons/t1.svg'
 import r2 from '../../icons/r2.svg'
 import AddressCopy from "@/theme/components/addressCopy";
 import linkbtnimg from '../../icons/linkbtnimg.svg'
@@ -38,7 +38,6 @@ import ConnectWallet from "../shared/connectWallet";
 import { mmctStakingAbi } from "@/configs/abi/mmctStaking";
 import shortenString from "@/lib/shortenString";
 import { useSearchParams } from "next/navigation";
-import DescriptionAlerts from "@/theme/components/descriptionAlerts";
 import { useQueryClient } from '@tanstack/react-query'
 import { extractDetailsFromError } from "@/lib/extractDetailsFromError";
 import { toast } from "react-toastify";
@@ -315,6 +314,11 @@ const useStyles = makeStyles({
         borderRadius: '30px',
         border: '1px solid red',
 
+    },
+    box_List:{
+        display:'flex',
+        alignItems:'center',
+        gap:'10px'
     }
 
 });
@@ -401,7 +405,7 @@ const Dsboard = (props: CircularProgressProps) => {
         }
 
 
-    }, [resultOfSaleDetails?.data]);
+    }, [resultOfSaleDetails?.data,initialProgressValue]);
 
 
 
@@ -510,7 +514,7 @@ const Dsboard = (props: CircularProgressProps) => {
         queryClient.invalidateQueries({ queryKey: resultOfBalance.queryKey })
         queryClient.invalidateQueries({ queryKey: resultOfUserCommunityReward.queryKey })
         queryClient.invalidateQueries({ queryKey: resultOfReferralDetail.queryKey })
-    }, [blockNumber, queryClient])
+    }, [blockNumber, queryClient,balanceOfRama,resultOfSaleDetails,resultOfUserContribution,resultOfRamaPriceInUSD,resultOfBalance,resultOfUserCommunityReward,resultOfReferralDetail])
 
     
 
@@ -587,7 +591,7 @@ const Dsboard = (props: CircularProgressProps) => {
                         {Box__list.map((item, index) => (
                             <Grid key={index} item lg={3} md={3} sm={12} xs={12}>
                                 <Box className={classes.list___bx}>
-                                    <Image src={item.image} alt={""} width={44} />
+                                    <Image src={item.image} alt={""} width={44} style={{backgroundColor:'transparent !important'}}/>
                                     <Typography color={'#fff'}>{item.title}</Typography>
                                     <Typography color={'#fff'} fontWeight={500} variant="h6">{item.data}</Typography>
                                     <Typography color={'#999'}>{item.valueInUsd}</Typography>
@@ -709,7 +713,8 @@ const Dsboard = (props: CircularProgressProps) => {
                                 <Box className={classes.worth}>
                                     {(resultOfRamaPriceInUSD?.data && buyInput) &&
                                         <>
-                                            {/* <Image src={rmesta} alt={""} width={40} /> */}
+                                           <Box className={classes.box_List}>
+                                           <Image src={dollar} alt={""} width={40} />
                                             <Typography color={'#999'}>COST:
                                                 <Typography component={'span'} color={'#fff'}> ${
                                                     ((Number(Number(buyInput) > 0 ? buyInput : 0) *
@@ -721,6 +726,9 @@ const Dsboard = (props: CircularProgressProps) => {
                                                 }
                                                 </Typography>
                                             </Typography>
+                                           </Box>
+
+                                            <Box className={classes.box_List}>
                                             <Image src={rmesta} alt={""} width={40} />
                                             <Typography color={'#999'}>RAMA PRICE:
                                                 <Typography component={'span'} color={'#fff'}> ${
@@ -729,8 +737,10 @@ const Dsboard = (props: CircularProgressProps) => {
                                                 }
                                                 </Typography>
                                             </Typography>
+                                            </Box>
                                         </>
                                     }
+                                    <Box className={classes.box_List}>
                                     <Image src={shield} alt={""} width={50} />
                                     <Typography color={'#999'}>MMCT WORTH : <Typography component={'span'} color={'#fff'}>{
                                         buyInput && resultOfRamaPriceInUSD?.data && resultOfSaleDetails?.data ? ((Number(Number(buyInput) > 0 ? buyInput : 0) *
@@ -741,6 +751,7 @@ const Dsboard = (props: CircularProgressProps) => {
                                                 formatEther?.(BigInt?.(resultOfSaleDetails?.data?.saleRateInUsd ? resultOfSaleDetails?.data?.saleRateInUsd.toString() : 0)))
                                         ).toFixed(2) : "0.00"
                                     }</Typography></Typography>
+                                    </Box>
                                 </Box>
 
                                 {address ?
