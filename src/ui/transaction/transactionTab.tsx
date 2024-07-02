@@ -106,8 +106,8 @@ export default function TransactionTab() {
                                 zIndex: '1',
                             }
                         }} value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab sx={{ textTransform: 'capitalize', color:"#999", flex: 1 }} label="My Transaction" {...a11yProps(0)} />
-                        <Tab sx={{ textTransform: 'capitalize', color:"#999", flex: 1 }} label="Live Transaction" {...a11yProps(1)} />
+                        <Tab sx={{ textTransform: 'capitalize', color:"#999",border:'1px solid #02b5b56b',borderRadius:'8px',margin:'0px 10px', flex: 1 }} label="My Transaction" {...a11yProps(0)} />
+                        <Tab sx={{ textTransform: 'capitalize', color:"#999",border:'1px solid #02b5b56b',borderRadius:'8px',margin:'0px 10px', flex: 1 }} label="Live Transaction" {...a11yProps(1)} />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>

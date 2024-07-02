@@ -129,7 +129,7 @@ export default function ReferralTab() {
                             borderRadius: '8px',
                             padding: '4px 6px 6px 6px',
                             '.MuiTabs-indicator': {
-                                height: 46,
+                                height: 47,
                                 color: '#000',
                                 background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
                                 borderRadius: '8px',
@@ -141,8 +141,8 @@ export default function ReferralTab() {
                                 zIndex: '1',
                             }
                         }} value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1 }} label="Direct Referral" {...a11yProps(0)} />
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", flex: 1 }} label="Upline Referral" {...a11yProps(1)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999",border:'1px solid #02b5b56b',borderRadius:'8px',margin:'0px 10px', flex: 1 }} label="Direct Referral" {...a11yProps(0)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999",border:'1px solid #02b5b56b',borderRadius:'8px',margin:'0px 10px', flex: 1 }} label="Upline Referral" {...a11yProps(1)} />
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>

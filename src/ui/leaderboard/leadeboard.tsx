@@ -73,7 +73,7 @@ const Leadeboard = () => {
                 <Box className={classes.cardlist}>
                      <Box sx={{
                         backgroundColor:'#101012',
-                        border:'1px solid #1D1D20',
+                        border:'1px solid #02b5b56b',
                         borderRadius:'8px',
                         padding:'1rem'
                      }}>
@@ -113,7 +113,7 @@ const Leadeboard = () => {
                         </Grid>
                      </Box>
                 </Box>
-                <Box sx={{ marginTop: '1rem' }}>
+                <Box sx={{padding:'10px' }}>
                 <Tableleader/>
                 </Box>
                 </Box>

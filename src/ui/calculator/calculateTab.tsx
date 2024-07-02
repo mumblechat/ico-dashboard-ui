@@ -85,7 +85,7 @@ export default function CalculateTab() {
                         sx={{
 
                             '.MuiTabs-indicator': {
-                                height: 46,
+                                height: 47,
                                 color: '#000',
                                 background: 'linear-gradient(0deg, #00FFFF, #00FFFF)',
                                 borderRadius: '8px',
@@ -97,9 +97,9 @@ export default function CalculateTab() {
                                 zIndex: '1',
                             }
                         }} value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", }} label="Private Sale" {...a11yProps(0)} />
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", }} label="Pre-Sale" {...a11yProps(1)} />
-                        <Tab sx={{ textTransform: 'capitalize', color: "#999", }} label="Public Sale" {...a11yProps(2)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999",border:'1px solid #02b5b56b',borderRadius:'8px',margin:'0px 10px', }} label="Private Sale" {...a11yProps(0)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999",border:'1px solid #02b5b56b',borderRadius:'8px',margin:'0px 10px', }} label="Pre-Sale" {...a11yProps(1)} />
+                        <Tab sx={{ textTransform: 'capitalize', color: "#999",border:'1px solid #02b5b56b',borderRadius:'8px',margin:'0px 10px', }} label="Public Sale" {...a11yProps(2)} />
                     </Tabs>
 
                     <Box><Typography>$0.001</Typography></Box>

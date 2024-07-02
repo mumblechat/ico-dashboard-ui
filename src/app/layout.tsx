@@ -44,33 +44,33 @@ interface LightPalette extends CustomPalette {
 interface DarkPalette extends LightPalette { }
 
 // Define custom palettes for light and dark modes
-const lightPalette: LightPalette = {
-  primary: { main: '#fff', contrastText: '#000', light: '#d1d1d1' },
-  secondary: { main: '#E3E1EB', contrastText: '#fff', light: '#F3F0FB' },
-  background: { paper: "#fff", default: '#E3E1EB' },
-  text: { primary: '#000' },
-  common: { black: '1px solid #D4D3DB', white: '#EBEBEB' },
-  success: { main: '#BBD7D0', contrastText: '#45B780' },
-  info: { main: '#fff', contrastText: '1px solid #EBEBEB' },
-  warning: { main: '#fff', contrastText: '1px solid #EBEBEB' },
-  button: undefined,
-  main: "#E3E1EB",
-  contrastText: ""
-};
+// const lightPalette: LightPalette = {
+//   primary: { main: '#fff', contrastText: '#000', light: '#d1d1d1' },
+//   secondary: { main: '#E3E1EB', contrastText: '#fff', light: '#F3F0FB' },
+//   background: { paper: "#fff", default: '#E3E1EB' },
+//   text: { primary: '#000' },
+//   common: { black: '1px solid #D4D3DB', white: '#EBEBEB' },
+//   success: { main: '#BBD7D0', contrastText: '#45B780' },
+//   info: { main: '#fff', contrastText: '1px solid #EBEBEB' },
+//   warning: { main: '#fff', contrastText: '1px solid #EBEBEB' },
+//   button: undefined,
+//   main: "#E3E1EB",
+//   contrastText: ""
+// };
 
-const darkPalette: DarkPalette = {
-  primary: { main: '#2A2A30', contrastText: '#fff', light: '#2A2A30' },
-  secondary: { main: '#1C1C20', contrastText: '#000', light: '#1C1C20' },
-  background: { paper: '#141416', default: '#2A2A30' },
-  text: { primary: '#fff' },
-  common: { black: '1px solid #27272B', white: '#EBEBEB' },
-  success: { main: '#264338', contrastText: '#45B780' },
-  info: { main: '#1C1C20', contrastText: '1px solid #1C1C20' },
-  warning: { main: '#1C1C20', contrastText: '1px solid #fff0' },
-  button: undefined,
-  main: "#000",
-  contrastText: ""
-};
+// const darkPalette: DarkPalette = {
+//   primary: { main: '#2A2A30', contrastText: '#fff', light: '#2A2A30' },
+//   secondary: { main: '#1C1C20', contrastText: '#000', light: '#1C1C20' },
+//   background: { paper: '#141416', default: '#2A2A30' },
+//   text: { primary: '#fff' },
+//   common: { black: '1px solid #27272B', white: '#EBEBEB' },
+//   success: { main: '#264338', contrastText: '#45B780' },
+//   info: { main: '#1C1C20', contrastText: '1px solid #1C1C20' },
+//   warning: { main: '#1C1C20', contrastText: '1px solid #fff0' },
+//   button: undefined,
+//   main: "#000",
+//   contrastText: ""
+// };
 
  
 
@@ -99,12 +99,12 @@ const RootLayout = ({
     }
   }, [mode]);
 
-  const getDesignTokens = (mode: PaletteMode) => ({
-    palette: {
-      mode,
-      ...(mode === 'dark' ? lightPalette : darkPalette),
-    },
-  });
+  // const getDesignTokens = (mode: PaletteMode) => ({
+  //   palette: {
+  //     mode,
+  //     ...(mode === 'dark' ? lightPalette : darkPalette),
+  //   },
+  // });
 
   const colorMode = useMemo(() => ({
     toggleColorMode: () => {
@@ -112,7 +112,7 @@ const RootLayout = ({
     },
   }), []);
 
-  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+  // const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   return (
     <html lang="en">

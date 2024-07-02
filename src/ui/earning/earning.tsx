@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     },
     Card: {
         backgroundColor: '#101012',
-        border: '1px solid #1D1D20',
+        border: '1px solid #02b5b56b',
         padding: '1rem',
         borderRadius: '8px',
         textAlign: 'center'

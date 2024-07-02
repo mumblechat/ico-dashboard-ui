@@ -146,7 +146,7 @@ const ContributorsTable = ({ resultOfRamaPriceInUSD }: { resultOfRamaPriceInUSD:
 useEffect(() => {
     queryClient.invalidateQueries({ queryKey:resultOfUserContributorLength.queryKey }) 
     queryClient.invalidateQueries({ queryKey:resultOfUserContributorList.queryKey })
-}, [blockNumber, queryClient])
+}, [blockNumber, queryClient,resultOfUserContributorLength.queryKey,resultOfUserContributorList.queryKey])
 
     return (
 
