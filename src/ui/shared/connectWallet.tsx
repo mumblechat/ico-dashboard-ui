@@ -32,16 +32,21 @@ const LoginStyled = styled(Link)(({ theme }) => ({
   fontWeight: '700 !important',
   borderRadius: '5rem !important',
   transition: '0.5s',
-  width:'100%',
-  justifyContent:'center',
+  width: '100%',
+  justifyContent: 'center',
+  '-webkit-transition': '0.5s', /* For Safari 3.1 to 6.0 */
+  '-moz-transition': '0.5s', /* For Firefox 4 to 15 */
+  '-o-transition': '0.5s', /* For Opera 10.5 to 12.0 */
   ':hover': {
-    transform: 'translateY(-5px)'
+    transform: 'translateY(-5px)',
+    '-webkit-transform': 'translateY(-5px)', /* For Safari 3.1 to 6.0 */
+    '-moz-transform': 'translateY(-5px)', /* For Firefox 4 to 15 */
+    '-ms-transform': 'translateY(-5px)', /* For IE 9 */
+    '-o-transform': 'translateY(-5px)', /* For Opera 10.5 to 12.0 */
   },
-  '@media(max-width : 1200px)': {
+  '@media(max-width: 1200px)': {
     padding: '14px',
-     
   }
-
 }));
 
 const ConnectWallet = () => {

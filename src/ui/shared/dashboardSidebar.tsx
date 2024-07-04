@@ -62,6 +62,10 @@ const StyledMenu = styled(Link)(({ theme }) => ({
     }
 }));
 
+const styles = {
+    color: '#000 !important'
+}
+
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export default function DashboardSidebar() {
@@ -122,14 +126,14 @@ export default function DashboardSidebar() {
                     <StyledMenu
                         onClick={toggleDrawer(anchor, true)}
                         href={""}>
-                        <MenuIcon sx={{color:'#000 !important'}}/>
+                        <MenuIcon style={styles} />
                     </StyledMenu>
                     <Drawer
-                    sx={{
-                        '& .MuiDrawer-paper': {
-                            backgroundColor: '#101012', // Your desired background color
-                        },
-                    }}
+                        sx={{
+                            '& .MuiDrawer-paper': {
+                                backgroundColor: '#101012', // Your desired background color
+                            },
+                        }}
                         anchor={anchor}
                         open={state[anchor]}
                         onClose={toggleDrawer(anchor, false)}
