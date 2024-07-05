@@ -142,9 +142,9 @@ const useStyles = makeStyles({
     },
     currentsale2: {
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
-
+marginTop:'10px'
     },
     rama__log: {
         backgroundColor: '#101012',
@@ -677,7 +677,7 @@ const Dsboard = (props: CircularProgressProps) => {
                                 </Box>
                                 <Box className={classes.currentsale2}>
                                     <Typography fontWeight={500} color={'#fff'}>$0.05 = 1 MMCT</Typography>
-                                    <Typography fontWeight={500} color={'#fff'}>Pre-Sale: $0.1</Typography>
+                                    {/* <Typography fontWeight={500} color={'#fff'}>Pre-Sale: $0.1</Typography> */}
                                 </Box>
 
                                 <Box className={classes.rama__log}>
