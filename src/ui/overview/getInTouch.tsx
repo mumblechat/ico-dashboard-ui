@@ -101,11 +101,11 @@ const useStyles = makeStyles({
 const PDF__title = [
     {
         Title: 'Whitepaper',
-        link: 'ICO MMCT Whitepaper.pdf'
+        link: 'MMCT Whitepaper.pdf'
     },
     {
         Title: 'Token Sale Terms',
-        link: ''
+        link: 'ICO Whitepaper MMCT.pdf'
     },
     {
         Title: 'Presentation',

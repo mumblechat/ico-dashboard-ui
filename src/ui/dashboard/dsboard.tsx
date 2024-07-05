@@ -533,14 +533,14 @@ const Dsboard = (props: CircularProgressProps) => {
                     </Box>
 
                     <Box sx={{ padding: '0rem 0.5rem', marginTop: '1rem' }}>
-                        <Grid container spacing={2} sx={{ flexWrap: 'inherit', '@media(max-width : 1200px)': { flexWrap: 'wrap' } }}>
-                            <Grid item lg={2.5} md={2.7} sm={2.7} xs={12} alignSelf={'center'}>
+                        <Grid container spacing={2} sx={{ flexWrap: 'inherit',  }}>
+                            <Grid item lg={2.5} md={2.7} sm={2} xs={2.5} alignSelf={'center'}>
                                 <Box className={classes.box__logo}>
                                     <Image src={rmesta} alt={""} />
-                                    <Typography color={'#fff'}>Ramestta</Typography>
+                                    <Typography sx={{'@media(max-width : 900px)':{display:'none'}}} color={'#fff'}>Ramestta</Typography>
                                 </Box>
                             </Grid>
-                            <Grid item lg={7} md={6} sm={6} xs={12} >
+                            <Grid item lg={7} md={6} sm={8} xs={7} >
                                 <Box sx={{
 
 
@@ -569,9 +569,9 @@ const Dsboard = (props: CircularProgressProps) => {
 
                                 </Box>
                             </Grid>
-                            <Grid item lg={3} md={3.3} sm={3.3} xs={12} alignSelf={'center'}>
+                            <Grid item lg={3} md={3.3} sm={2} xs={2.5} alignSelf={'center'}>
                                 <Box className={classes.box__logo2}>
-                                    <Typography color={'#fff'}>Mumblechat</Typography>
+                                    <Typography sx={{'@media(max-width : 900px)':{display:'none'}}} color={'#fff'}>Mumblechat</Typography>
                                     <Image src={shield} alt={""} width={60} />
                                 </Box>
                             </Grid>
