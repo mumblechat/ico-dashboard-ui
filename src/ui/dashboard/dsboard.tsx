@@ -230,7 +230,7 @@ marginTop:'10px'
     middleBox: {
         padding: '0rem 2rem 1rem 2rem',
         '@media(max-width : 600px)': {
-            padding: '0rem 1rem 1rem 1rem'
+            padding: '0rem 0.4rem 1rem 0.4rem'
         }
     },
     step__four: {
@@ -845,13 +845,22 @@ const Dsboard = (props: CircularProgressProps) => {
                                                         padding: '0.3rem 0.5rem',
                                                         ':-moz-placeholder': {
                                                             color: 'fff',
+                                                        },
+                                                        '@media(max-width : 600px)':{
+                                                            fontSize:'11px',
                                                         }
                                                     }}
                                                     fullWidth
                                                     placeholder={'Enter Referrer Address'}
                                                     type={'text'}
                                                 />
-                                                <Button className={classes.max_btn} onClick={(e) => setReferrerAddress((resultOfReferralDetail?.data && resultOfReferralDetail?.data?.[3]?.result !== zeroAddress) ? resultOfReferralDetail?.data?.[3]?.result as Address : referrerAddress)} >Apply</Button>
+                                                {/* <Button sx={{
+                                                    '@media(max-width : 600px)':{
+                                                            fontSize:'12px',
+                                                            minWidth:'50px',
+                                                            padding:'6px 6px'
+                                                        }
+                                                }} className={classes.max_btn} onClick={(e) => setReferrerAddress((resultOfReferralDetail?.data && resultOfReferralDetail?.data?.[3]?.result !== zeroAddress) ? resultOfReferralDetail?.data?.[3]?.result as Address : referrerAddress)} >Apply</Button> */}
 
 
                                             </Box>
